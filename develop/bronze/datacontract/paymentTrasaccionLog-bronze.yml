@@ -1,0 +1,83 @@
+dataContractSpecification: 1.1.0
+id: urn:datacontract:develop:paymentTrasaccionLog-bronze
+info:
+  title: Paymenttrasaccionlog Bronze
+  version: 1.0.0
+  description: Data contract para la tabla paymentTrasaccionLog.
+  owner: Retail Data Team
+  status: active
+  contact:
+    name: Cynthia Acuna (Data Owner)
+    url: https://example.com/teams/retail
+servers:
+  bronze:
+    type: databricks
+    environment: bronze
+    location: abfss://develop@adlseu2yadlbackd02.dfs.core.windows.net/dataContract/bronze/develop/datacontract/paymentTrasaccionLog-bronze.yml
+    format: yaml
+    delimiter: none
+    description: Contrato almacenado en ADLS para paymentTrasaccionLog
+    roles:
+    - name: data_engineer
+      description: Puede generar y validar contratos
+terms:
+  usage: Este contrato define la estructura de los datos de transacciones.
+  limitations: No apto para cargas en tiempo real.
+  policies:
+  - name: privacy-policy
+    url: https://example.com/privacy
+  - name: license
+    url: https://example.com/license
+  billing: 0 USD (interno)
+  noticePeriod: P0D
+models:
+  paymentTrasaccionLog:
+    description: Registro de paymentTrasaccionLog.
+    type: table
+    fields:
+      yape_account_id:
+        type: string
+        description: Account Identifier
+        required: true
+      currency_id:
+        type: integer
+        description: Yape currency identifier.
+        required: true
+      balance:
+        type: number
+        description: Yapero balance up to the collection date
+        required: true
+      collection_date:
+        type: string
+        description: Timestamp when the balance was collected (UTC)
+        required: true
+      servers:
+        type: string
+        description: List of server identifiers
+        required: true
+      info:
+        type: string
+        description: General information metadata
+        required: true
+      models:
+        type: string
+        description: Associated model versions
+        required: true
+definitions: {}
+servicelevels:
+  availability:
+    description: Disponible 24/7
+    percentage: 99%
+  latency:
+    description: Disponibilidad <1h
+    threshold: 25h
+  frequency:
+    description: Batch diario
+    type: batch
+    cron: 0 0 * * *
+tags:
+- develop
+- bronze
+- datacontract
+links:
+  datacontractCli: https://cli.datacontract.com
