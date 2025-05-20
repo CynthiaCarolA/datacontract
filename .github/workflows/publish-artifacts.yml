@@ -17,7 +17,7 @@ jobs:
 
       - name: Descargar archivos desde ADLS
         run: |
-          azcopy copy "https://adlseu2yadlbackd02.blob.core.windows.net/?${{ secrets.SAS_TOKEN }}" "./" --recursive
+          azcopy copy "https://adlseu2yadlbackd02.blob.core.windows.net/develop?${{ secrets.SAS_TOKEN }}" "./" --recursive
 
       - name: Commit & Push
         run: |
