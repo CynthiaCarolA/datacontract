@@ -22,9 +22,11 @@ terms:
   usage: ''
   limitations: ''
   policies:
-  - name: Job Compute
-    description: General-purpose for running non-interactive workloads.
-    url: https://adb-7624286972541238.18.azuredatabricks.net/compute/policies/001B6FE994558F71?o=7624286972541238
+  - name: privacy-policy
+    url: https://example.com/privacy
+  - name: license
+    description: External data is licensed under agreement 1234.
+    url: https://example.com/license/1234
   noticePeriod: ''
 models:
   tiendaorder5_brz:
