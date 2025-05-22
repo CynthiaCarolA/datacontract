@@ -1,0 +1,709 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:retail:tiendaorder6_brz-latest
+info:
+  title: CreateOrder
+  version: '1'
+  status: active
+  description: Schema for Create Order
+  c-domain: retail
+  c-squad: marketplace
+  owner: Miguel Torres
+  contact:
+    name: cynthia
+    c-email: blaguar15@gmail.com
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: ''
+    c-catalog: retail
+    c-schema: bronze
+terms:
+  usage: ''
+  limitations: ''
+  policies:
+  - name: privacy-policy
+    url: https://example.com/privacy
+  - name: license
+    description: External data is licensed under agreement 1234.
+    url: https://example.com/license/1234
+  noticePeriod: ''
+models:
+  tiendaorder6_brz:
+    c-catalog: retail
+    c-schema: bronze
+    c-objectType: table
+    c-tableType: raw
+    description: Schema for Create Order
+    fields:
+      id_yape_account:
+        description: Yape account id
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: id_yape_account
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shopping_cart_id:
+        description: Shopping cart id VTEX
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shopping_cart_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      value:
+        description: Total value of the order
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: value
+            c-dataTypeField: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      order_id:
+        description: Order id VTEX
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: order_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      status:
+        description: Order status
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: status
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      order_date:
+        description: Order date
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: order_date
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_id:
+        description: Shipping data id
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_type:
+        description: Shipping data type
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_type
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_receiver_name:
+        description: Shipping data Receiver name
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_receiver_name
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_address_id:
+        description: Shipping data Address id VTEX
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_address_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_postal_code:
+        description: Postal code - Ubigeo
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_postal_code
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_city:
+        description: Shipping data City - Province
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_city
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_state:
+        description: Shipping data State - Department
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_state
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_country:
+        description: Shipping data Country
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_country
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_street:
+        description: Shipping data Street
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_street
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_number:
+        description: Shipping data Number
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_number
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_neighborhood:
+        description: Shipping data Neighborhood - District
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_neighborhood
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_complement:
+        description: Shipping data Complement
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_complement
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      shipping_data_reference:
+        description: Shipping data Reference
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: shipping_data_reference
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      items:
+        description: <<missing>>
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: items ()
+            c-dataTypeField: array
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      logisticts_information:
+        description: <<missing>>
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: logisticts_information ()
+            c-dataTypeField: array
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      totalisers_amount:
+        description: <<missing>>
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: totalisers_amount ()
+            c-dataTypeField: array
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_error:
+        description: Payment error
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_error
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_status:
+        description: Payment status
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_status
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_transaction_id:
+        description: Payment transaction id Yape
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_transaction_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_card_error:
+        description: Card error
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_card_error
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_card_transaction_id:
+        description: Card transaction id
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_card_transaction_id
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_card_brand:
+        description: Card brand
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_card_brand
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      payment_card_number:
+        description: Card number
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: true
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: payment_card_number
+            c-dataTypeField: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      route_type:
+        description: Route type transaction
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: route_type
+            c-dataTypeField: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      channel:
+        description: Channel transaction
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        c-loadrule: Carga directa
+        c-qualityRule:
+          c-nullity: false
+          c-encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            c-sourceType: Kafka
+            name: payment.lastbalance
+            field: channel
+            c-dataTypeField: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+    tags:
+    - retail
+    - bronze
+    - raw
+    config:
+      c-clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      c-tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 7 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: Se actualiza cada 5 segundos
+    type: streaming
+    interval: No aplica
