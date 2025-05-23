@@ -2182,6 +2182,11 @@ FROM orders
   
 </div>
     
+    <div class="mt-2">
+  <span class="italic">Quality | TEXT:</span> las ordenes solo pueden ser hasta 100.
+  
+</div>
+    
     
   </td>
 </tr>
@@ -3177,7 +3182,7 @@ It is typically associated with an article's barcode, such as the EAN/GTIN.
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 23 May 2025 00:36:14 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.26
+        Created at 23 May 2025 01:03:34 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.26
       </div>
 
     </div>
@@ -3300,6 +3305,8 @@ models:
           mustBeBetween:
           - 1000
           - 49900
+        - type: text
+          description: las ordenes solo pueden ser hasta 100.
       customer_id:
         type: text
         description: Unique identifier for the customer.
