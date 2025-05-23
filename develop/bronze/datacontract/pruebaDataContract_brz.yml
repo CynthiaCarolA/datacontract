@@ -71,6 +71,8 @@ models:
               SELECT quantile_cont(order_total, 0.95) AS percentile_95
               FROM orders
             mustBeBetween: [1000, 49900]
+          - type: text
+            description: las ordenes solo pueden ser hasta 100.
       customer_id:
         description: Unique identifier for the customer.
         type: text
@@ -86,11 +88,10 @@ models:
         quality:
           - type: text
             description: The email address is not verified and may be invalid.
-        lineage:
-          inputFields:
-            - namespace: com.example.service.checkout
-              name: checkout_db.orders
-              field: email_address
+        c-lineage:
+          - namespace: com.example.service.checkout
+            name: checkout_db.orders
+            field: email_address
       processed_timestamp:
         description: The timestamp when the record was processed by the data platform.
         type: timestamp
