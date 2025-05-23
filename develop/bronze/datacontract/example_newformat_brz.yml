@@ -1,0 +1,133 @@
+dataContractSpecification: 1.1.0
+id: urn:datacontract:checkout:orders-latest
+info:
+  title: Orders Latest
+  version: 2.0.0
+  description: 'Successful customer orders in the webshop.
+
+    All orders since 2020-01-01.
+
+    Orders with their line items are in their current state (no history included).
+
+    '
+  c-domain: ecommerce
+  c-squad: checkout_team
+  owner: Checkout Team
+  status: active
+  contact:
+    name: John Doe (Data Product Owner)
+    c-email: owner@example.com
+servers:
+  production:
+    type: s3
+    environment: prod
+    host: value_placeholder
+    c-table: orders_table
+    c-catalog: default_catalog
+    c-schema: default_catalog
+terms:
+  usage: 'Data can be used for reports, analytics and machine learning use cases.
+
+    Order may be linked and joined by other tables
+
+    '
+  limitations: 'Not suitable for real-time use cases.
+
+    Data may not be used to identify individual customers.
+
+    Max data processing per day: 10 TiB
+
+    '
+  policies:
+  - name: privacy-policy
+    url: https://example.com/privacy-policy
+  - name: license
+    description: External data is licensed under agreement 1234.
+    url: https://example.com/license/1234
+  noticePeriod: P3M
+models:
+  orders:
+    description: One record per order. Includes cancelled and deleted orders.
+    c-objectType: table
+    c-tableType: orders_table
+    c-catalog: default_catalog
+    c-schema: default_catalog
+    c-clustering: order_id
+    c-universeLogic: logical_order_model
+    fields:
+      fieldName:
+        description: The business timestamp in UTC when the order was successfully
+          registered in the source system and the payment was successful.
+        type: timestamp
+        required: true
+        c-encrypted: true
+        pii: true
+        classification: sensitive
+        unique: true
+        primaryKey: true
+        minLength: 10
+        maxLength: 20
+        pattern: ^[A-Za-z0-9]{8,14}$
+        examples:
+        - '2024-09-09T08:30:00Z'
+        quality:
+        - type: sql
+          description: 95% of all order total values are expected to be between 10
+            and 499 EUR.
+          query: SELECT quantile_cont(order_total, 0.95) AS percentile_95 FROM orders
+        - type: text
+          description: The email address is not verified and may be invalid.
+        fields:
+          fieldName:
+            description: Nested description for child field
+            type: string
+            unique: true
+            primaryKey: true
+            minLength: 10
+            maxLength: 20
+            pattern: ^[A-Za-z0-9]{8,14}$
+            examples:
+            - '2024-09-09T08:30:00Z'
+            quality:
+            - type: sql
+              description: 95% of all order total values are expected to be between
+                10 and 499 EUR.
+              query: SELECT quantile_cont(order_total, 0.95) AS percentile_95 FROM
+                orders
+              mustBeBetween:
+              - 1000
+              - 49900
+            - type: text
+              description: The email address is not verified and may be invalid.
+    quality:
+    - type: sql
+      description: The maximum duration between two orders should be less than 3600
+        seconds
+      query: SELECT MAX(duration) AS max_duration FROM (SELECT EXTRACT(EPOCH FROM
+        (order_timestamp - LAG(order_timestamp) OVER (ORDER BY order_timestamp)))
+        AS duration FROM orders)
+      mustBeBetween:
+      - 0
+      - 3600
+    - type: sql
+      description: Row Count
+      query: SELECT count(*) as row_count FROM orders
+      mustBeGreaterThan: 5
+    primaryKey:
+    - order_id
+    - line_item_id
+    examples:
+    - order_id,order_timestamp,order_total,customer_id,customer_email_address,processed_timestamp
+      "1001","2030-09-09T08:30:00Z",2500,"1000000001","mary.taylor82@example.com","2030-09-09T08:31:00Z"
+servicelevels:
+  frequency:
+    description: Data is delivered once a day
+    type: batch
+    interval: daily
+    cron: 0 0 * * *
+tags:
+- checkout
+- orders
+- s3
+links:
+  c-contentManagement: https://cli.datacontract.com
