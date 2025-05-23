@@ -71,6 +71,8 @@ models:
               SELECT quantile_cont(order_total, 0.95) AS percentile_95
               FROM orders
             mustBeBetween: [1000, 49900]
+          - type: text
+            description: las ordenes solo pueden ser hasta 100.
       customer_id:
         description: Unique identifier for the customer.
         type: text
