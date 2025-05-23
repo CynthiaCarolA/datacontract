@@ -1,0 +1,173 @@
+dataContractSpecification: 1.1.0
+id: urn:datacontract:checkout:orders-latest
+info:
+  title: Orders Latest
+  version: 2.0.0
+  description: 'Successful customer orders in the webshop.
+
+    All orders since 2020-01-01.
+
+    Orders with their line items are in their current state (no history included).
+
+    '
+  c-domain: ecommerce
+  c-squad: checkout-team
+  owner: Checkout Team
+  status: active
+  contact:
+    name: John Doe (Data Product Owner)
+    c-email: johndoe@example.com
+servers:
+  production:
+    type: s3
+    environment: prod
+    host: s3.amazonaws.com
+    c-table: orders_table
+    c-catalog: main_catalog
+    c-schema: public
+terms:
+  usage: 'Data can be used for reports, analytics and machine learning use cases.
+
+    Order may be linked and joined by other tables
+
+    '
+  limitations: 'Not suitable for real-time use cases.
+
+    Data may not be used to identify individual customers.
+
+    Max data processing per day: 10 TiB
+
+    '
+  policies:
+  - name: privacy-policy
+    url: https://example.com/privacy-policy
+  - name: license
+    description: External data is licensed under agreement 1234.
+    url: https://example.com/license/1234
+  noticePeriod: P3M
+models:
+  orders:
+    description: One record per order. Includes cancelled and deleted orders.
+    c-objectType: table
+    c-tableType: fact
+    c-catalog: main_catalog
+    c-schema: public
+    c-clustering: order_id
+    c-universeLogic: logical_order_model
+    fields:
+      order_timestamp:
+        description: The business timestamp in UTC when the order was successfully
+          registered in the source system and the payment was successful.
+        type: string
+        format: 'email'
+        enum: []
+        required: true
+        c-encrypted: true
+        pii: true
+        classification: sensitive
+        c-loadrule: 'xx'
+        unique: true
+        primaryKey: true
+        references: 'model.field'
+        precision: 2
+        scale: 1
+        examples:
+        - '2024-09-09T08:30:00Z'
+        quality:
+        - type: sql
+          description: 95% of all order total values are expected to be between 10
+            and 499 EUR.
+          query: 'SELECT quantile_cont(order_total, 0.95) AS percentile_95
+
+            FROM orders
+
+            '
+          mustBeBetween:
+          - 10
+          - 499
+        - type: text
+          description: The email address is not verified and may be invalid.
+        fields:
+          email_field:
+            description: Email of the customer
+            type: string
+            format: email
+            required: true
+            c-encrypted: false
+            pii: true
+            classification: personal
+            c-loadrule: 'xx'
+            unique: false
+            primaryKey: false
+            references: customer.id
+            precision: 2
+            scale: 1
+            examples:
+            - customer@example.com
+            quality:
+            - type: sql
+              description: 95% of all order total values are expected to be between
+                10 and 499 EUR.
+              query: 'SELECT quantile_cont(order_total, 0.95) AS percentile_95
+
+                FROM orders
+
+                '
+              mustBeBetween:
+              - 1000
+              - 49900
+            - type: text
+              description: The email address is not verified and may be invalid.
+            mustBeBetween:
+            - 3600
+            - 7200
+    lineage:
+      inputFields:
+      - namespace: com.example.service.checkout
+        name: checkout_db.orders
+        field: email_address
+        c-sourceType: source_system
+        c-dataTypeField: string
+    transformations:
+    - type: normalization
+      subtype: lowercase
+      description: Convert email to lowercase
+    quality:
+    - type: sql
+      description: The maximum duration between two orders should be less that 3600
+        seconds
+      query: "SELECT MAX(duration) AS max_duration\nFROM (\n  SELECT EXTRACT(EPOCH\
+        \ FROM (order_timestamp - LAG(order_timestamp) OVER (ORDER BY order_timestamp)))\
+        \ AS duration\n  FROM orders\n)\n"
+      mustBeBetween:
+      - 0
+      - 3600
+    - type: sql
+      description: Row Count
+      query: 'SELECT count(*) as row_count
+
+        FROM orders
+
+        '
+      mustBeGreaterThan: 5
+    primaryKey:
+    - order_id
+    - line_item_id
+    examples:
+    - 'order_id,order_timestamp,order_total,customer_id,customer_email_address,processed_timestamp
+
+      "1001","2030-09-09T08:30:00Z",2500,"1000000001","mary.taylor82@example.com","2030-09-09T08:31:00Z"
+
+      '
+servicelevels:
+  frequency:
+    description: Data is delivered once a day
+    type: batch
+    interval: daily
+    cron: 0 0 * * *
+tags:
+- checkout
+- orders
+- s3
+links:
+  c-contentManagement: https://cli.datacontract.com
