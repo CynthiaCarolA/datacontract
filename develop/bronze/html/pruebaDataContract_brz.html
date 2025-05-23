@@ -2182,6 +2182,11 @@ FROM orders
   
 </div>
     
+    <div class="mt-2">
+  <span class="italic">Quality | TEXT:</span> las ordenes solo pueden ser hasta 100.
+  
+</div>
+    
     
   </td>
 </tr>
@@ -2306,7 +2311,7 @@ FROM orders
       <span class="inline-flex items-center rounded-md bg-yellow-50 px-1 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-500/10 mr-1 mt-1">PII</span>
       
       
-      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">lineage:{'inputFields': [{'namespace': 'com.example.service.checkout', 'name': 'checkout_db.orders', 'field': 'email_address'}]}</span>
+      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">c-lineage:[{'namespace': 'com.example.service.checkout', 'name': 'checkout_db.orders', 'field': 'email_address'}]</span>
       
       
     </div>
@@ -3177,7 +3182,7 @@ It is typically associated with an article's barcode, such as the EAN/GTIN.
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 23 May 2025 00:36:14 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.26
+        Created at 23 May 2025 01:29:44 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.26
       </div>
 
     </div>
@@ -3300,6 +3305,8 @@ models:
           mustBeBetween:
           - 1000
           - 49900
+        - type: text
+          description: las ordenes solo pueden ser hasta 100.
       customer_id:
         type: text
         description: Unique identifier for the customer.
@@ -3315,11 +3322,10 @@ models:
         quality:
         - type: text
           description: The email address is not verified and may be invalid.
-        lineage:
-          inputFields:
-          - namespace: com.example.service.checkout
-            name: checkout_db.orders
-            field: email_address
+        c-lineage:
+        - namespace: com.example.service.checkout
+          name: checkout_db.orders
+          field: email_address
       processed_timestamp:
         type: timestamp
         required: true
