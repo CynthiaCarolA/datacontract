@@ -1,0 +1,393 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:develop:prices_update_brz-latest
+info:
+  title: CustomerContingencyAssociationRequestedEnriched
+  version: '1'
+  status: active
+  description: Customer contingency association requested enriched
+  domain: develop
+  squad: Marketplace
+  owner: Miguel Torres
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Para alimentar data del Lake
+  limitations: ninguno
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- develop
+- bronze
+- raw
+models:
+  prices_update_brz:
+    catalog: develop
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: Customer contingency association requested enriched
+    universeLogic: Data sin lógicas de negocio
+    fields:
+      requestDate:
+        description: Date of the request
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: requestDate
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      requestId:
+        description: Identifier of the request
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: requestId
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      notificationStatus:
+        description: Status of the notification
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: notificationStatus
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      notificationChannel:
+        description: Channel used to the notification
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: notificationChannel
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      contingencyId:
+        description: Identifier of the contingency
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: contingencyId
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      idYapeAccount:
+        description: Identifier of the Yape account
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: idYapeAccount
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      channel:
+        description: Channel origin of the request
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: channel
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      conversationId:
+        description: Identifier of the conversation
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: conversationId
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      preferredNotificationChannel:
+        description: Preferred notification channel
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: preferredNotificationChannel
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      userInformation:
+        description: User information
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: userInformation
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      issueInformation:
+        description: Issue information
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: issueInformation
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      additionalInformation:
+        description: Additional information
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: additionalInformation
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+            examples: []
+            pii: false
+            classification: public
+            loadrule: Carga directa
+            qualityRule:
+              nullity: true
+              encrypted: false
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+            examples: []
+            pii: false
+            classification: public
+            loadrule: Carga directa
+            qualityRule:
+              nullity: true
+              encrypted: false
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+            examples: []
+            pii: false
+            classification: public
+            loadrule: Carga directa
+            qualityRule:
+              nullity: true
+              encrypted: false
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+            examples: []
+            pii: false
+            classification: public
+            loadrule: Carga directa
+            qualityRule:
+              nullity: true
+              encrypted: false
+      document:
+        description: JSON text from eventData
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: Se actualiza cada 5 segundos
+    type: streaming
+    interval: No aplica
