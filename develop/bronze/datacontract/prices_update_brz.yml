@@ -1,0 +1,245 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:develop:prices_update_brz-latest
+info:
+  title: VtexPricingPricesUpdate
+  version: '1'
+  status: active
+  description: Schema for pricing updates events from VTEX
+  domain: develop
+  squad: Marketplace
+  owner: Miguel Torres
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Para alimentar data del Lake
+  limitations: ninguno
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- develop
+- bronze
+- raw
+models:
+  prices_update_brz:
+    catalog: develop
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: Schema for pricing updates events from VTEX
+    universeLogic: Data sin restricciones
+    fields:
+      itemId:
+        description: The unique identifier for the item
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: itemId
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      listPrice:
+        description: The list price of the item (retail price)
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: listPrice
+            xdataTypeFile: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      costPrice:
+        description: The cost price of the item
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: costPrice
+            xdataTypeFile: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      markup:
+        description: The markup percentage for the item
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: markup
+            xdataTypeFile: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      basePrice:
+        description: The base price of the item
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: basePrice
+            xdataTypeFile: number
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      fixedPrices:
+        description: List of fixed prices for specific trade policies or null
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: fixedPrices
+            xdataTypeFile:
+            - array
+            - 'null'
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      updateTs:
+        description: The timestamp when the update happened (in UTC-5)
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: false
+          encrypted: false
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: updateTs
+            xdataTypeFile: string
+            transformations:
+            - type: transform_type
+              subtype: subtype_info
+              description: Example transformation description
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+      document:
+        description: JSON text from eventData
+        type: string
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        examples: []
+        pii: false
+        classification: public
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          nullity: true
+          encrypted: false
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: Se actualiza cada 5 segundos
+    type: streaming
+    interval: No aplica
