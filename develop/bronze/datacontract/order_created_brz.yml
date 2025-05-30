@@ -1,0 +1,445 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:develop:order_created_brz-latest
+info:
+  title: CreateOrder
+  version: '1'
+  status: active
+  description: Schema for Create Order
+  domain: develop
+  squad: tienda
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Data de catalogo utilizada para análisis del movimiento de sku en el tiempo
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- develop
+- bronze
+- raw
+models:
+  order_created_brz:
+    catalog: develop
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: Schema for Create Order
+    universeLogic: Data sin lógicas de negocio
+    fields:
+      id_yape_account:
+        type: string
+        description: Yape account id
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: id_yape_account
+            xdataTypeFile: string
+      shopping_cart_id:
+        type: string
+        description: Shopping cart id VTEX
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shopping_cart_id
+            xdataTypeFile: string
+      value:
+        type: string
+        description: Total value of the order
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: value
+            xdataTypeFile: number
+      order_id:
+        type: string
+        description: Order id VTEX
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: order_id
+            xdataTypeFile: string
+      status:
+        type: string
+        description: Order status
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: status
+            xdataTypeFile: string
+      order_date:
+        type: string
+        description: Order date
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: order_date
+            xdataTypeFile: string
+      shipping_data_id:
+        type: string
+        description: Shipping data id
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_id
+            xdataTypeFile: string
+      shipping_data_type:
+        type: string
+        description: Shipping data type
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_type
+            xdataTypeFile: string
+      shipping_data_receiver_name:
+        type: string
+        description: Shipping data Receiver name
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_receiver_name
+            xdataTypeFile: string
+      shipping_data_address_id:
+        type: string
+        description: Shipping data Address id VTEX
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_address_id
+            xdataTypeFile: string
+      shipping_data_postal_code:
+        type: string
+        description: Postal code - Ubigeo
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_postal_code
+            xdataTypeFile: string
+      shipping_data_city:
+        type: string
+        description: Shipping data City - Province
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_city
+            xdataTypeFile: string
+      shipping_data_state:
+        type: string
+        description: Shipping data State - Department
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_state
+            xdataTypeFile: string
+      shipping_data_country:
+        type: string
+        description: Shipping data Country
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_country
+            xdataTypeFile: string
+      shipping_data_street:
+        type: string
+        description: Shipping data Street
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_street
+            xdataTypeFile: string
+      shipping_data_number:
+        type: string
+        description: Shipping data Number
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_number
+            xdataTypeFile: string
+      shipping_data_neighborhood:
+        type: string
+        description: Shipping data Neighborhood - District
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_neighborhood
+            xdataTypeFile: string
+      shipping_data_complement:
+        type: string
+        description: Shipping data Complement
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_complement
+            xdataTypeFile: string
+      shipping_data_reference:
+        type: string
+        description: Shipping data Reference
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: shipping_data_reference
+            xdataTypeFile: string
+      items:
+        type: string
+        description: <<missing>>
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: items (id, ref_id, ean, name, sku_name, price_valid_until, seller,
+              availability, image_url, price, selling_price, quantity, brand_id, brand_name,
+              department_id, department_name, category_id, category_name, subcategory_id,
+              subcategory_name)
+            xdataTypeFile: array
+      logisticts_information:
+        type: string
+        description: <<missing>>
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: logisticts_information (selected_sla, selected_delivery_channel,
+              address_id, item_id, estimate_delivery_date)
+            xdataTypeFile: array
+      totalisers_amount:
+        type: string
+        description: <<missing>>
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: totalisers_amount (name, value)
+            xdataTypeFile: array
+      payment_error:
+        type: string
+        description: Payment error
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_error
+            xdataTypeFile: string
+      payment_status:
+        type: string
+        description: Payment status
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_status
+            xdataTypeFile: string
+      payment_transaction_id:
+        type: string
+        description: Payment transaction id Yape
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_transaction_id
+            xdataTypeFile: string
+      payment_card_error:
+        type: string
+        description: Card error
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_card_error
+            xdataTypeFile: string
+      payment_card_transaction_id:
+        type: string
+        description: Card transaction id
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_card_transaction_id
+            xdataTypeFile: string
+      payment_card_brand:
+        type: string
+        description: Card brand
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_card_brand
+            xdataTypeFile: string
+      payment_card_number:
+        type: string
+        description: Card number
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: payment_card_number
+            xdataTypeFile: string
+      route_type:
+        type: string
+        description: Route type transaction
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: route_type
+            xdataTypeFile: number
+      channel:
+        type: string
+        description: Channel transaction
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: channel
+            xdataTypeFile: number
+      metadata:
+        type: string
+        description: string
+      document:
+        type: string
+        description: string
+      auditTime:
+        type: string
+        description: string
+        required: true
+      p_auditDate:
+        type: string
+        description: string
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      en streaming.
+    type: streaming
