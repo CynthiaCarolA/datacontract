@@ -1,0 +1,188 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:develop:fin_prices_brz-latest
+info:
+  title: VtexPricingPricesUpdate
+  version: '1'
+  status: active
+  description: Schema for pricing updates events from VTEX
+  domain: develop
+  squad: tienda
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Data de catalogo utilizada para análisis del movimiento de sku en el tiempo
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- develop
+- bronze
+- raw
+models:
+  fin_prices_brz:
+    catalog: develop
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: Schema for pricing updates events from VTEX
+    universeLogic: Data sin lógicas de negocio
+    fields:
+      itemId:
+        type: string
+        description: The unique identifier for the item
+        examples:
+        - '38'
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: itemId
+            xdataTypeFile: string
+      listPrice:
+        type: string
+        description: The list price of the item (retail price)
+        examples:
+        - 119
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: listPrice
+            xdataTypeFile: number
+      costPrice:
+        type: string
+        description: The cost price of the item
+        examples:
+        - 49
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: costPrice
+            xdataTypeFile: number
+      markup:
+        type: string
+        description: The markup percentage for the item
+        examples:
+        - 2.040816327
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: markup
+            xdataTypeFile: number
+      basePrice:
+        type: string
+        description: The base price of the item
+        examples:
+        - 50
+        - 37
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: basePrice
+            xdataTypeFile: number
+      fixedPrices:
+        type: string
+        description: List of fixed prices for specific trade policies or null
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: fixedPrices
+            xdataTypeFile:
+            - array
+            - 'null'
+      updateTs:
+        type: string
+        description: The timestamp when the update happened (in UTC-5)
+        examples:
+        - '2025-04-25T15:05:29.434-05:00'
+        classification: public
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: updateTs
+            xdataTypeFile: string
+      metadata:
+        type: struct
+        description: Metadata from kafka
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+      document:
+        type: string
+        description: JSON text from eventData
+        classification: public
+        loadrule: Carga directa
+      auditTime:
+        type: timestamp
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        required: true
+      p_auditDate:
+        type: date
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      en streaming.
+    type: streaming
