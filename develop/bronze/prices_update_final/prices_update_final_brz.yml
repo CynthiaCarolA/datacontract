@@ -43,9 +43,11 @@ models:
         required: true
         examples:
         - '38'
+        pii: true
         loadrule: Carga directa
         xqualityFieldValidations:
           xnullity: false
+          xencrypted: true
         lineage:
           inputFields:
           - namespace: vtex
@@ -60,8 +62,6 @@ models:
         examples:
         - 119
         loadrule: Carga directa
-        xqualityFieldValidations:
-          xnullity: false
         lineage:
           inputFields:
           - namespace: vtex
@@ -74,9 +74,8 @@ models:
         type: string
         examples:
         - 49
+        - 37
         loadrule: Carga directa
-        xqualityFieldValidations:
-          xencrypted: true
         lineage:
           inputFields:
           - namespace: vtex
@@ -89,6 +88,7 @@ models:
         type: string
         examples:
         - 2.040816327
+        - 0.3453
         loadrule: Carga directa
         lineage:
           inputFields:
