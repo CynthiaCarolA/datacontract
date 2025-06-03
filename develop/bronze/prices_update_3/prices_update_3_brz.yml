@@ -1,0 +1,221 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:develop:prices_update_3_brz-latest
+info:
+  title: CustomerContingencyAssociationRequestedEnriched
+  version: 1.1.0
+  status: active
+  description: Customer contingency association requested enriched
+  domain: develop
+  squad: tienda
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Data de catalogo utilizada para análisis del movimiento de sku en el tiempo
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- develop
+- bronze
+- raw
+models:
+  prices_update_3_brz:
+    catalog: develop
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: Customer contingency association requested enriched
+    universeLogic: Data sin lógicas de negocio
+    fields:
+      requestDate:
+        description: Date of the request
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: requestDate
+            xdataTypeField: string
+      requestId:
+        description: Identifier of the request
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: requestId
+            xdataTypeField: string
+      notificationStatus:
+        description: Status of the notification
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: notificationStatus
+            xdataTypeField: string
+      notificationChannel:
+        description: Channel used to the notification
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: notificationChannel
+            xdataTypeField: string
+      contingencyId:
+        description: Identifier of the contingency
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: contingencyId
+            xdataTypeField: string
+      idYapeAccount:
+        description: Identifier of the Yape account
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: idYapeAccount
+            xdataTypeField: string
+      channel:
+        description: Channel origin of the request
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: channel
+            xdataTypeField: string
+      conversationId:
+        description: Identifier of the conversation
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: conversationId
+            xdataTypeField: string
+      preferredNotificationChannel:
+        description: Preferred notification channel
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: preferredNotificationChannel
+            xdataTypeField: string
+      userInformation:
+        description: User information
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: userInformation
+            xdataTypeField: string
+      issueInformation:
+        description: Issue information
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: issueInformation
+            xdataTypeField: string
+      additionalInformation:
+        description: Additional information
+        type: string
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: vtex
+            xsourceType: kafka
+            name: prices.update
+            field: additionalInformation
+            xdataTypeField: string
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      en streaming.
+    type: streaming
