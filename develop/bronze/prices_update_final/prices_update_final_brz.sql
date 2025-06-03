@@ -27,4 +27,5 @@ COMMENT "Schema for pricing updates events from VTEX"
   'delta.autoOptimize.optimizeWrite' = 'true'
 );
 ALTER TABLE develop.bronze.prices_update_final_brz SET TAGS ('Domain'='develop', 'Schema'='bronze', 'TypeTable'='raw');
+ALTER TABLE develop.bronze.prices_update_final_brz ALTER COLUMN itemId SET TAGS ('dac');
 ALTER TABLE develop.bronze.prices_update_final_brz ALTER COLUMN basePrice SET TAGS ('dac');
