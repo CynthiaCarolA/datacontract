@@ -58,7 +58,6 @@ models:
       listPrice:
         description: The list price of the item (retail price)
         type: string
-        required: true
         examples:
         - 119
         loadrule: Carga directa
