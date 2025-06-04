@@ -2,7 +2,7 @@
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE develop.bronze.prices_update_brz (
   itemId STRING COMMENT "The unique identifier for the item" not null,
-  listPrice STRING COMMENT "The list price of the item (retail price)" not null,
+  listPrice STRING COMMENT "The list price of the item (retail price)",
   costPrice STRING COMMENT "The cost price of the item",
   markup STRING COMMENT "The markup percentage for the item",
   basePrice STRING COMMENT "The base price of the item",
