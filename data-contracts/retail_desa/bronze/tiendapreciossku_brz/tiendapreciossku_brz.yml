@@ -171,4 +171,9 @@ models:
         delta.deletedFileRetentionDuration: interval 30 days
         delta.autoOptimize.autoCompact: 'true'
         delta.autoOptimize.optimizeWrite: 'true'
-servicelevels: {}
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      cada vez que se genera una actualización sobre algún SKU por lo cual es en streaming.
+    type: streaming
+    interval: No aplica
