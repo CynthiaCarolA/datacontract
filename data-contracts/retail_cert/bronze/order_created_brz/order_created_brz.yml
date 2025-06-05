@@ -1,0 +1,409 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:retail_cert:order_created_brz-latest
+info:
+  title: CreateOrder
+  version: 1.0.0
+  status: active
+  description: Schema for Create Order
+  domain: retail_cert
+  squad: tienda
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+servers:
+  stg:
+    type: databricks
+    environment: stg
+    host: https://adb-7232238130947209.9.azuredatabricks.net/
+    catalog: retail_cert
+    schema: bronze
+terms:
+  usage: Data de catalogo utilizada para análisis del movimiento de sku en el tiempo
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- retail_cert
+- bronze
+- raw
+models:
+  order_created_brz:
+    catalog: retail_cert
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: 'Guarda la información relacionada a las actualizaciones de precios
+      de los productos.
+
+      Nivel de detalle:
+
+      Almacena cada actualización ocurrida en el tiempo.'
+    universeLogic: Carga directa
+    fields:
+      id_yape_account:
+        description: Yape account id
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: id_yape_account
+            xdataTypeField: string
+      shopping_cart_id:
+        description: Shopping cart id VTEX
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shopping_cart_id
+            xdataTypeField: string
+      value:
+        description: Total value of the order
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: value
+            xdataTypeField: number
+      order_id:
+        description: Order id VTEX
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: order_id
+            xdataTypeField: string
+      status:
+        description: Order status
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: status
+            xdataTypeField: string
+      order_date:
+        description: Order date
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: order_date
+            xdataTypeField: string
+      shipping_data_id:
+        description: Shipping data id
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_id
+            xdataTypeField: string
+      shipping_data_type:
+        description: Shipping data type
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_type
+            xdataTypeField: string
+      shipping_data_receiver_name:
+        description: Shipping data Receiver name
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_receiver_name
+            xdataTypeField: string
+      shipping_data_address_id:
+        description: Shipping data Address id VTEX
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_address_id
+            xdataTypeField: string
+      shipping_data_postal_code:
+        description: Postal code - Ubigeo
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_postal_code
+            xdataTypeField: string
+      shipping_data_city:
+        description: Shipping data City - Province
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_city
+            xdataTypeField: string
+      shipping_data_state:
+        description: Shipping data State - Department
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_state
+            xdataTypeField: string
+      shipping_data_country:
+        description: Shipping data Country
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_country
+            xdataTypeField: string
+      shipping_data_street:
+        description: Shipping data Street
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_street
+            xdataTypeField: string
+      shipping_data_number:
+        description: Shipping data Number
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_number
+            xdataTypeField: string
+      shipping_data_neighborhood:
+        description: Shipping data Neighborhood - District
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_neighborhood
+            xdataTypeField: string
+      shipping_data_complement:
+        description: Shipping data Complement
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_complement
+            xdataTypeField: string
+      shipping_data_reference:
+        description: Shipping data Reference
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: shipping_data_reference
+            xdataTypeField: string
+      items:
+        description: <<missing>>
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: items (id, ref_id, ean, name, sku_name, price_valid_until, seller,
+              availability, image_url, price, selling_price, quantity, brand_id, brand_name,
+              department_id, department_name, category_id, category_name, subcategory_id,
+              subcategory_name)
+            xdataTypeField: array
+      logisticts_information:
+        description: <<missing>>
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: logisticts_information (selected_sla, selected_delivery_channel,
+              address_id, item_id, estimate_delivery_date)
+            xdataTypeField: array
+      totalisers_amount:
+        description: <<missing>>
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: totalisers_amount (name, value)
+            xdataTypeField: array
+      payment_error:
+        description: Payment error
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_error
+            xdataTypeField: string
+      payment_status:
+        description: Payment status
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_status
+            xdataTypeField: string
+      payment_transaction_id:
+        description: Payment transaction id Yape
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_transaction_id
+            xdataTypeField: string
+      payment_card_error:
+        description: Card error
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_card_error
+            xdataTypeField: string
+      payment_card_transaction_id:
+        description: Card transaction id
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_card_transaction_id
+            xdataTypeField: string
+      payment_card_brand:
+        description: Card brand
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_card_brand
+            xdataTypeField: string
+      payment_card_number:
+        description: Card number
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: payment_card_number
+            xdataTypeField: string
+      route_type:
+        description: Route type transaction
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: route_type
+            xdataTypeField: number
+      channel:
+        description: Channel transaction
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: orders
+            field: channel
+            xdataTypeField: number
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      cada vez que se genera una actualización sobre algún SKU por lo cual es en streaming.
+    type: streaming
+    interval: No aplica
