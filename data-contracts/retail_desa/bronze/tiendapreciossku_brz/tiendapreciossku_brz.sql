@@ -1,3 +1,5 @@
+-- Databricks notebook source
+-- COMMAND ----------
 -- Data Contract: urn:datacontract:retail_desa:tiendaPreciosSku_brz-latest
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE retail_desa.bronze.tiendaPreciosSku_brz (
