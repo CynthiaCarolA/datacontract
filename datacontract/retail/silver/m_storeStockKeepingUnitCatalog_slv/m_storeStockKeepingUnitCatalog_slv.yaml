@@ -1,0 +1,678 @@
+dataContractSpecification: 0.9.3
+id: urn:retail.silver.m_storeStockKeepingUnitCatalog_slv-latest
+info:
+  title: Catálogo de Actualizaciones de Tienda
+  version: 1.0.0
+  status: active
+  description: Tabla que almacena información sobre actualizaciones de SKU, precios
+    y disponibilidad de inventario en el catálogo de productos de la Tienda.
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Sanny Flores
+    email: sannyflores@yape.com.pe
+  domain: retail
+  squad: tienda
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: retail
+    schema: silver
+terms:
+  usage: La información de esta tabla está destinada para el monitoreo, análisis y
+    consulta de los cambios en el catálogo de la Tienda.
+  limitations: Ninguna
+tags:
+- master
+- retail
+- silver
+models:
+  m_storeStockKeepingUnitCatalog_slv:
+    description: Tabla que almacena información relacionada con las actualizaciones
+      de SKU, precios de productos y disponibilidad de inventario en el catálogo de
+      la Tienda.
+    type: table
+    tableType: master
+    universeLogic: Se carga todo el universo de registros
+    fields:
+      skuId:
+        type: string
+        description: Identificador único del SKU, es un incremental autogenerado desde
+          la App de VTEX.
+        required: true
+        primaryKey: true
+        loadrule: Carga directa
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo skuId.
+          query: select count(*) from (select count(*) from retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            GROUP BY skuId  HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: Id
+            xdataTypeField: string
+      skuDesc:
+        type: string
+        description: Nombre del SKU.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: SkuName
+            xdataTypeField: string
+      imageUrlDesc:
+        type: array
+        description: URL de la imagen.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.Images
+            field: ImageUrl
+            xdataTypeField: string
+      sellerLegalIdentifierNum:
+        type: string
+        description: Identificador del vendedor del SKU correspondiente al RUC del
+          seller. Es un campo opcional que puede ser usado por el seller como identificador
+          propio, en el caso de Tienda no es muy usado.
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo sellerLegalIdentifierNum no tenga
+            null o vacíos en la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE sellerLegalIdentifierNum IS NULL OR sellerLegalIdentifierNum = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: CSCIdentification
+            xdataTypeField: string
+      volumetricWeightNum:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Peso cúbico real del SKU medido en gramos, podría tomar valores
+          decimales.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.RealDimension
+            field: realCubicWeight
+            xdataTypeField: string
+      heightNum:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Altura real del SKU en centímetros, podría tomar valores decimales.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.RealDimension
+            field: realHeight
+            xdataTypeField: string
+      lengthNum:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Longitud real del SKU en centímetros, podría tomar valores decimales.
+        loadrule: En caso el flag de kit es tiendaCatalogSku_brz.IsKit = 'true', entonces
+          colocar S. En caso el flag de kit es tiendaCatalogSku_brz.IsKit = 'false',
+          entonces colocar N.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.RealDimension
+            field: realLength
+            xdataTypeField: string
+      weightNum:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Peso real del SKU en gramos, podría tomar valores decimales.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.RealDimension
+            field: realWeight
+            xdataTypeField: string
+      widthNum:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Ancho real del SKU en centímetros, podría tomar valores decimales.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.RealDimension
+            field: realWidth
+            xdataTypeField: string
+      kitFlg:
+        type: string
+        description: Indica si el SKU está compuesto por uno o más SKUs (parte de
+          un kit) (S) o no (N). Debe activarse si estás añadiendo un kit. Una vez
+          activada, esta definición no puede revertirse.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: IsKit
+            xdataTypeField: string
+      skuClassificationArray:
+        type: array
+        description: Array que contiene la estructura del departamento, categoría
+          y subcategoría a la que pertenece el SKU.
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo skuClassificationArray no tenga
+            null o vacíos en la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE skuClassificationArray IS NULL OR skuClassificationArray = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: category
+            xdataTypeField: string
+      principalCategoryActiveFlg:
+        type: string
+        description: Indica si la categoría principal del SKU se encuentra activa
+          o no.
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo principalCategoryActiveFlg no tenga
+            null o vacíos en la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE principalCategoryActiveFlg IS NULL OR principalCategoryActiveFlg
+            = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: IsDirectCategoryActive
+            xdataTypeField: string
+      sellerArray:
+        type: array
+        description: Array con los datos relacionados a los vendedores del SKU.
+        loadrule: En caso el indicador de activado del SKU es SkuSellers.IsActive
+          = 'true', entonces colocar S. En caso el indicador de activado del SKU es
+          SkuSellers.IsActive = 'false', entonces colocar N.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: SkuSellers
+            xdataTypeField: string
+      skuSpecificationArray:
+        type: array
+        description: Array de objeto con las especificaciones relacionadas del SKU.
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo skuSpecificationArray no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE skuSpecificationArray IS NULL OR skuSpecificationArray = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: SkuSpecifications
+            xdataTypeField: string
+      commercialConditionId:
+        type: string
+        description: Identificador de la condición comercial usada para definir promociones
+          específicas del SKU o reglas de cuotas. Si no hay una condición específica,
+          usar 1 (valor por defecto). Este campo no acepta 0, ya que tiene el valor
+          por defecto 1.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: CommercialConditionId
+            xdataTypeField: string
+      eanCd:
+        type: string
+        description: Código de barras estandarizado (EAN) a nivel mundial que identifica
+          un producto (SKU).
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo eanCd no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE eanCd IS NULL OR eanCd = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.AlternateIds
+            field: Ean
+            xdataTypeField: string
+      sellerSkuId:
+        type: string
+        description: Identificador de referencia del SKU.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz.AlternateIds
+            field: RefId
+            xdataTypeField: string
+      measurementUnitDesc:
+        type: string
+        description: Unidad de medida que debe utilizarse cuando sea necesario convertirla
+          para efectos de venta. Por ejemplo, si un producto se comercializa en cajas,
+          pero los clientes desean adquirirlo por metro cuadrado (m2). En casos comunes,
+          se debe usar un.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: MeasurementUnit
+            xdataTypeField: string
+      logisticSegmentationTypeDesc:
+        type: string
+        description: 'Vincula un tipo de SKU que requiere transporte especial (como
+          carne, vidrio, colchones, entre otros) con un transportista especializado.
+          Este campo debe completarse con el nombre del modal correspondiente (por
+          ejemplo: Químicos o Productos refrigerados).'
+        loadrule: En caso el indicador de activado de la marca es IsBrandActive =
+          'true', entonces colocar S. En caso el indicador de activado de la marca
+          es IsBrandActive = 'false', entonces colocar N.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ModalType
+            xdataTypeField: string
+      brandId:
+        type: string
+        description: Identificador de la marca del producto.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: BrandId
+            xdataTypeField: string
+      brandDesc:
+        type: string
+        description: Nombre de la marca del producto.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: BrandName
+            xdataTypeField: string
+      brandActiveFlg:
+        type: string
+        description: Indica si la marca se encuentra activa o no. Si la marca se inactiva,
+          se inactiva automaticamente el producto.
+        loadrule: En caso el indicador de visibilidad del producto es ProductIsVisible
+          = 'true', entonces colocar S. En caso el indicador de visibilidad del producto
+          es ProductIsVisible = 'false', entonces colocar N.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: IsBrandActive
+            xdataTypeField: string
+      productId:
+        type: string
+        description: Identificador del producto relacionado que hace referencia al
+          identificador único del SKU (skuId), considerando que un mismo productId
+          puede estar asociado a múltiples skuIds.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ProductId
+            xdataTypeField: string
+      productDesc:
+        type: string
+        description: Nombre del producto.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ProductName
+            xdataTypeField: string
+      visibleProductFlg:
+        type: string
+        description: Indica si el producto es visible o no.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ProductIsVisible
+            xdataTypeField: string
+      sellerProductId:
+        type: string
+        description: Identificador de referencia de un producto relacionado, definido
+          por el vendedor (seller).
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ProductRefId
+            xdataTypeField: string
+      productSpecificationArray:
+        type: array
+        description: Array de objetos con las especificaciones relacionadas del producto.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ProductSpecifications
+            xdataTypeField: string
+      productClustersArray:
+        type: array
+        description: Arreglo de objetos que contienen información sobre los clústeres
+          comerciales a los que está asociado el producto. Estos clústeres agrupan
+          productos con fines de campañas promocionales o iniciativas comerciales
+          específicas.
+        loadrule: Carga directa
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo productClustersArray no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM retail_desa.silver.m_storeStockKeepingUnitCatalog_slv
+            WHERE productClustersArray IS NULL OR productClustersArray = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: productClusters
+            xdataTypeField: string
+      productActiveFlg:
+        type: string
+        description: Indica si el producto está activo o no.
+        loadrule: Se obtiene la fecha del tiendaCatalogSku_brz.ReleaseDate
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: IsProductActive
+            xdataTypeField: string
+      displayIfOutOfStockFlg:
+        type: string
+        description: Indica si el producto se mostrará cuando no esté disponible.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ShowIfNotAvailable
+            xdataTypeField: string
+      recordCreationTs:
+        type: timestamp
+        description: Fecha y hora de lanzamiento del producto en formato UTC-5.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: ReleaseDate
+            xdataTypeField: string
+      recordCreationDt:
+        type: date
+        description: Fecha de lanzamiento del producto en formato UTC-5.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.silver.m_storeStockKeepingUnitCatalog_slv
+            field: recordCreationTs
+            xdataTypeField: string
+      strikethroughPriceAmt:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Precio de venta sugerido para el SKU.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaPricesSku_brz
+            field: listPrice
+            xdataTypeField: string
+      basePriceAmt:
+        type: decimal
+        precision: 21
+        scale: 4
+        description: Valor de referencia utilizado para el cálculo o comparación de
+          precios del SKU.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaPricesSku_brz
+            field: basePrice
+            xdataTypeField: string
+      tradePolicyArray:
+        type: array
+        description: Array de objetos que contiene los datos del cuerpo de la solicitud
+          de precio fijo. Este valor tiene prioridad sobre cualquier otra configuración
+          previamente definida en la tabla de precios.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaPricesSku_brz
+            field: fixedPrices
+            xdataTypeField: string
+      priceRecordUpdateTs:
+        type: timestamp
+        description: Fecha y hora de la última actualización de la información del
+          SKU, expresada en formato UTC-5.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaPricesSku_brz
+            field: updateTs
+            xdataTypeField: string
+      priceRecordUpdateDt:
+        type: date
+        description: Fecha de la última actualización de la información del SKU, expresada
+          en formato UTC-5.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.silver.m_storeStockKeepingUnitCatalog_slv
+            field: priceRecordUpdateTs
+            xdataTypeField: string
+      skuStockArray:
+        type: array
+        description: Array que almacena objetos, cada uno representando el estado
+          del inventario de un SKU específico en diferentes almacenes.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaLogisticSku_brz
+            field: balance
+            xdataTypeField: string
+      stockRecordUpdateTs:
+        type: timestamp
+        description: Fecha y hora (UTC-5) en que se actualizó la información del SKU
+          en el catálogo.
+        loadrule: Se obtiene la fecha del tiendaCatalogSku_brz.updateTs
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaLogisticSku_brz
+            field: updateTs
+            xdataTypeField: string
+      stockRecordUpdateDt:
+        type: date
+        description: Fecha (UTC-5) en que se actualizó la información del SKU en el
+          catálogo.
+        loadrule: En caso el indicador de activado del SKU es IsActive = 'true', entonces
+          colocar S. En caso el indicador de activado del SKU es IsActive = 'false',
+          entonces colocar N.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.silver.m_storeStockKeepingUnitCatalog_slv
+            field: stockRecordUpdateTs
+            xdataTypeField: string
+      skuRecordUpdateTs:
+        type: timestamp
+        description: Fecha y hora de actualización de la información del SKU. Indica
+          la fecha y hora en formato UTC-5 en que se actualizó el catálogo.
+        loadrule: Fecha y hora de ejecución de la rutina de carga o actualización
+          al Lake de Yape.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: updateTs
+            xdataTypeField: string
+      skuRecordUpdateDt:
+        type: date
+        description: Fecha de actualización de la información del SKU. Indica la fecha
+          y hora en formato UTC-5 en que se actualizó el catálogo.
+        loadrule: Se obtiene del máximo de los 3 updates de las tablas de bronce.
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.silver.m_storeStockKeepingUnitCatalog_slv
+            field: skuRecordUpdateTs
+            xdataTypeField: string
+      skuActiveFlg:
+        type: string
+        description: Indica si el SKU se encuentra activo o no.
+        loadrule: Deriva de recordUpdateTs
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaCatalogSku_brz
+            field: IsActive
+            xdataTypeField: string
+      recordUpdateTs:
+        type: timestamp
+        description: Fecha y hora de modificación del registro en la fuente.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.bronze.tiendaPricesSku_brz.updateTs, retail.bronze.tiendaCatalogSku_brz.updateTs,
+              retail.bronze.tiendaCatalogSku_brz
+            field: updateTs
+            xdataTypeField: string
+      recordUpdateDt:
+        type: date
+        description: Fecha de modificación del registro en la fuente.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: retail.silver.m_storeStockKeepingUnitCatalog_slv
+            field: recordUpdateTs
+            xdataTypeField: string
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+    config:
+      clustering:
+        fields: recordCreationDt, skuId, skuDesc
+      tableProperties:
+        delta.enableChangeDataFeed: 'true'
+        delta.logRetentionDuration: interval 60 days
+        delta.deletedFileRetentionDuration: interval 60 days
+        delta.tuneFileSizesForRewrites: 'true'
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    type: streaming
+    description: La información de actualizaciones se recibe y almacena en tiempo
+      real mediante procesamiento en streaming, permitiendo reflejar los cambios en
+      el catálogo de la Tienda de manera inmediata.
