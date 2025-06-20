@@ -51,7 +51,7 @@ CREATE OR REPLACE TABLE retail.silver.m_storeStockKeepingUnitCatalog_slv (
   executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null
   ,CONSTRAINT m_storeStockKeepingUnitCatalog_slv_pk PRIMARY KEY(skuId)
 )
-CLUSTER BY (r, e, c, o, r, d, C, r, e, a, t, i, o, n, D, t, ,,  , s, k, u, I, d, ,,  , s, k, u, D, e, s, c)
+CLUSTER BY (recordCreationDt, skuId, skuDesc)
 COMMENT "Tabla que almacena información relacionada con las actualizaciones de SKU, precios de productos y disponibilidad de inventario en el catálogo de la Tienda."
  TBLPROPERTIES (
   'delta.enableChangeDataFeed' = 'true',
