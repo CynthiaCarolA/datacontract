@@ -1627,15 +1627,15 @@ video {
                 </svg>
                 
                 <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 mr-1">
-                  <span>master</span>
-                </span>
-                
-                <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 mr-1">
                   <span>retail</span>
                 </span>
                 
                 <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 mr-1">
                   <span>silver</span>
+                </span>
+                
+                <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 mr-1">
+                  <span>master</span>
                 </span>
                 
               </div>
@@ -8190,7 +8190,7 @@ video {
       <dt class="w-auto font-semibold text-gray-700">Clustering</dt>
       
       
-      <dd class="italic text-gray-600">Fields: r, e, c, o, r, d, C, r, e, a, t, i, o, n, D, t, ,,  , s, k, u, I, d, ,,  , s, k, u, D, e, s, c</dd>
+      <dd class="italic text-gray-600">Fields: recordCreationDt, skuId, skuDesc</dd>
       
     </div>
     
@@ -8298,7 +8298,7 @@ video {
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 20 Jun 2025 21:30:10 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 20 Jun 2025 21:48:13 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -8981,7 +8981,10 @@ models:
           UTC-0.
     config:
       clustering:
-        fields: recordCreationDt, skuId, skuDesc
+        fields:
+        - recordCreationDt
+        - skuId
+        - skuDesc
       tableProperties:
         delta.enableChangeDataFeed: 'true'
         delta.logRetentionDuration: interval 60 days
@@ -8998,9 +9001,9 @@ servicelevels:
       el catálogo de la Tienda de manera inmediata.
     type: streaming
 tags:
-- master
 - retail
 - silver
+- master
 </code></pre>
           </div>
           <div class="mt-5 sm:mt-6">
