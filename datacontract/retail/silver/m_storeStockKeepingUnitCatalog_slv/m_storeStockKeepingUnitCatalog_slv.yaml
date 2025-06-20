@@ -24,9 +24,9 @@ terms:
     consulta de los cambios en el catálogo de la Tienda.
   limitations: Ninguna
 tags:
-- master
 - retail
 - silver
+- master
 models:
   m_storeStockKeepingUnitCatalog_slv:
     description: Tabla que almacena información relacionada con las actualizaciones
@@ -662,7 +662,10 @@ models:
         required: true
     config:
       clustering:
-        fields: recordCreationDt, skuId, skuDesc
+        fields:
+        - recordCreationDt
+        - skuId
+        - skuDesc
       tableProperties:
         delta.enableChangeDataFeed: 'true'
         delta.logRetentionDuration: interval 60 days
