@@ -1,0 +1,213 @@
+dataContractSpecification: 0.9.3
+id: urn:core.silver.h_loanAccountSettingLog_slv-latest
+info:
+  title: Histórico de Configuración de Préstamos Express
+  version: 1.0.0
+  status: active
+  description: Almacena los eventos de activación y modificación de configuraciones
+    del producto Préstamos Express  para cuentas Yape, incluyendo historial de cambios
+    y activaciones.
+  owner: Eliana Munares Ayala
+  contact:
+    name: Enrique Huasupoma Malca
+    email: enriquehuasupomam@yape.com.pe
+  domain: core
+  squad: SQ NEXUS
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: core
+    schema: silver
+terms:
+  usage: Esta tabla debe ser utilizada para auditoría, trazabilidad y análisis evolutivo
+    de las configuraciones del producto Préstamos Express  por usuario, registrando
+    cada activación o modificación relevante en el tiempo.
+  limitations: Ninguna
+tags:
+- core
+- silver
+- historical
+models:
+  h_loanAccountSettingLog_slv:
+    description: 'Tabla histórica que registra los eventos de activación o modificación
+      de configuraciones asociadas al producto Préstamos Express de 10K para cuentas
+      Yape.
+
+      Cada fila representa una instancia en el tiempo en la que se detectó una configuración
+      activa del préstamo (type = 1) en la fuente accountSettings. Se considera tanto
+      la primera activación como cualquier cambio posterior en los parámetros asociados
+      (como montos máximos o fecha de expiración).
+
+      Esta tabla permite llevar trazabilidad de cambios en los valores configurados
+      por usuario y mantener un log histórico para auditoría o análisis evolutivo.'
+    type: table
+    tableType: historical
+    universeLogic: 'Carga directa sobre el accountsetting tomando en consideracion
+      el nuevo documento  filtro type = 1 con las configuraciones  '
+    fields:
+      accountSettingId:
+        type: string
+        description: Identificador único del registro en accountSettings, en formato
+          UUID. Se genera en el momento de la afiliación del usuario o creación de
+          la configuración.
+        required: true
+        primaryKey: true
+        references: core.silver.accountsetting_slv(accountSettingId)
+        loadrule: Carga directa
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo accountSettingId.
+          query: select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv
+            GROUP BY accountSettingId  HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: id
+            xdataTypeField: string
+      recordCreationTs:
+        type: timestamp
+        description: Fecha y hora de creación del registro. Normalmente coincide o
+          tiene una diferencia mínima con la fecha de creación de la cuenta Yape.
+        required: true
+        primaryKey: true
+        loadrule: Carga en el formato de fecha y hora
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo recordCreationTs.
+          query: select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv
+            GROUP BY recordCreationTs  HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: creationDate
+            xdataTypeField: string
+      loanAccountSettingTypeCd:
+        type: string
+        description: Tipo de configuración. En este contexto, el valor 1 indica que
+          el registro corresponde a configuraciones del producto Préstamos Express.
+        required: true
+        primaryKey: true
+        references: datahub.silver.m_catalog_slv/ no generar fk
+        loadrule: Carga directa
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo loanAccountSettingTypeCd.
+          query: select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv
+            GROUP BY loanAccountSettingTypeCd  HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: type
+            xdataTypeField: string
+      accountId:
+        type: string
+        description: Identificador de la cuenta Yape asociada a la configuración.
+          Puede repetirse temporalmente debido a errores en el flujo de afiliación
+          (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan
+          por TTL.
+        references: core.silver.m_account_slv(accountId)
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: idYapeAccount
+            xdataTypeField: string
+      maxAmtPerTrxNum:
+        type: int
+        description: Monto máximo permitido por transacción. En contextos con préstamos
+          activos, puede establecerse un valor especial como 999.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: amountMaxSendByTransaction
+            xdataTypeField: string
+      maxAmtPerDayNum:
+        type: int
+        description: Monto máximo permitido para enviar por día. Los valores comunes
+          son 3000, 5000, 10000 y 20000.
+        loadrule: Carga directa
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: amountMaxSendDay
+            xdataTypeField: string
+      expirationTs:
+        type: timestamp
+        description: Fecha y hora de expiración del registro de configuración. Después
+          de esta fecha, el préstamo o beneficio asociado dejaría de estar vigente.
+          Debe transformarse a UTC 5
+        loadrule: Carga en el formato de fecha y hora
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.bronze.accountsettings_brz
+            field: expiresAt
+            xdataTypeField: string
+      expirationDt:
+        type: date
+        description: Fecha  de expiración del registro de configuración. Después de
+          esta fecha, el préstamo o beneficio asociado dejaría de estar vigente.Debe
+          transformarse a UTC 5
+        loadrule: 'Carga en el formato de fecha '
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.h_loanAccountSettingLog_slv
+            field: expirationTs
+            xdataTypeField: string
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      recordCreationDt:
+        type: date
+        description: Fecha de creacion del registro debe estar en UTC 5
+        loadrule: 'Carga en el formato de fecha '
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core.h_loanAccountSettingLog_slv
+            field: recordCreationTs
+            xdataTypeField: string
+    config:
+      clustering:
+        fields:
+        - expirationDt
+        - accountId
+        - accountSettingId
+        - loanAccountSettingTypeCd
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    type: streaming
+    description: Los eventos de activación de configuraciones de Préstamos Express
+      se registran en tiempo real mediante procesamiento en streaming. Cada actualización
+      en la configuración del préstamo es capturada y almacenada instantáneamente,
+      permitiendo mantener un historial actualizado y preciso para auditoría y análisis
+      evolutivo.
