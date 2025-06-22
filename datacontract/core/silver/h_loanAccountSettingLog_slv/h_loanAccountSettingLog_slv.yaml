@@ -54,19 +54,27 @@ models:
           la configuración.
         required: true
         primaryKey: true
-        references: core.silver.accountsetting_slv(accountSettingId)
+        references: accountsetting_slv.accountSettingId
         loadrule: Carga directa
+        xqualityFieldValidations:
+          xreferentialIntegrity: true
         quality:
         - type: sql
           description: Validacion de unicidad campo accountSettingId.
           query: select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv
             GROUP BY accountSettingId  HAVING COUNT(*) > 1)
           mustBe: 0
+        - type: sql
+          description: Validacion de integridad referencial del campo accountSettingId.
+          query: select count(*) from (SELECT d.accountSettingId FROM core_desa.silver.h_loanAccountSettingLog_slv
+            d LEFT ANTI JOIN core_desa.silver.accountsetting_slv mON d.accountSettingId
+            = m.accountSettingId)
+          mustBe: 0
         lineage:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: id
             xdataTypeField: string
       recordCreationTs:
@@ -86,7 +94,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: creationDate
             xdataTypeField: string
       loanAccountSettingTypeCd:
@@ -95,7 +103,7 @@ models:
           el registro corresponde a configuraciones del producto Préstamos Express.
         required: true
         primaryKey: true
-        references: datahub.silver.m_catalog_slv/ no generar fk
+        references: m_catalog_slv
         loadrule: Carga directa
         quality:
         - type: sql
@@ -107,7 +115,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: type
             xdataTypeField: string
       accountId:
@@ -116,13 +124,21 @@ models:
           Puede repetirse temporalmente debido a errores en el flujo de afiliación
           (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan
           por TTL.
-        references: core.silver.m_account_slv(accountId)
+        references: m_account_slv.accountId
         loadrule: Carga directa
+        xqualityFieldValidations:
+          xreferentialIntegrity: true
+        quality:
+        - type: sql
+          description: Validacion de integridad referencial del campo accountId.
+          query: select count(*) from (SELECT d.accountId FROM core_desa.silver.h_loanAccountSettingLog_slv
+            d LEFT ANTI JOIN core_desa.silver.m_account_slv mON d.accountId = m.accountId)
+          mustBe: 0
         lineage:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: idYapeAccount
             xdataTypeField: string
       maxAmtPerTrxNum:
@@ -134,7 +150,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: amountMaxSendByTransaction
             xdataTypeField: string
       maxAmtPerDayNum:
@@ -146,7 +162,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: amountMaxSendDay
             xdataTypeField: string
       expirationTs:
@@ -159,7 +175,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: expiresAt
             xdataTypeField: string
       expirationDt:
@@ -172,14 +188,9 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.h_loanAccountSettingLog_slv
+            name: core_desa.silver.h_loanAccountSettingLog_slv
             field: expirationTs
             xdataTypeField: string
-      executionTs:
-        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
-          UTC-0.
-        type: timestamp
-        required: true
       recordCreationDt:
         type: date
         description: Fecha de creacion del registro debe estar en UTC 5
@@ -188,9 +199,14 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.h_loanAccountSettingLog_slv
+            name: core_desa.silver.h_loanAccountSettingLog_slv
             field: recordCreationTs
             xdataTypeField: string
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
     config:
       clustering:
         fields:
