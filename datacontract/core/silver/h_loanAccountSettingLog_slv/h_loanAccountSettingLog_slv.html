@@ -1906,8 +1906,8 @@ video {
         maxAmtPerDayNum int
         expirationTs timestamp
         expirationDt date
-        executionTs timestamp
         recordCreationDt date
+        executionTs timestamp
 }
 
 
@@ -2032,7 +2032,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div class="mt-1 italic">
       References:
-      <span class="font-mono">core.silver.accountsetting_slv(accountSettingId)</span>
+      <span class="font-mono">accountsetting_slv.accountSettingId</span>
     </div>
     
 
@@ -2063,6 +2063,8 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       
       
       
+      
+      
 
       
     </div>
@@ -2075,6 +2077,25 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
 
     
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      <div>
+        Referential integrity: <span class="font-mono font-bold"> True</span>
+      </div>
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
     
     
     
@@ -2084,6 +2105,28 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
   <div class="pl-4">
     Query:
     <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv GROUP BY accountSettingId  HAVING COUNT(*) > 1)</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validacion de integridad referencial del campo accountSettingId.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>select count(*) from (SELECT d.accountSettingId FROM core_desa.silver.h_loanAccountSettingLog_slv d LEFT ANTI JOIN core_desa.silver.accountsetting_slv mON d.accountSettingId = m.accountSettingId)</code></pre></div>
     
     <div>
       Must Be: <span class="font-mono font-bold"> 0</span>
@@ -2131,7 +2174,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2287,7 +2330,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2349,7 +2392,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div class="mt-1 italic">
       References:
-      <span class="font-mono">datahub.silver.m_catalog_slv/ no generar fk</span>
+      <span class="font-mono">m_catalog_slv</span>
     </div>
     
 
@@ -2448,7 +2491,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2510,7 +2553,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div class="mt-1 italic">
       References:
-      <span class="font-mono">core.silver.m_account_slv(accountId)</span>
+      <span class="font-mono">m_account_slv.accountId</span>
     </div>
     
 
@@ -2537,6 +2580,8 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       
       
       
+      
+      
 
       
     </div>
@@ -2549,6 +2594,49 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
 
     
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      <div>
+        Referential integrity: <span class="font-mono font-bold"> True</span>
+      </div>
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validacion de integridad referencial del campo accountId.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>select count(*) from (SELECT d.accountId FROM core_desa.silver.h_loanAccountSettingLog_slv d LEFT ANTI JOIN core_desa.silver.m_account_slv mON d.accountId = m.accountId)</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
     
     
 
@@ -2581,7 +2669,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2709,7 +2797,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2837,7 +2925,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -2965,7 +3053,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.bronze.accountsettings_brz</span>
+          <span class="italic">core_desa.bronze.accountsettings_brz</span>
         </div>
         
         
@@ -3093,7 +3181,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.h_loanAccountSettingLog_slv</span>
+          <span class="italic">core_desa.silver.h_loanAccountSettingLog_slv</span>
         </div>
         
         
@@ -3115,76 +3203,6 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
   
 </ul>
     </div>
-    
-  </td>
-</tr>
-
-
-
-
-
-
-
-
-
-
-                      
-                        
-<tr>
-  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
-
-    <div class="py-2 text-sm">
-      
-      <span class="font-mono flex">executionTs</span>
-    </div>
-  </td>
-  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
-    
-    timestamp
-    
-  </td>
-  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
-    
-    <div class="text-gray-500">Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0.</div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div>
-      
-      
-      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-      
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
     
   </td>
 </tr>
@@ -3291,7 +3309,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
         
         <div class="mb-0.5">
           <span class="font-semibold text-gray-600">Source object:</span>
-          <span class="italic">core.h_loanAccountSettingLog_slv</span>
+          <span class="italic">core_desa.silver.h_loanAccountSettingLog_slv</span>
         </div>
         
         
@@ -3313,6 +3331,76 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
   
 </ul>
     </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">executionTs</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    timestamp
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
     
   </td>
 </tr>
@@ -3445,7 +3533,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 20 Jun 2025 22:01:33 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 22 Jun 2025 21:53:04 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3516,7 +3604,7 @@ models:
         type: string
         required: true
         primaryKey: true
-        references: core.silver.accountsetting_slv(accountSettingId)
+        references: accountsetting_slv.accountSettingId
         description: Identificador único del registro en accountSettings, en formato
           UUID. Se genera en el momento de la afiliación del usuario o creación de
           la configuración.
@@ -3526,12 +3614,20 @@ models:
           query: select count(*) from (select count(*) from core_desa.silver.h_loanAccountSettingLog_slv
             GROUP BY accountSettingId  HAVING COUNT(*) > 1)
           mustBe: 0
+        - type: sql
+          description: Validacion de integridad referencial del campo accountSettingId.
+          query: select count(*) from (SELECT d.accountSettingId FROM core_desa.silver.h_loanAccountSettingLog_slv
+            d LEFT ANTI JOIN core_desa.silver.accountsetting_slv mON d.accountSettingId
+            = m.accountSettingId)
+          mustBe: 0
         loadrule: Carga directa
+        xqualityFieldValidations:
+          xreferentialIntegrity: true
         lineage:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: id
             xdataTypeField: string
       recordCreationTs:
@@ -3551,14 +3647,14 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: creationDate
             xdataTypeField: string
       loanAccountSettingTypeCd:
         type: string
         required: true
         primaryKey: true
-        references: datahub.silver.m_catalog_slv/ no generar fk
+        references: m_catalog_slv
         description: Tipo de configuración. En este contexto, el valor 1 indica que
           el registro corresponde a configuraciones del producto Préstamos Express.
         quality:
@@ -3572,22 +3668,30 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: type
             xdataTypeField: string
       accountId:
         type: string
-        references: core.silver.m_account_slv(accountId)
+        references: m_account_slv.accountId
         description: Identificador de la cuenta Yape asociada a la configuración.
           Puede repetirse temporalmente debido a errores en el flujo de afiliación
           (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan
           por TTL.
+        quality:
+        - type: sql
+          description: Validacion de integridad referencial del campo accountId.
+          query: select count(*) from (SELECT d.accountId FROM core_desa.silver.h_loanAccountSettingLog_slv
+            d LEFT ANTI JOIN core_desa.silver.m_account_slv mON d.accountId = m.accountId)
+          mustBe: 0
         loadrule: Carga directa
+        xqualityFieldValidations:
+          xreferentialIntegrity: true
         lineage:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: idYapeAccount
             xdataTypeField: string
       maxAmtPerTrxNum:
@@ -3599,7 +3703,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: amountMaxSendByTransaction
             xdataTypeField: string
       maxAmtPerDayNum:
@@ -3611,7 +3715,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: amountMaxSendDay
             xdataTypeField: string
       expirationTs:
@@ -3624,7 +3728,7 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.bronze.accountsettings_brz
+            name: core_desa.bronze.accountsettings_brz
             field: expiresAt
             xdataTypeField: string
       expirationDt:
@@ -3637,14 +3741,9 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.h_loanAccountSettingLog_slv
+            name: core_desa.silver.h_loanAccountSettingLog_slv
             field: expirationTs
             xdataTypeField: string
-      executionTs:
-        type: timestamp
-        required: true
-        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
-          UTC-0.
       recordCreationDt:
         type: date
         description: Fecha de creacion del registro debe estar en UTC 5
@@ -3653,9 +3752,14 @@ models:
           inputFields:
           - namespace: lakehouse
             xsourceType: bronze
-            name: core.h_loanAccountSettingLog_slv
+            name: core_desa.silver.h_loanAccountSettingLog_slv
             field: recordCreationTs
             xdataTypeField: string
+      executionTs:
+        type: timestamp
+        required: true
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
     config:
       clustering:
         fields:
