@@ -11,12 +11,12 @@ CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
   maxAmtPerDayNum INT COMMENT "Monto máximo permitido para enviar por día. Los valores comunes son 3000, 5000, 10000 y 20000.",
   expirationTs TIMESTAMP COMMENT "Fecha y hora de expiración del registro de configuración. Después de esta fecha, el préstamo o beneficio asociado dejaría de estar vigente. Debe transformarse a UTC 5",
   expirationDt DATE COMMENT "Fecha  de expiración del registro de configuración. Después de esta fecha, el préstamo o beneficio asociado dejaría de estar vigente.Debe transformarse a UTC 5",
-  executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null,
-  recordCreationDt DATE COMMENT "Fecha de creacion del registro debe estar en UTC 5"
+  recordCreationDt DATE COMMENT "Fecha de creacion del registro debe estar en UTC 5",
+  executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null
   ,CONSTRAINT h_loanAccountSettingLog_slv_pk PRIMARY KEY(accountSettingId, recordCreationTs, loanAccountSettingTypeCd)
-  ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES core.silver.accountsetting_slv
-  ,CONSTRAINT h_loanAccountSettingLog_slv_loanAccountSettingTypeCd_fk FOREIGN KEY (loanAccountSettingTypeCd) REFERENCES datahub.silver.m_catalog_slv/ no generar fk
-  ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES core.silver.m_account_slv
+  ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES accountsetting_slv.accountSettingId
+  ,CONSTRAINT h_loanAccountSettingLog_slv_loanAccountSettingTypeCd_fk FOREIGN KEY (loanAccountSettingTypeCd) REFERENCES m_catalog_slv
+  ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES m_account_slv.accountId
 )
 CLUSTER BY (expirationDt, accountId, accountSettingId, loanAccountSettingTypeCd)
 COMMENT "Tabla histórica que registra los eventos de activación o modificación de configuraciones asociadas al producto Préstamos Express de 10K para cuentas Yape.
@@ -28,4 +28,4 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
   'delta.autoOptimize.autoCompact' = 'true',
   'delta.autoOptimize.optimizeWrite' = 'true'
 );
-ALTER TABLE core.silver.h_loanAccountSettingLog_slv SET TAGS ('Schema'='silver', 'TypeTable'='historical');
+ALTER TABLE core.silver.h_loanAccountSettingLog_slv SET TAGS ('Domain'='core', 'Layer'='silver', 'TypeTable'='historical');
