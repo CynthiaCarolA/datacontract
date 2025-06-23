@@ -54,7 +54,7 @@ models:
           la configuración.
         required: true
         primaryKey: true
-        references: accountsetting_slv.accountSettingId
+        references: core.silver.accountsetting_slv.accountSettingId
         loadrule: Carga directa
         xqualityFieldValidations:
           xreferentialIntegrity: true
@@ -103,7 +103,6 @@ models:
           el registro corresponde a configuraciones del producto Préstamos Express.
         required: true
         primaryKey: true
-        references: m_catalog_slv
         loadrule: Carga directa
         quality:
         - type: sql
@@ -124,7 +123,7 @@ models:
           Puede repetirse temporalmente debido a errores en el flujo de afiliación
           (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan
           por TTL.
-        references: m_account_slv.accountId
+        references: core.silver.m_account_slv.accountId
         loadrule: Carga directa
         xqualityFieldValidations:
           xreferentialIntegrity: true
