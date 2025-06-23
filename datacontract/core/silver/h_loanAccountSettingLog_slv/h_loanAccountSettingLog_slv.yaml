@@ -103,6 +103,7 @@ models:
           el registro corresponde a configuraciones del producto Préstamos Express.
         required: true
         primaryKey: true
+        references: datahub.silver.m_catalog_slv
         loadrule: Carga directa
         quality:
         - type: sql
