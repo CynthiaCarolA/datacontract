@@ -1,0 +1,421 @@
+dataContractSpecification: 0.9.3
+id: urn:core.bronze.backofficeBannersConfigurations_brz-latest
+info:
+  title: Configuración de Banners Publicitarios - Backoffice
+  domain: core
+  version: 1.0.0
+  squad: SQ. CONNECT
+  owner: Angello Sebastian Vasquez Carbajal
+  contact:
+    name: Enrique Huasupoma Malca
+    email: enriquehuasupomam@yape.com.pe
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: core
+    schema: bronze
+terms:
+  usage: La información de esta tabla se utiliza para cruces con eventos de interacción
+    y consultas del equipo de ML, contribuyendo al análisis de performance y a modelos
+    de recomendación.
+  limitations: Ninguna
+tags:
+- core
+- bronze
+- raw
+- Backoffice
+models:
+  backofficeBannersConfigurations_brz:
+    description: 'Esta tabla guardará la información de la configuración de los Banners
+      realizados desde el Backoffice y almacenada en Postgress.
+
+      La finalidad de la tabla es poder realizar cruces entre los eventos de la tabla
+      app interactions junto con la forma en como se configuró el propio banner para
+      medir el performance de acuerdo a la segmentación realizada.
+
+      Adicionalmente servirá para que el equipo de ML pueda consultar la información
+      de los banners configurados y se utilice dentro de sus modelos de recomendación.'
+    type: table
+    tableType: raw
+    universeLogic: Carga directa
+    fields:
+      end_date:
+        type: string
+        description: Fecha de finalización de la vigencia de un banner. Esta fecha
+          es configurada dentro del backoffice. La fecha está en formato UTC-0
+        examples:
+        - 09/03/2025 00:00:59+00
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: end_date
+            xdataTypeField: string
+      owner:
+        type: string
+        description: 'Owner provider configurado dentro del backoffice. Sirve para
+          identificar a que usuarios se mostrará el banner de acuerdo al owner provider.
+          Este valor solo llegará cuando el banner es de tipo MASIVO.
+
+          Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA'
+        examples:
+        - '{BCP, YAPEDIGITAL}'
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: owner
+            xdataTypeField: string
+      product:
+        type: string
+        description: Producto del home banner. Este se empleará para los clusters
+          de NBP en un futuro.
+        examples:
+        - Recargas
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: product
+            xdataTypeField: string
+      __deleted:
+        type: string
+        description: "Campo que se usa como convención de integración con debezium.\
+          \ \nFalse: El registro no ha sido eliminado (es un registro activo).\nTrue:\
+          \ El registro ha sido eliminado (es un \"tombstone\")."
+        examples:
+        - 1
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: __deleted
+            xdataTypeField: string
+      deeplink:
+        type: string
+        description: Es el deeplink empleado en el banner el cual permitirá redireccionar
+          a los usuarios cuando estos le den tap.
+        examples:
+        - yape://yape.com.pe/app/recharges
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: deeplink
+            xdataTypeField: string
+      blacklist:
+        type: string
+        description: Corresponde a un array de valores. Este campo indica el listado
+          de segmentos que actuarán a modo de blacklist en las lógicas del API Connect
+          Hub. Si un segmento se encuentra en este listado, los usuarios incluidos
+          en dicho segmento no visualizarán el banner configurado.
+        examples:
+        - '{testqanewlabel40, testqanewlabel39}'
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: blacklist
+            xdataTypeField: string
+      description:
+        type: string
+        description: Es la descripción textual del banner creado. Se emplea para las
+          funciones de accesibilidad en los dispositivos.
+        examples:
+        - Realiza compras con envios desde 10 soles por Yape Tienda
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: description
+            xdataTypeField: string
+      created_at:
+        type: string
+        description: Campo que corresponde a la fecha de creación del home banner.
+          Formato UTC - 0
+        examples:
+        - 09/03/2025 00:00:59+00
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: created_at
+            xdataTypeField: string
+      organization_name:
+        type: string
+        description: Es el nombre de la ONG u Organización de la cual se está usando
+          para crear el banner de tipo donación. Este campo solo tendrá valor si el
+          banner es de tipo donación
+        examples:
+        - Perú Manos Unidas
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: organization_name
+            xdataTypeField: string
+      title:
+        type: string
+        description: Es el título que se le da al banner dentro del backoffice
+        examples:
+        - Envios a 10 soles
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: title
+            xdataTypeField: string
+      type:
+        type: string
+        description: 'Indica el tipo de banner que es. Puede ser de tipo funcional
+          o de tipo donación.
+
+          Valores esperados:
+
+          NAVIGATION
+
+          DONATION'
+        examples:
+        - NAVIGATION
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: type
+            xdataTypeField: string
+      confirmation_name:
+        type: string
+        description: Es el nombre de confirmación del mensaje que se muestra en el
+          modal de donaciones. Este campo solo tendrá valor si el banner es de tipo
+          donación.
+        examples:
+        - Perú Manos Unidas
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: confirmation_name
+            xdataTypeField: string
+      banner_type_position:
+        type: string
+        description: 'Indica el tipo de configuración de segmentación que tiene el
+          Banner creado. Los valores indicarán si es de tipo Masivo, Segmentado o
+          NBP.
+
+          Valores esperados:
+
+          MASIVO: Envios de acuerdo al owner provider del usuario.
+
+          SEGMENTADO: Segmentación personalida por bases.
+
+          NBP: Personalización a nivel de usuario.
+
+          DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.'
+        examples:
+        - MASIVO
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: banner_type_position
+            xdataTypeField: string
+      petitioner:
+        type: string
+        description: Valor que indica el producto al que hace referencia la publicación.
+          Se configura dentro de backoffice desde una lista deplegable o desde un
+          campo de texto.
+        examples:
+        - RECARGAS
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: petitioner
+            xdataTypeField: string
+      url_image:
+        type: string
+        description: Es la url de la imagen que se utiliza para mostrar el banner
+          en el carrusel de Yape
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: url_image
+            xdataTypeField: string
+      updated_at:
+        type: string
+        description: Campo que corresponde a la fecha de modificación de un registro
+          del banner. Formato UTC-0
+        examples:
+        - 09/03/2025 00:00:59+00
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: updated_at
+            xdataTypeField: string
+      segment:
+        type: string
+        description: 'Corresponde a un array de valores. Este campo indica el listado
+          de segmentos a los cuales se les disponibilizará el banner.
+
+          Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO'
+        examples:
+        - '{testqanewlabel42, testqanewlabel43, testqanewlabel44}'
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: segment
+            xdataTypeField: string
+      id:
+        type: string
+        description: Identificador único del Banner creado desde Backoffice. Se utiliza
+          como una PK.
+        examples:
+        - 5cbfce31eef3581dbb2e5a8490d4ac7b
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: id
+            xdataTypeField: string
+      phone_donation:
+        type: string
+        description: Numero celular de la ONG a la cual se realizarán los yapeos donativos.
+          Este campo solo tendrá valor si el banner es de tipo donación.
+        examples:
+        - 51999999999
+        pii: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: phone_donation
+            xdataTypeField: string
+      position:
+        type: string
+        description: Indica la posición relativa que tendrá el banner dentro del carrusel
+          de banners o dentro de un listado de banners en los flujos que lo soporten.
+        examples:
+        - 1
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: position
+            xdataTypeField: string
+      view_scope:
+        type: string
+        description: Indica la pantalla a la cual donde deberá aparecer el banner
+          configurado en backoffice.
+        examples:
+        - BENEFICIOS_DMS
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: view_scope
+            xdataTypeField: string
+      start_date:
+        type: string
+        description: Fecha de inicio de la publicación del banner. Esta fecha es configurada
+          dentro del backoffice. La fecha es en UTC-0
+        examples:
+        - 09/03/2025 00:00:59+00
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: start_date
+            xdataTypeField: string
+      status:
+        type: string
+        description: "Indica el estado del registro de banner. \nLos valores que pueden\
+          \ llegar son estos:\nBORRADOR: El registro aun se encuentra en borrador\
+          \ y puede ser modificado.\nVALIDACION: El registro se encuentra en validación\
+          \ por un owner.\nAPROBADO: Indica que ya se encuentra activado\nELIMINADO:\
+          \ El registro se ha eliminado desde backoffice."
+        examples:
+        - APROBADO
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: banners.configurations
+            field: status
+            xdataTypeField: string
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; 0 fecha de creación del
+              evento, 1 fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              1. Si timestampType es 0, corresponde a la fecha de creación del evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La actualización de la data  sobre la configuración de banners se
+      realizará todos los días a media noche + 1 min
+    type: batch
+    interval: daily
