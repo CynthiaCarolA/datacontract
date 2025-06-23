@@ -1900,7 +1900,7 @@ video {
                 "**h_loanAccountSettingLog_slv**"{
         accountSettingId🔑⌘ string
         recordCreationTs🔑 timestamp
-        loanAccountSettingTypeCd🔑 string
+        loanAccountSettingTypeCd🔑⌘ string
         accountId⌘ string
         maxAmtPerTrxNum int
         maxAmtPerDayNum int
@@ -2389,6 +2389,11 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
 
     
 
+    
+    <div class="mt-1 italic">
+      References:
+      <span class="font-mono">datahub.silver.m_catalog_slv</span>
+    </div>
     
 
     
@@ -3528,7 +3533,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 23 Jun 2025 01:34:00 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 23 Jun 2025 05:24:04 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3649,6 +3654,7 @@ models:
         type: string
         required: true
         primaryKey: true
+        references: datahub.silver.m_catalog_slv
         description: Tipo de configuración. En este contexto, el valor 1 indica que
           el registro corresponde a configuraciones del producto Préstamos Express.
         quality:
