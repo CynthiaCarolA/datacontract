@@ -1898,6 +1898,33 @@ video {
                   <pre class="mermaid">
                     erDiagram
                 "**c_yapeBanner_slv**"{
+        yapeBannerId🔑 string
+        recordUpdateTs🔑 timestamp
+        segmentationTypeDesc string
+        blacklistSegmentDesc array
+        confirmationMessageDesc string
+        organizationName string
+        deeplinkDesc string
+        organizationPhoneNum string
+        targetProviderDesc array
+        targetSegmentDesc array
+        contentOwnerDesc string
+        carouselPositionNum int
+        bannerTypeDesc string
+        bannerStatusTypeDesc string
+        titleDesc string
+        imageUrl string
+        productTypeDesc string
+        displayScreenDesc string
+        descriptionDesc string
+        startTs timestamp
+        startDt date
+        endTs timestamp
+        endDt date
+        recordCreationTs timestamp
+        recordCreationDt date
+        deletedFlg string
+        recordUpdateDt date
         executionTs timestamp
 }
 
@@ -1994,6 +2021,3958 @@ video {
                       </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-200 bg-white">
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">yapeBannerId</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Identificador único del banner, generado desde Backoffice. Actúa como clave primaria de la tabla y permite trazabilidad entre capas del modelo de datos.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      <span class="inline-flex items-center rounded-md bg-blue-50 px-1 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10 mr-1 mt-1">primary</span>
+      
+      
+      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validacion de unicidad campo yapeBannerId.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>select count(*) from (select count(*) from core_desa.silver.c_yapeBanner_slv GROUP BY yapeBannerId  HAVING COUNT(*) > 1)</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">yapeBannerId</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">recordUpdateTs</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    timestamp
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Campo que corresponde a la fecha y hora de modificación de un registro del banner. Se tiene que llevar a UTC - 5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      <span class="inline-flex items-center rounded-md bg-blue-50 px-1 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10 mr-1 mt-1">primary</span>
+      
+      
+      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">Valor por defecto en caso sea null 1999-01-01T00:00:00.000+0000</span>
+    </div>
+    
+
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validacion de unicidad campo recordUpdateTs.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>select count(*) from (select count(*) from core_desa.silver.c_yapeBanner_slv GROUP BY recordUpdateTs  HAVING COUNT(*) > 1)</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">recordUpdateTs</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">segmentationTypeDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Estrategia de segmentación del banner. Puede ser MASIVO (por owner), SEGMENTADO (por segmentos), NBP (a nivel usuario) o DEFAULT (fallback genérico).</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">segmentationTypeDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">blacklistSegmentDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    array
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Lista de segmentos a los cuales no se debe mostrar el banner, incluso si cumplen otros criterios. Actúa como lista de exclusión (blacklist lógica).</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo blacklistSegmentDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE blacklistSegmentDesc IS NULL OR blacklistSegmentDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">blacklistSegmentDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">confirmationMessageDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Texto de confirmación que aparece en el modal al realizar una donación. Solo aplica para banners de tipo DONATION.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo confirmationMessageDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE confirmationMessageDesc IS NULL OR confirmationMessageDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">confirmationMessageDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">organizationName</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Nombre de la organización u ONG asociada al banner. Aplica únicamente para banners de tipo DONATION.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo organizationName no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationName IS NULL OR organizationName = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">organizationName</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">deeplinkDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Enlace interno que redirige al usuario a una funcionalidad específica de la app (e.g., recargas, pagos) al hacer tap en el banner.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo deeplinkDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE deeplinkDesc IS NULL OR deeplinkDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">deeplinkDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">organizationPhoneNum</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Número de celular de la ONG que recibe las donaciones. Este campo solo se utiliza cuando el banner es de tipo DONATION. Campo DAC tiene que ir cifrado</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <span class="inline-flex items-center rounded-md bg-yellow-50 px-1 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-500/10 mr-1 mt-1">PII</span>
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      <div>
+        Encrypted: <span class="font-mono font-bold"> True</span>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo organizationPhoneNum no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationPhoneNum IS NULL OR organizationPhoneNum = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de encriptado del campo organizationPhoneNum.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationPhoneNum IS NOT NULL AND organizationPhoneNum NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">organizationPhoneNum</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">targetProviderDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    array
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Lista de owner providers (como BCP, YAPEDIGITAL) a quienes se dirige el banner. Aplica solo cuando banner_type_position = MASIVO.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">targetProviderDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">targetSegmentDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    array
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Lista de segmentos objetivo definidos para el banner. Solo se usa si banner_type_position = SEGMENTADO.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo targetSegmentDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE targetSegmentDesc IS NULL OR targetSegmentDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">targetSegmentDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">contentOwnerDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Producto o flujo del app que solicita la publicación del banner (ej. RECARGAS). Ayuda a identificar al área dueña del contenido.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo contentOwnerDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE contentOwnerDesc IS NULL OR contentOwnerDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">contentOwnerDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">carouselPositionNum</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    int
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Orden relativo del banner en el carrusel de visualización. A menor valor, mayor prioridad visual.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">carouselPositionNum</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">bannerTypeDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Tipo de banner. Puede ser NAVIGATION (informativo, funcional) o DONATION (dirigido a campañas de donación).</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">bannerTypeDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">bannerStatusTypeDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Estado del banner dentro del flujo de gestión (BORRADOR, VALIDACION, APROBADO, ELIMINADO). Solo los banners aprobados son vigentes.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">bannerStatusTypeDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">titleDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Título visible del banner, definido por el equipo de producto o marketing.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">titleDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">imageUrl</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">URL donde se encuentra alojada la imagen que será mostrada en el banner.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">imageUrl</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">productTypeDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Producto asociado al banner. Se usará para segmentación avanzada o modelos de recomendación (NBP).</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">productTypeDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">displayScreenDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Pantalla específica de la app donde debe aparecer el banner (por ejemplo: BENEFICIOS_DMS, HOME, etc.).</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo displayScreenDesc no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE displayScreenDesc IS NULL OR displayScreenDesc = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">displayScreenDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">descriptionDesc</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Texto accesible o alternativo del banner. Se usa para funciones de accesibilidad y en algunos casos para enriquecer la semántica del banner.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">descriptionDesc</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">startTs</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    timestamp
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Fecha y hora de inicio de vigencia del banner convertido a hora peru UTC. -5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo startTs no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE startTs IS NULL OR startTs = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">startTs</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">startDt</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    date
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Fecha  de inicio de vigencia del banner convertido a hora peru UTC. -5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">startDt</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">endTs</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    timestamp
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Fecha y hora de finalización de la vigencia del banner convertido a hora peru UTC. -5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">endTs</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">endDt</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    date
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Fecha  de finalización de la vigencia del banner convertido a hora peru UTC. -5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">endDt</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">recordCreationTs</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    timestamp
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Campo que corresponde a la fecha y hora de creación del home banner. Se tiene que llevar a UTC - 5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    <div class="mt-3">
+      <div class="mt-2">
+    <span class="italic">Quality rules</span>
+    <div class="pl-4">
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    </div>
+    
+    
+    
+    
+    <div class="mt-2">
+  <span class="italic">Quality | SQL:</span> Validación de que el campo recordCreationTs no tenga null o vacíos en la data.
+  
+  <div class="pl-4">
+    Query:
+    <div class="ring-1 ring-inset ring-gray-500/10 bg-gray-50 p-2 rounded-md"><pre><code>SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE recordCreationTs IS NULL OR recordCreationTs = ''</code></pre></div>
+    
+    <div>
+      Must Be: <span class="font-mono font-bold"> 0</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+</div>
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">recordCreationTs</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">recordCreationDt</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    date
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Campo que corresponde a la fecha de creación del home banner. Se tiene que llevar a UTC - 5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">recordCreationDt</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">deletedFlg</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    string
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Indicador lógico para señalar eliminación  (soft delete). Si es 'S', el registro ha sido eliminado en origen y puede excluirse del consumo.</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">deletedFlg</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+<tr>
+  <td class="whitespace-nowrap py-2 pl-4 pr-2 text-sm font-medium text-gray-900 sm:pl-6 w-2/12">
+
+    <div class="py-2 text-sm">
+      
+      <span class="font-mono flex">recordUpdateDt</span>
+    </div>
+  </td>
+  <td class="whitespace-nowrap px-1 py-2 text-sm text-gray-500 w-1/12">
+    
+    date
+    
+  </td>
+  <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
+    
+    <div class="text-gray-500">Campo que corresponde a la fecha de modificación de un registro del banner. Se tiene que llevar a UTC - 5</div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+
+      
+    </div>
+
+    
+    <div class="mt-3 text-sm">
+      <span class="italic text-gray-600">Load rule:</span>
+      <span class="text-gray-500 ml-1">not defined</span>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="mt-3">
+      <div class="italic">
+    <span>Lineage |</span>
+    <span class="italic text-gray-500">InputFields</span>
+  </div>
+
+<ul class="ml-1">
+  
+  <li class="mb-3">
+    <div style="border-left: 2px solid #bbb; padding-left: 10px; margin-left: 2px; margin-bottom: 0;">
+      <div class="text-sm text-gray-700 w-full">
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source application:</span>
+          <span class="italic">lakehouse</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source type:</span>
+          <span class="italic">bronze</span>
+        </div>
+        
+        
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Source object:</span>
+          <span class="italic">core_desa.silver.m_yapeBanner_slv</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field:</span>
+          <span class="italic">recordUpdateDt</span>
+        </div>
+        
+        
+        <div class="mb-0.5">
+          <span class="font-semibold text-gray-600">Field type:</span>
+          <span class="italic">string</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </li>
+  
+</ul>
+    </div>
+    
+  </td>
+</tr>
+
+
+
+
+
+
+
+
+
+
                       
                         
 <tr>
@@ -2190,7 +6169,7 @@ video {
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 23 Jun 2025 02:54:49 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 23 Jun 2025 05:11:28 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -2250,6 +6229,448 @@ models:
       transaccional en Postgres.
     type: table
     fields:
+      yapeBannerId:
+        type: string
+        required: true
+        primaryKey: true
+        description: Identificador único del banner, generado desde Backoffice. Actúa
+          como clave primaria de la tabla y permite trazabilidad entre capas del modelo
+          de datos.
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo yapeBannerId.
+          query: select count(*) from (select count(*) from core_desa.silver.c_yapeBanner_slv
+            GROUP BY yapeBannerId  HAVING COUNT(*) > 1)
+          mustBe: 0
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: yapeBannerId
+            xdataTypeField: string
+      recordUpdateTs:
+        type: timestamp
+        required: true
+        primaryKey: true
+        description: Campo que corresponde a la fecha y hora de modificación de un
+          registro del banner. Se tiene que llevar a UTC - 5
+        quality:
+        - type: sql
+          description: Validacion de unicidad campo recordUpdateTs.
+          query: select count(*) from (select count(*) from core_desa.silver.c_yapeBanner_slv
+            GROUP BY recordUpdateTs  HAVING COUNT(*) > 1)
+          mustBe: 0
+        loadrule: Valor por defecto en caso sea null 1999-01-01T00:00:00.000+0000
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: recordUpdateTs
+            xdataTypeField: string
+      segmentationTypeDesc:
+        type: string
+        description: Estrategia de segmentación del banner. Puede ser MASIVO (por
+          owner), SEGMENTADO (por segmentos), NBP (a nivel usuario) o DEFAULT (fallback
+          genérico).
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: segmentationTypeDesc
+            xdataTypeField: string
+      blacklistSegmentDesc:
+        type: array
+        description: Lista de segmentos a los cuales no se debe mostrar el banner,
+          incluso si cumplen otros criterios. Actúa como lista de exclusión (blacklist
+          lógica).
+        quality:
+        - type: sql
+          description: Validación de que el campo blacklistSegmentDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE blacklistSegmentDesc
+            IS NULL OR blacklistSegmentDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: blacklistSegmentDesc
+            xdataTypeField: string
+      confirmationMessageDesc:
+        type: string
+        description: Texto de confirmación que aparece en el modal al realizar una
+          donación. Solo aplica para banners de tipo DONATION.
+        quality:
+        - type: sql
+          description: Validación de que el campo confirmationMessageDesc no tenga
+            null o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE confirmationMessageDesc
+            IS NULL OR confirmationMessageDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: confirmationMessageDesc
+            xdataTypeField: string
+      organizationName:
+        type: string
+        description: Nombre de la organización u ONG asociada al banner. Aplica únicamente
+          para banners de tipo DONATION.
+        quality:
+        - type: sql
+          description: Validación de que el campo organizationName no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationName
+            IS NULL OR organizationName = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: organizationName
+            xdataTypeField: string
+      deeplinkDesc:
+        type: string
+        description: Enlace interno que redirige al usuario a una funcionalidad específica
+          de la app (e.g., recargas, pagos) al hacer tap en el banner.
+        quality:
+        - type: sql
+          description: Validación de que el campo deeplinkDesc no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE deeplinkDesc
+            IS NULL OR deeplinkDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: deeplinkDesc
+            xdataTypeField: string
+      organizationPhoneNum:
+        type: string
+        description: Número de celular de la ONG que recibe las donaciones. Este campo
+          solo se utiliza cuando el banner es de tipo DONATION. Campo DAC tiene que
+          ir cifrado
+        pii: true
+        quality:
+        - type: sql
+          description: Validación de que el campo organizationPhoneNum no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationPhoneNum
+            IS NULL OR organizationPhoneNum = ''
+          mustBe: 0
+        - type: sql
+          description: Validación de encriptado del campo organizationPhoneNum.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE organizationPhoneNum
+            IS NOT NULL AND organizationPhoneNum NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+          xencrypted: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: organizationPhoneNum
+            xdataTypeField: string
+      targetProviderDesc:
+        type: array
+        description: Lista de owner providers (como BCP, YAPEDIGITAL) a quienes se
+          dirige el banner. Aplica solo cuando banner_type_position = MASIVO.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: targetProviderDesc
+            xdataTypeField: string
+      targetSegmentDesc:
+        type: array
+        description: Lista de segmentos objetivo definidos para el banner. Solo se
+          usa si banner_type_position = SEGMENTADO.
+        quality:
+        - type: sql
+          description: Validación de que el campo targetSegmentDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE targetSegmentDesc
+            IS NULL OR targetSegmentDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: targetSegmentDesc
+            xdataTypeField: string
+      contentOwnerDesc:
+        type: string
+        description: Producto o flujo del app que solicita la publicación del banner
+          (ej. RECARGAS). Ayuda a identificar al área dueña del contenido.
+        quality:
+        - type: sql
+          description: Validación de que el campo contentOwnerDesc no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE contentOwnerDesc
+            IS NULL OR contentOwnerDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: contentOwnerDesc
+            xdataTypeField: string
+      carouselPositionNum:
+        type: int
+        description: Orden relativo del banner en el carrusel de visualización. A
+          menor valor, mayor prioridad visual.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: carouselPositionNum
+            xdataTypeField: string
+      bannerTypeDesc:
+        type: string
+        description: Tipo de banner. Puede ser NAVIGATION (informativo, funcional)
+          o DONATION (dirigido a campañas de donación).
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: bannerTypeDesc
+            xdataTypeField: string
+      bannerStatusTypeDesc:
+        type: string
+        description: Estado del banner dentro del flujo de gestión (BORRADOR, VALIDACION,
+          APROBADO, ELIMINADO). Solo los banners aprobados son vigentes.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: bannerStatusTypeDesc
+            xdataTypeField: string
+      titleDesc:
+        type: string
+        description: Título visible del banner, definido por el equipo de producto
+          o marketing.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: titleDesc
+            xdataTypeField: string
+      imageUrl:
+        type: string
+        description: URL donde se encuentra alojada la imagen que será mostrada en
+          el banner.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: imageUrl
+            xdataTypeField: string
+      productTypeDesc:
+        type: string
+        description: Producto asociado al banner. Se usará para segmentación avanzada
+          o modelos de recomendación (NBP).
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: productTypeDesc
+            xdataTypeField: string
+      displayScreenDesc:
+        type: string
+        description: 'Pantalla específica de la app donde debe aparecer el banner
+          (por ejemplo: BENEFICIOS_DMS, HOME, etc.).'
+        quality:
+        - type: sql
+          description: Validación de que el campo displayScreenDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE displayScreenDesc
+            IS NULL OR displayScreenDesc = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: displayScreenDesc
+            xdataTypeField: string
+      descriptionDesc:
+        type: string
+        description: Texto accesible o alternativo del banner. Se usa para funciones
+          de accesibilidad y en algunos casos para enriquecer la semántica del banner.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: descriptionDesc
+            xdataTypeField: string
+      startTs:
+        type: timestamp
+        description: Fecha y hora de inicio de vigencia del banner convertido a hora
+          peru UTC. -5
+        quality:
+        - type: sql
+          description: Validación de que el campo startTs no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE startTs
+            IS NULL OR startTs = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: startTs
+            xdataTypeField: string
+      startDt:
+        type: date
+        description: Fecha  de inicio de vigencia del banner convertido a hora peru
+          UTC. -5
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: startDt
+            xdataTypeField: string
+      endTs:
+        type: timestamp
+        description: Fecha y hora de finalización de la vigencia del banner convertido
+          a hora peru UTC. -5
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: endTs
+            xdataTypeField: string
+      endDt:
+        type: date
+        description: Fecha  de finalización de la vigencia del banner convertido a
+          hora peru UTC. -5
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: endDt
+            xdataTypeField: string
+      recordCreationTs:
+        type: timestamp
+        description: Campo que corresponde a la fecha y hora de creación del home
+          banner. Se tiene que llevar a UTC - 5
+        quality:
+        - type: sql
+          description: Validación de que el campo recordCreationTs no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.c_yapeBanner_slv WHERE recordCreationTs
+            IS NULL OR recordCreationTs = ''
+          mustBe: 0
+        loadrule: not defined
+        xqualityFieldValidations:
+          xnullity: false
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: recordCreationTs
+            xdataTypeField: string
+      recordCreationDt:
+        type: date
+        description: Campo que corresponde a la fecha de creación del home banner.
+          Se tiene que llevar a UTC - 5
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: recordCreationDt
+            xdataTypeField: string
+      deletedFlg:
+        type: string
+        required: true
+        description: Indicador lógico para señalar eliminación  (soft delete). Si
+          es 'S', el registro ha sido eliminado en origen y puede excluirse del consumo.
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: deletedFlg
+            xdataTypeField: string
+      recordUpdateDt:
+        type: date
+        description: Campo que corresponde a la fecha de modificación de un registro
+          del banner. Se tiene que llevar a UTC - 5
+        loadrule: not defined
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xsourceType: bronze
+            name: core_desa.silver.m_yapeBanner_slv
+            field: recordUpdateDt
+            xdataTypeField: string
       executionTs:
         type: timestamp
         required: true
