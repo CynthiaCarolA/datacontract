@@ -1,0 +1,63 @@
+dataContractSpecification: 0.9.3
+id: urn:core.silver.c_yapeBanner_slv-latest
+info:
+  title: Tabla de cambios de Configuración de Banners Publicitarios
+  version: 1.0.0
+  status: active
+  description: Consolida la configuración de banners publicitarios desde el Backoffice,
+    utilizada para personalización en el aplicativo y modelos de recomendación (ML).
+    Estructurada y normalizada desde Postgres.
+  owner: Angello Sebastian Vasquez Carbajal
+  contact:
+    name: Enrique Huasupoma Malca
+    email: enriquehuasupomam@yape.com.pe
+  domain: core
+  squad: SQ CONNECT
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: core
+    schema: silver
+terms:
+  usage: La configuración de banners publicitarios, debe ser utilizada exclusivamente
+    para fines de analítica.
+  limitations: Ninguna
+tags:
+- core
+- silver
+- changes
+models:
+  c_yapeBanner_slv:
+    description: Tabla de cambios que consolida la configuración de banners publicitarios
+      gestionados desde el Backoffice. Esta configuración es utilizada tanto para
+      la visualización personalizada en el aplicativo como para alimentar modelos
+      de recomendación (ML). La tabla es estructurada y normalizada a partir del origen
+      transaccional en Postgres.
+    type: table
+    tableType: changes
+    universeLogic: Carga directa
+    fields:
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+    config:
+      clustering:
+        fields:
+        - yapeBannerId
+        - recordUpdateTs
+        - hashCd
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    type: batch
+    description: La tabla de cambios que consolida la configuración de banners publicitarios
+      se actualiza cada hora.
+    interval: hourly
