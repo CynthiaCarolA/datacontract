@@ -1,5 +1,3 @@
--- Databricks notebook source
--- COMMAND ----------
 -- Data Contract: urn:core.silver.h_loanAccountSettingLog_slv-latest
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
@@ -15,6 +13,7 @@ CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
   executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null
   ,CONSTRAINT h_loanAccountSettingLog_slv_pk PRIMARY KEY(accountSettingId, recordCreationTs, loanAccountSettingTypeCd)
   ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES core.silver.accountsetting_slv
+  ,CONSTRAINT h_loanAccountSettingLog_slv_loanAccountSettingTypeCd_fk FOREIGN KEY (loanAccountSettingTypeCd) REFERENCES datahub.silver
   ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES core.silver.m_account_slv
 )
 CLUSTER BY (expirationDt, accountId, accountSettingId, loanAccountSettingTypeCd)
