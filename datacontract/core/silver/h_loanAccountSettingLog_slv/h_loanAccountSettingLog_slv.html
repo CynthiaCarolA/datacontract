@@ -1900,7 +1900,7 @@ video {
                 "**h_loanAccountSettingLog_slv**"{
         accountSettingId🔑⌘ string
         recordCreationTs🔑 timestamp
-        loanAccountSettingTypeCd🔑⌘ string
+        loanAccountSettingTypeCd🔑 string
         accountId⌘ string
         maxAmtPerTrxNum int
         maxAmtPerDayNum int
@@ -2032,7 +2032,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div class="mt-1 italic">
       References:
-      <span class="font-mono">accountsetting_slv.accountSettingId</span>
+      <span class="font-mono">core.silver.accountsetting_slv.accountSettingId</span>
     </div>
     
 
@@ -2390,11 +2390,6 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
 
     
-    <div class="mt-1 italic">
-      References:
-      <span class="font-mono">m_catalog_slv</span>
-    </div>
-    
 
     
     <div>
@@ -2553,7 +2548,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div class="mt-1 italic">
       References:
-      <span class="font-mono">m_account_slv.accountId</span>
+      <span class="font-mono">core.silver.m_account_slv.accountId</span>
     </div>
     
 
@@ -3533,7 +3528,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 22 Jun 2025 22:37:35 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 23 Jun 2025 01:16:40 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3604,7 +3599,7 @@ models:
         type: string
         required: true
         primaryKey: true
-        references: accountsetting_slv.accountSettingId
+        references: core.silver.accountsetting_slv.accountSettingId
         description: Identificador único del registro en accountSettings, en formato
           UUID. Se genera en el momento de la afiliación del usuario o creación de
           la configuración.
@@ -3654,7 +3649,6 @@ models:
         type: string
         required: true
         primaryKey: true
-        references: m_catalog_slv
         description: Tipo de configuración. En este contexto, el valor 1 indica que
           el registro corresponde a configuraciones del producto Préstamos Express.
         quality:
@@ -3673,7 +3667,7 @@ models:
             xdataTypeField: string
       accountId:
         type: string
-        references: m_account_slv.accountId
+        references: core.silver.m_account_slv.accountId
         description: Identificador de la cuenta Yape asociada a la configuración.
           Puede repetirse temporalmente debido a errores en el flujo de afiliación
           (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan
