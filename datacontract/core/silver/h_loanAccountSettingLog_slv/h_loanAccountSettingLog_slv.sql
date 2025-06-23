@@ -14,9 +14,8 @@ CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
   recordCreationDt DATE COMMENT "Fecha de creacion del registro debe estar en UTC 5",
   executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null
   ,CONSTRAINT h_loanAccountSettingLog_slv_pk PRIMARY KEY(accountSettingId, recordCreationTs, loanAccountSettingTypeCd)
-  ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES accountsetting_slv.accountSettingId
-  ,CONSTRAINT h_loanAccountSettingLog_slv_loanAccountSettingTypeCd_fk FOREIGN KEY (loanAccountSettingTypeCd) REFERENCES m_catalog_slv
-  ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES m_account_slv.accountId
+  ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES core.silver.accountsetting_slv
+  ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES core.silver.m_account_slv
 )
 CLUSTER BY (expirationDt, accountId, accountSettingId, loanAccountSettingTypeCd)
 COMMENT "Tabla histórica que registra los eventos de activación o modificación de configuraciones asociadas al producto Préstamos Express de 10K para cuentas Yape.
