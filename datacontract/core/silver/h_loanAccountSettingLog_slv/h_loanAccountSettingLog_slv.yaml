@@ -57,6 +57,7 @@ models:
         references: core.silver.accountsetting_slv.accountSettingId
         loadrule: Carga directa
         xqualityFieldValidations:
+          unique: true
           xreferentialIntegrity: true
         quality:
         - type: sql
@@ -84,6 +85,8 @@ models:
         required: true
         primaryKey: true
         loadrule: Carga en el formato de fecha y hora
+        xqualityFieldValidations:
+          unique: true
         quality:
         - type: sql
           description: Validacion de unicidad campo recordCreationTs.
@@ -103,8 +106,9 @@ models:
           el registro corresponde a configuraciones del producto Préstamos Express.
         required: true
         primaryKey: true
-        references: datahub.silver.m_catalog_slv
         loadrule: Carga directa
+        xqualityFieldValidations:
+          unique: true
         quality:
         - type: sql
           description: Validacion de unicidad campo loanAccountSettingTypeCd.
