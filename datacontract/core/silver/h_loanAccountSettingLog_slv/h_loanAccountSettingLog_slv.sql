@@ -3,7 +3,7 @@
 CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
   accountSettingId STRING COMMENT "Identificador único del registro en accountSettings, en formato UUID. Se genera en el momento de la afiliación del usuario o creación de la configuración." not null,
   recordCreationTs TIMESTAMP COMMENT "Fecha y hora de creación del registro. Normalmente coincide o tiene una diferencia mínima con la fecha de creación de la cuenta Yape." not null,
-  loanAccountSettingTypeCd STRING COMMENT "Tipo de configuración. En este contexto, el valor 1 indica que el registro corresponde a configuraciones del producto Préstamos Express." not null,
+  loanAccountSettingTypeCd STRING COMMENT "Tipo de configuración. En este contexto, el valor 1 indica que el registro corresponde a configuraciones del producto Préstamos Express.",
   accountId STRING COMMENT "Identificador de la cuenta Yape asociada a la configuración. Puede repetirse temporalmente debido a errores en el flujo de afiliación (por ejemplo, durante la asociación de tarjeta). Estos registros se eliminan por TTL.",
   maxAmtPerTrxNum INT COMMENT "Monto máximo permitido por transacción. En contextos con préstamos activos, puede establecerse un valor especial como 999.",
   maxAmtPerDayNum INT COMMENT "Monto máximo permitido para enviar por día. Los valores comunes son 3000, 5000, 10000 y 20000.",
@@ -11,7 +11,7 @@ CREATE OR REPLACE TABLE core.silver.h_loanAccountSettingLog_slv (
   expirationDt DATE COMMENT "Fecha  de expiración del registro de configuración. Después de esta fecha, el préstamo o beneficio asociado dejaría de estar vigente.Debe transformarse a UTC 5",
   recordCreationDt DATE COMMENT "Fecha de creacion del registro debe estar en UTC 5",
   executionTs TIMESTAMP COMMENT "Fecha y hora de ejecucion de la rutina de carga al datalake en UTC-0." not null
-  ,CONSTRAINT h_loanAccountSettingLog_slv_pk PRIMARY KEY(accountSettingId, recordCreationTs, loanAccountSettingTypeCd)
+  ,CONSTRAINT h_loanAccountSettingLog_slv_pk PRIMARY KEY(accountSettingId, recordCreationTs)
   ,CONSTRAINT h_loanAccountSettingLog_slv_accountSettingId_fk FOREIGN KEY (accountSettingId) REFERENCES core.silver.accountsetting_slv
   ,CONSTRAINT h_loanAccountSettingLog_slv_accountId_fk FOREIGN KEY (accountId) REFERENCES core.silver.m_account_slv
 )
