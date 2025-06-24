@@ -1900,7 +1900,7 @@ video {
                 "**h_loanAccountSettingLog_slv**"{
         accountSettingId🔑⌘ string
         recordCreationTs🔑 timestamp
-        loanAccountSettingTypeCd🔑 string
+        loanAccountSettingTypeCd string
         accountId⌘ string
         maxAmtPerTrxNum int
         maxAmtPerDayNum int
@@ -2419,10 +2419,6 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
     
     <div>
       
-      <span class="inline-flex items-center rounded-md bg-blue-50 px-1 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10 mr-1 mt-1">primary</span>
-      
-      
-      <span class="inline-flex items-center rounded-md bg-gray-50 px-1 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mr-1 mt-1">required</span>
       
       
       
@@ -3574,7 +3570,7 @@ Esta tabla permite llevar trazabilidad de cambios en los valores configurados po
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 24 Jun 2025 02:53:55 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 24 Jun 2025 03:25:01 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3696,8 +3692,6 @@ models:
             xdataTypeField: string
       loanAccountSettingTypeCd:
         type: string
-        required: true
-        primaryKey: true
         description: Tipo de configuración. En este contexto, el valor 1 indica que
           el registro corresponde a configuraciones del producto Préstamos Express.
         quality:
