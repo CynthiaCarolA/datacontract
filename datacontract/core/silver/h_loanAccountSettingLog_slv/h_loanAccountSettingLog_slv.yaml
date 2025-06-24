@@ -104,8 +104,6 @@ models:
         type: string
         description: Tipo de configuración. En este contexto, el valor 1 indica que
           el registro corresponde a configuraciones del producto Préstamos Express.
-        required: true
-        primaryKey: true
         loadrule: Carga directa
         xqualityFieldValidations:
           unique: true
