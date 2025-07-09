@@ -19,7 +19,7 @@ servers:
     catalog: experience
     schema: bronze
 terms:
-  usage: Data de usuarois que solicitan qe seles envie las notificaciones por wjhatsapp
+  usage: Data de xxxxxxxxx que solicitan qe seles envie las notificaciones por wjhatsapp
   limitations: Ninguna
   policies:
   - name: yadl-policy-ephemeral-job
