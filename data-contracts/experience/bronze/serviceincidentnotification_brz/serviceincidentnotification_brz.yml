@@ -1,0 +1,214 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:experience:serviceincidentnotification_brz-latest
+info:
+  title: CustomerContingencyAssociationRequestedEnriched
+  version: 1.0.0
+  status: active
+  description: Customer contingency association requested enriched
+  domain: experience
+  squad: productoscx
+  owner: Levis Abanto
+  contact:
+    name: Diana Dominguez
+    email: dianafdominguez@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: experience
+    schema: bronze
+terms:
+  usage: Data de usuarios que solicitan qe se les envie las notificaciones por whatsapp
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- experience
+- bronze
+- raw
+models:
+  serviceincidentnotification_brz:
+    catalog: experience
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: 'Guarda la información relacionada a las actualizaciones de precios
+      de los productos.
+
+      Nivel de detalle:
+
+      Almacena cada actualización ocurrida en el tiempo.'
+    universeLogic: Carga directa
+    fields:
+      requestDate:
+        description: Date of the request
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: requestDate
+            xdataTypeField: string
+      requestId:
+        description: Identifier of the request
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: requestId
+            xdataTypeField: string
+      notificationStatus:
+        description: Status of the notification
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: notificationStatus
+            xdataTypeField: string
+      notificationChannel:
+        description: Channel used to the notification
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: notificationChannel
+            xdataTypeField: string
+      contingencyId:
+        description: Identifier of the contingency
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: contingencyId
+            xdataTypeField: string
+      idYapeAccount:
+        description: Identifier of the Yape account
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: idYapeAccount
+            xdataTypeField: string
+      channel:
+        description: Channel origin of the request
+        type: string
+        examples:
+        - YABO
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: channel
+            xdataTypeField: string
+      conversationId:
+        description: Identifier of the conversation
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: conversationId
+            xdataTypeField: string
+      preferredNotificationChannel:
+        description: Preferred notification channel
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: preferredNotificationChannel
+            xdataTypeField: string
+      userInformation:
+        description: User information
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: userInformation
+            xdataTypeField: string
+      issueInformation:
+        description: Issue information
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: issueInformation
+            xdataTypeField: string
+      additionalInformation:
+        description: Additional information
+        type: string
+        examples:
+        - '{transmitterName:YAPE_ALTERNATIVO}'
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: additionalInformation
+            xdataTypeField: string
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels: {}
