@@ -1,0 +1,254 @@
+dataContractSpecification: 0.9.3
+id: urn:datacontract:experience:whatsappNotifier_brz-latest
+info:
+  title: NotificationWhatsappStatus
+  version: 1.0.0
+  status: active
+  description: Schema for Notification Whatsapp Status
+  domain: experience
+  squad: productoscx
+  owner: Levis Abanto
+  contact:
+    name: Diana Dominguez
+    email: dianafdominguez@yape.com.pe
+servers:
+  qa:
+    type: databricks
+    environment: qa
+    host: https://adb-7624286972541238.18.azuredatabricks.net/
+    catalog: experience
+    schema: bronze
+terms:
+  usage: Data de usuarois que solicitan qe seles envie las notificaciones por wjhatsapp
+  limitations: Ninguna
+  policies:
+  - name: yadl-policy-ephemeral-job
+    description: valida políticas específicas dentro del Azure Data Lake / Yape environment.
+tags:
+- experience
+- bronze
+- raw
+models:
+  whatsappNotifier_brz:
+    catalog: experience
+    schema_: bronze
+    type: table
+    tableType: raw
+    description: 'Guarda la información relacionada a las actualizaciones de precios
+      de los productos.
+
+      Nivel de detalle:
+
+      Almacena cada actualización ocurrida en el tiempo.'
+    universeLogic: Carga directa
+    fields:
+      integrationId:
+        description: Unique identifier to integrate with the provider
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: integrationId
+            xdataTypeField: string
+      phoneNumber:
+        description: Customer's cell phone number
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: phoneNumber
+            xdataTypeField: string
+      templateName:
+        description: Name of the template to be used
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: templateName
+            xdataTypeField: string
+      idYapeAccount:
+        description: Unique Yape identifier
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: idYapeAccount
+            xdataTypeField: string
+      templateParams:
+        description: Params to be used in the template
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: templateParams
+            xdataTypeField: string
+      channel:
+        description: Name of channel requested
+        type: string
+        examples:
+        - YABO
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: channel
+            xdataTypeField: string
+      processId:
+        description: Unique identifier for the massive charge process
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: processId
+            xdataTypeField: string
+      requester:
+        description: Mail or abbreviate identifier of the requester
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: requester
+            xdataTypeField: string
+      additionalInformation:
+        description: Additional information for the notification
+        type: string
+        examples:
+        - '{transmitterName:YAPE_ALTERNATIVO}'
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: additionalInformation
+            xdataTypeField: string
+      statusId:
+        description: Identifier of the status of the notification
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: statusId
+            xdataTypeField: string
+      errorDescription:
+        description: Error description in case of failure
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: errorDescription
+            xdataTypeField: string
+      conversationId:
+        description: Unique identifier for the conversation
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: conversationId
+            xdataTypeField: string
+      messageType:
+        description: Type of message
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: messageType
+            xdataTypeField: string
+      requestDate:
+        description: Timestamp of metadata request
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: requestDate
+            xdataTypeField: string
+      processedDate:
+        description: Date of processing the notification on Sunco
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: processedDate
+            xdataTypeField: string
+      requestId:
+        description: Identifier of the request
+        type: string
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: notifier
+            field: requestId
+            xdataTypeField: string
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; '0' fecha de creación del
+              evento, '1' fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              '1'. Si timestampType es '0', corresponde a la fecha de creación del
+              evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels: {}
