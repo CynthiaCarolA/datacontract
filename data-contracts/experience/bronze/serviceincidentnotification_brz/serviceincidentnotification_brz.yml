@@ -49,7 +49,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: requestDate
             xdataTypeField: string
       requestId:
@@ -59,7 +59,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: requestId
             xdataTypeField: string
       notificationStatus:
@@ -69,7 +69,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: notificationStatus
             xdataTypeField: string
       notificationChannel:
@@ -79,7 +79,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: notificationChannel
             xdataTypeField: string
       contingencyId:
@@ -91,7 +91,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: contingencyId
             xdataTypeField: string
       idYapeAccount:
@@ -101,7 +101,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: idYapeAccount
             xdataTypeField: string
       channel:
@@ -111,7 +111,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: channel
             xdataTypeField: string
       conversationId:
@@ -123,7 +123,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: conversationId
             xdataTypeField: string
       preferredNotificationChannel:
@@ -133,7 +133,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: preferredNotificationChannel
             xdataTypeField: string
       userInformation:
@@ -143,7 +143,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: userInformation
             xdataTypeField: string
       issueInformation:
@@ -153,7 +153,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: issueInformation
             xdataTypeField: string
       additionalInformation:
@@ -163,7 +163,7 @@ models:
           inputFields:
           - namespace: VTEX
             xsourceType: kafka
-            name: notifier
+            name: contingency
             field: additionalInformation
             xdataTypeField: string
       metadata:
