@@ -118,7 +118,7 @@ models:
         description: Identifier of the conversation
         type: string
         examples:
-        - '{transmitterName:YAPE_ALTERNATIVO}'
+        - 15ad3df18d11cbdcaffc6d1d
         lineage:
           inputFields:
           - namespace: VTEX
