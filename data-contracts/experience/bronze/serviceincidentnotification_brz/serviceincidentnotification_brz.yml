@@ -85,6 +85,8 @@ models:
       contingencyId:
         description: Identifier of the contingency
         type: string
+        examples:
+        - K600004
         lineage:
           inputFields:
           - namespace: VTEX
@@ -105,8 +107,6 @@ models:
       channel:
         description: Channel origin of the request
         type: string
-        examples:
-        - YAPE WEB
         lineage:
           inputFields:
           - namespace: VTEX
@@ -117,6 +117,8 @@ models:
       conversationId:
         description: Identifier of the conversation
         type: string
+        examples:
+        - '{transmitterName:YAPE_ALTERNATIVO}'
         lineage:
           inputFields:
           - namespace: VTEX
@@ -157,8 +159,6 @@ models:
       additionalInformation:
         description: Additional information
         type: string
-        examples:
-        - '{transmitterName:YAPE_ALTERNATIVO}'
         lineage:
           inputFields:
           - namespace: VTEX

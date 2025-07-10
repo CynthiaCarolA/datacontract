@@ -2549,6 +2549,13 @@ Almacena cada actualización ocurrida en el tiempo.</div>
     
 
     
+    <div class="mt-1 italic">
+      Examples:
+      
+      <span class="font-mono">K600004</span>
+      
+    </div>
+    
 
     
 
@@ -2791,13 +2798,6 @@ Almacena cada actualización ocurrida en el tiempo.</div>
     
 
     
-    <div class="mt-1 italic">
-      Examples:
-      
-      <span class="font-mono">YAPE WEB</span>
-      
-    </div>
-    
 
     
 
@@ -2918,6 +2918,13 @@ Almacena cada actualización ocurrida en el tiempo.</div>
 
     
 
+    
+    <div class="mt-1 italic">
+      Examples:
+      
+      <span class="font-mono">{transmitterName:YAPE_ALTERNATIVO}</span>
+      
+    </div>
     
 
     
@@ -3402,13 +3409,6 @@ Almacena cada actualización ocurrida en el tiempo.</div>
 
     
 
-    
-    <div class="mt-1 italic">
-      Examples:
-      
-      <span class="font-mono">{transmitterName:YAPE_ALTERNATIVO}</span>
-      
-    </div>
     
 
     
@@ -4219,7 +4219,7 @@ Almacena cada actualización ocurrida en el tiempo.</div>
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 10 Jul 2025 16:23:23 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 10 Jul 2025 16:30:57 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -4323,6 +4323,8 @@ models:
       contingencyId:
         type: string
         description: Identifier of the contingency
+        examples:
+        - K600004
         lineage:
           inputFields:
           - namespace: VTEX
@@ -4343,8 +4345,6 @@ models:
       channel:
         type: string
         description: Channel origin of the request
-        examples:
-        - YAPE WEB
         lineage:
           inputFields:
           - namespace: VTEX
@@ -4355,6 +4355,8 @@ models:
       conversationId:
         type: string
         description: Identifier of the conversation
+        examples:
+        - '{transmitterName:YAPE_ALTERNATIVO}'
         lineage:
           inputFields:
           - namespace: VTEX
@@ -4395,8 +4397,6 @@ models:
       additionalInformation:
         type: string
         description: Additional information
-        examples:
-        - '{transmitterName:YAPE_ALTERNATIVO}'
         lineage:
           inputFields:
           - namespace: VTEX
