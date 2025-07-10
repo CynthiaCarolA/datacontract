@@ -19,7 +19,7 @@ servers:
     catalog: experience
     schema: bronze
 terms:
-  usage: Data de usuarios que solicitan qe se les envie las notificaciones por whatsapp
+  usage: Data de usuarios que quieren ser el servicio de service IncidentNotification
   limitations: Ninguna
   policies:
   - name: yadl-policy-ephemeral-job
