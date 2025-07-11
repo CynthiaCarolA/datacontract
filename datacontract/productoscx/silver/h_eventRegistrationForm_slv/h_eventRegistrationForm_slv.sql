@@ -1,7 +1,7 @@
 -- Data Contract: urn:productoscx.silver.h_eventRegistrationForm_slv-latest
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE productoscx.silver.h_eventRegistrationForm_slv (
-  eventRegistrationFormId STRING COMMENT "De tipo string, este campo actúa como identificador único del registro de cada formulario, lo cual es esencial para la trazabilidad y para mantener la integridad de la información almacenada. Al ser una llave técnica, permite que cada registro sea inmutable y único dentro de la base de datos. Ejemplo: 4d3b6696-a8d7-4c01-a527-2950c62f2521. (Llave Técnica)." not null,
+  eventRegistrationFormId STRING COMMENT "esto es una prueba con el campo indiacaoodios." not null,
   campaignName STRING COMMENT "Un campo string que contiene el nombre descriptivo de la campaña asociada al formulario. Esto facilita la identificación de los registros vinculados a campañas de marketing o investigaciones específicas, lo cual es útil para análisis posteriores. Ejemplo: Campaña Verano OXXO.",
   campaignId STRING COMMENT "Este campo string almacena un identificador único y alfanumérico para cada campaña. Es una llave de negocio que permite agrupar y analizar las respuestas en función de la campaña correspondiente, ayudando a gestionar campañas de forma eficiente. Ejemplo: 03052024_campaña_verano_oxxo. (Llave de Negocio).",
   accountId STRING COMMENT "De tipo string, este campo identifica la cuenta Yape del usuario que completa el formulario. Aunque los formularios no es de uso exclusivo de los “Yaperos”, permite distinguir si el usuario tiene una cuenta en Yape, lo cual facilita segmentar las respuestas por tipo de usuario. Ejemplo: 5cbfce31eef3581dbb2e5a8490d4ac7b.",

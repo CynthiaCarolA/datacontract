@@ -49,11 +49,7 @@ models:
     fields:
       eventRegistrationFormId:
         type: string
-        description: 'De tipo string, este campo actúa como identificador único del
-          registro de cada formulario, lo cual es esencial para la trazabilidad y
-          para mantener la integridad de la información almacenada. Al ser una llave
-          técnica, permite que cada registro sea inmutable y único dentro de la base
-          de datos. Ejemplo: 4d3b6696-a8d7-4c01-a527-2950c62f2521. (Llave Técnica).'
+        description: esto es una prueba con el campo indiacaoodios.
         required: true
         primary_key: true
         loadrule: 'Carga directa desde el aplicativo fuente. '
