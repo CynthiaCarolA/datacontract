@@ -1,0 +1,1060 @@
+dataContractSpecification: 0.9.3
+id: urn:productoscx.silver.h_eventRegistrationForm_slv-latest
+info:
+  title: Registros de Formularios Web Yape
+  version: 1.0.0
+  status: active
+  description: Tabla que almacena los datos de cada registro enviado por usuarios
+    a través del formulario web de Yape, incluyendo el ID, la fecha y hora del registro,
+    y el nombre de la campaña asociada.
+  owner: Jean Paul Castro Grados
+  contact:
+    name: Ronny Corzo Huaman
+    email: ronnycorzo@yape.com.pe
+  domain: productoscx
+  squad: SQ AUTOATENCION
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: productoscx
+    schema: silver
+terms:
+  usage: Esta tabla tiene como finalidad identificar y almacenar los registros realizados
+    por los usuarios a través del formulario web de Yape, permitiendo el análisis
+    y seguimiento de las campañas y la actividad de los usuarios.
+  limitations: Ninguna
+tags:
+- productoscx
+- silver
+- historical
+models:
+  h_eventRegistrationForm_slv:
+    description: 'Esta tabla guarda toda la información de los registros enviados
+      a través del formulario en la web de Yape.
+
+      Nivel de detalle:
+
+      Esta tabla almacena cada registro enviado por "id" del registro, fecha y hora
+      del registro y nombre de la campaña.
+
+      Consideraciones:
+
+      Esta tabla/evento tiene la finalidad de identificar los registros realizados
+      de los usuarios.'
+    type: table
+    tableType: historical
+    universeLogic: Carga directa
+    fields:
+      eventRegistrationFormId:
+        type: string
+        description: esto es una prueba con el campo indiacaoodios.
+        required: true
+        primary_key: true
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 4d3b6696-a8d7-4c01-a527-2950c62f2521
+        xqualityFieldValidations:
+          xnullity: false
+          unique: true
+        quality:
+        - type: sql
+          description: Validación de que el campo eventRegistrationFormId no tenga
+            null o vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            eventRegistrationFormId IS NULL OR eventRegistrationFormId = ''
+          mustBe: 0
+        - type: sql
+          description: Validacion de unicidad campo eventRegistrationFormId.
+          query: select count(*) from (select count(*) from None.silver.h_eventRegistrationForm_slv
+            GROUP BY eventRegistrationFormId HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: id
+            xdataTypeField: string
+      campaignName:
+        type: string
+        description: 'Un campo string que contiene el nombre descriptivo de la campaña
+          asociada al formulario. Esto facilita la identificación de los registros
+          vinculados a campañas de marketing o investigaciones específicas, lo cual
+          es útil para análisis posteriores. Ejemplo: Campaña Verano OXXO.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - Campaña Verano OXXO
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: campaignName
+            xdataTypeField: string
+      campaignId:
+        type: string
+        description: 'Este campo string almacena un identificador único y alfanumérico
+          para cada campaña. Es una llave de negocio que permite agrupar y analizar
+          las respuestas en función de la campaña correspondiente, ayudando a gestionar
+          campañas de forma eficiente. Ejemplo: 03052024_campaña_verano_oxxo. (Llave
+          de Negocio).'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 03052024_campaña_verano_oxxo
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo campaignId no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            campaignId IS NULL OR campaignId = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: campaignID
+            xdataTypeField: string
+      accountId:
+        type: string
+        description: 'De tipo string, este campo identifica la cuenta Yape del usuario
+          que completa el formulario. Aunque los formularios no es de uso exclusivo
+          de los “Yaperos”, permite distinguir si el usuario tiene una cuenta en Yape,
+          lo cual facilita segmentar las respuestas por tipo de usuario. Ejemplo:
+          5cbfce31eef3581dbb2e5a8490d4ac7b.'
+        references: core.silver.m_account_slv.accountId
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 5cbfce31eef3581dbb2e5a8490d4ac7b
+        xqualityFieldValidations:
+          xnullity: true
+          xreferentialIntegrity: true
+        quality:
+        - type: sql
+          description: Validacion de integridad referencial del campo accountId.
+          query: select count(*) from (SELECT d.accountId FROM None.silver.h_eventRegistrationForm_slv
+            d LEFT ANTI JOIN core_desa.silver.m_account_slv m ON d.accountId = m.accountId)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: idYapeAccount
+            xdataTypeField: string
+      idcCd:
+        type: string
+        description: Field idcCd
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo idcCd.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            idcCd IS NOT NULL AND idcCd NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: idc
+            xdataTypeField: string
+      userId:
+        type: string
+        description: Field userId
+        references: core.silver.m_user_slv.userId
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        xqualityFieldValidations:
+          xnullity: false
+          xreferentialIntegrity: true
+        quality:
+        - type: sql
+          description: Validación de que el campo userId no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            userId IS NULL OR userId = ''
+          mustBe: 0
+        - type: sql
+          description: Validacion de integridad referencial del campo userId.
+          query: select count(*) from (SELECT d.userId FROM None.silver.h_eventRegistrationForm_slv
+            d LEFT ANTI JOIN core_desa.silver.m_user_slv m ON d.userId = m.userId)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: silver
+            name: h_eventRegistrationForm_slv
+            field: idcCd
+            xdataTypeField: string
+      phoneNum:
+        type: string
+        description: 'Este campo string contiene el número de teléfono del usuario,
+          lo cual permite el contacto directo y se utiliza como un dato de alta criticidad
+          (DAC) debido a su sensibilidad. Ejemplo: +51931987654. (DAC).'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo phoneNum.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            phoneNum IS NOT NULL AND phoneNum NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: phoneNumber
+            xdataTypeField: string
+      userEmailDesc:
+        type: string
+        description: 'De tipo string, el campo almacena la dirección de correo electrónico
+          del usuario. Esto facilita la comunicación mediante correo y, al igual que
+          otros datos de contacto, es considerado de alta criticidad (DAC). Ejemplo:
+          ejemplo@correo.com. (DAC). Debe estar cifrado'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo userEmailDesc.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            userEmailDesc IS NOT NULL AND userEmailDesc NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: email
+            xdataTypeField: string
+      givenName:
+        type: string
+        description: Un campo string que guarda el nombre del usuario. Este dato es
+          utilizado para la personalización de las interacciones y, debido a su carácter
+          identificable, es de alta criticidad (DAC). Debe estar cifrado
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo givenName.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            givenName IS NOT NULL AND givenName NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: firstName
+            xdataTypeField: string
+      firstFamilyName:
+        type: string
+        description: 'De tipo string, este campo registra el primer apellido (apellido
+          paterno) del usuario, facilitando su identificación completa y es tratado
+          como dato de alta criticidad (DAC). Ejemplo: Pérez. (DAC). Debe venir cifrado'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo firstFamilyName.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            firstFamilyName IS NOT NULL AND firstFamilyName NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: lastName
+            xdataTypeField: string
+      secondFamilyName:
+        type: string
+        description: 'Campo string que almacena el segundo apellido (apellido materno)
+          del usuario, que en conjunto con el primer apellido permite una identificación
+          completa. Este campo también es considerado de alta criticidad (DAC). Ejemplo:
+          Noriega. (DAC). Debe venir cifrado'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo secondFamilyName.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            secondFamilyName IS NOT NULL AND secondFamilyName NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: motherLastName
+            xdataTypeField: string
+      addressDepartmentCd:
+        type: string
+        description: 'Un campo integer que guarda el código del departamento al que
+          pertenece el usuario. Este dato es fundamental para segmentaciones geográficas
+          a nivel macro y no es de alta criticidad. Ejemplo: 01.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 1
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: departmentCode
+            xdataTypeField: string
+      addressProvinceCd:
+        type: string
+        description: 'De tipo integer, este campo almacena el código de la provincia
+          donde reside el usuario, útil para segmentaciones más precisas en análisis
+          geográficos. Ejemplo: 01.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 1
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: provinceCode
+            xdataTypeField: string
+      addressDistrictCd:
+        type: string
+        description: 'Este campo integer contiene el código del distrito del usuario,
+          lo que permite un análisis detallado a nivel distrital, sin embargo, no
+          es de alta criticidad. Ejemplo: 02.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 2
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: districtCode
+            xdataTypeField: string
+      referredByName:
+        type: string
+        description: 'Un campo string que almacena el nombre de la persona que refirió
+          al usuario, permitiendo rastrear la efectividad de referencias en campañas.
+          Considerado de alta criticidad (DAC) por su potencial uso en identificación
+          personal. Ejemplo: María López. (DAC). Debe venir cifrado'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo referredByName.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            referredByName IS NOT NULL AND referredByName NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: referredBy
+            xdataTypeField: string
+      termAndConditionAgreementFlg:
+        type: string
+        description: 'Este campo string indica si el usuario aceptó los términos y
+          condiciones del formulario (checkbox), necesario para cumplir con los requisitos
+          legales de consentimiento. '
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - S, N
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: tycConsent
+            xdataTypeField: string
+      privacyPolicyAgreementFlg:
+        type: string
+        description: 'De tipo string, muestra si el usuario aceptó las políticas de
+          privacidad del formulario (checkbox), necesario para el cumplimiento de
+          normativas de protección de datos. '
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - S, N
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: pdpConsent
+            xdataTypeField: string
+      favoriteMovieDesc:
+        type: string
+        description: Un campo string que recoge el título de la película favorita
+          del usuario, útil para personalizar campañas y análisis de preferencias.
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - Titanic
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field:  additionalFields.favoriteMovie
+            xdataTypeField: string
+      favoriteFoodDesc:
+        type: string
+        description: 'Este campo string almacena la comida favorita del usuario, lo
+          cual permite segmentar y personalizar comunicaciones basadas en preferencias
+          personales. Ejemplo: Ceviche.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - Ceviche
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field:  additionalFields.favoriteFood
+            xdataTypeField: string
+      businessStruct:
+        type: struct
+        description: Contiene  los campos que solo un negocio puee aplicar.
+        loadrule: not defined
+        fields:
+          mbBusinessLineTypeCd:
+            type: string
+            description: 'Este campo  describe el codigo del sector en el cual opera
+              el negocio del usuario, útil para segmentaciones basadas en la industria.
+              Es relevante para analizar tendencias por sector y no se clasifica como
+              dato crítico. Ejemplo: Tecnología.'
+            loadrule: 'Para cargar este campo se tiene que buscar el valor fuente
+              en el catalogo ya creado y devolver el codigo '
+            examples:
+            - Tecnología
+            xqualityFieldValidations:
+              xnullity: true
+            lineage:
+              inputFields:
+              - namespace: lakehouse
+                xcatalog: productoscx
+                xschema: bronze
+                name: yapewebforms_brz
+                field: businessSector
+                xdataTypeField: string
+          phoneNum:
+            type: string
+            description: 'De tipo string, contiene el número telefónico del negocio
+              del usuario. Permite el contacto comercial y, debido a su naturaleza
+              de contacto directo, se clasifica como dato de alta criticidad (DAC).
+              Ejemplo: +51931987653. (DAC). Debe venir cifrado '
+            loadrule: 'Carga directa desde el aplicativo fuente. '
+            examples:
+            - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+            pii: true
+            xqualityFieldValidations:
+              xnullity: false
+              xencrypted: true
+            quality:
+            - type: sql
+              description: Validación de que el campo phoneNum no tenga null o vacíos
+                en la data.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE phoneNum IS NULL OR phoneNum = ''
+              mustBe: 0
+            - type: sql
+              description: Validación de encriptado del campo phoneNum.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE phoneNum IS NOT NULL AND phoneNum NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+              mustBe: 0
+            lineage:
+              inputFields:
+              - namespace: lakehouse
+                xcatalog: productoscx
+                xschema: bronze
+                name: yapewebforms_brz
+                field: businessPhoneNumber
+                xdataTypeField: string
+          addressDesc:
+            type: string
+            description: 'Este campo string almacena la dirección física del negocio
+              del usuario, útil para segmentación geográfica y contacto, también considerado
+              de alta criticidad (DAC). Ejemplo: Calle Principal 123, Ciudad. (DAC).
+              Este campo debe venir cifrado'
+            loadrule: 'Carga directa desde el aplicativo fuente. '
+            examples:
+            - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+            pii: true
+            xqualityFieldValidations:
+              xnullity: false
+              xencrypted: true
+            quality:
+            - type: sql
+              description: Validación de que el campo addressDesc no tenga null o
+                vacíos en la data.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE addressDesc IS NULL OR addressDesc = ''
+              mustBe: 0
+            - type: sql
+              description: Validación de encriptado del campo addressDesc.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE addressDesc IS NOT NULL AND addressDesc NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+              mustBe: 0
+            lineage:
+              inputFields:
+              - namespace: lakehouse
+                xcatalog: productoscx
+                xschema: bronze
+                name: yapewebforms_brz
+                field: businessAddress
+                xdataTypeField: string
+          tradeName:
+            type: string
+            description: Nombre comercial del negocio tal como fue registrado por
+              el usuario. Este campo representa la denominación bajo la cual el cliente
+              desea ser identificado en los canales digitales o físicos, y puede incluir
+              razón social, nombre de fantasía o marca registrada. Se utiliza para
+              fines de identificación, segmentación y validación en procesos comerciales
+              y operativos.
+            loadrule: 'Carga directa desde el aplicativo fuente. '
+            examples:
+            - '"Panadería El Trigal", "Yape Detalles S.A.C.", "Tiendas Mi Mundo"'
+            xqualityFieldValidations:
+              xnullity: false
+            quality:
+            - type: sql
+              description: Validación de que el campo tradeName no tenga null o vacíos
+                en la data.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE tradeName IS NULL OR tradeName = ''
+              mustBe: 0
+            lineage:
+              inputFields:
+              - namespace: lakehouse
+                xcatalog: productoscx
+                xschema: bronze
+                name: yapewebforms_brz
+                field: businessName
+                xdataTypeField: string
+          operationChannelTypeDesc:
+            type: string
+            description: Define la naturaleza operativa del negocio. Puede tomar valores
+              como “física”, “digital”, o combinaciones como “mixta”. Este campo permite
+              diferenciar los canales de venta utilizados por el negocio, lo cual
+              es esencial para personalizar servicios, habilitar funcionalidades específicas
+              (como pasarelas de pago o catálogos digitales) y para análisis de estrategia
+              comercial.
+            loadrule: 'Carga directa desde el aplicativo fuente. '
+            examples:
+            - '"física", "digital", "mixta"'
+            xqualityFieldValidations:
+              xnullity: false
+            quality:
+            - type: sql
+              description: Validación de que el campo operationChannelTypeDesc no
+                tenga null o vacíos en la data.
+              query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                WHERE operationChannelTypeDesc IS NULL OR operationChannelTypeDesc
+                = ''
+              mustBe: 0
+            lineage:
+              inputFields:
+              - namespace: lakehouse
+                xcatalog: productoscx
+                xschema: bronze
+                name: yapewebforms_brz
+                field: typeOfStore
+                xdataTypeField: string
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo businessStruct no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            businessStruct IS NULL OR businessStruct = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: businessSector,productoscx.bronze.yapewebforms_brz.businessPhoneNumber,productoscx.bronze.yapewebforms_brz.businessAddress,productoscx.bronze.yapewebforms_brz.businessName,productoscx.bronze.yapewebforms_brz.typeOfStore
+            xdataTypeField: string
+      skuClassificationArray:
+        type: array
+        description: Array que contiene la estructura del departamento, categoría
+          y subcategoría a la que pertenece el SKU.
+        loadrule: Carga directa
+        items:
+          type: struct
+          description: Items del campo {field_name}
+          fields:
+            departmentCd:
+              type: string
+              description: Identificador del departamento al que pertenece el SKU.
+                Cada SKU está asociado a una subcategoría de productos; a su vez,
+                cada subcategoría forma parte de una categoría, y todas las categorías
+                se agrupan dentro de departamentos. Este valor no puede estar vacío.
+              loadrule: Carga directa
+              examples:
+              - 1
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo departmentCd no tenga null
+                  o vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE departmentCd IS NULL OR departmentCd = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.departmentCd
+                  xdataTypeField: string
+            departmentDesc:
+              type: string
+              description: Nombre del departamento al que pertenece el SKU. Cada SKU
+                se asocia a una subcategoría, que pertenece a una categoría, y esta
+                a un departamento. Este valor no puede estar vacío.
+              loadrule: Carga directa
+              examples:
+              - tienda
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo departmentDesc no tenga null
+                  o vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE departmentDesc IS NULL OR departmentDesc = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.departmentDesc
+                  xdataTypeField: string
+            categoryCd:
+              type: string
+              description: Identificador de la categoría a la que pertenece el SKU.
+                Este valor no puede estar vacío.
+              loadrule: Carga directa
+              examples:
+              - 12
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo categoryCd no tenga null o
+                  vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE categoryCd IS NULL OR categoryCd = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.categoryCd
+                  xdataTypeField: string
+            categoryDesc:
+              type: string
+              description: Nombre de la categoría a la que pertenece el SKU. Este
+                valor  no puede estar vacío.
+              loadrule: En caso el flag de categoría principal es category.principalflg
+                = 'true', entonces colocar S. En caso el flag de categoría principal
+                es category.principalflg = 'false', entonces colocar N.
+              examples:
+              - ropa
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo categoryDesc no tenga null
+                  o vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE categoryDesc IS NULL OR categoryDesc = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.cartegoryDesc
+                  xdataTypeField: string
+            subCategoryCd:
+              type: string
+              description: Identificador de la subcategoría a la que pertenece el
+                SKU.
+              loadrule: --
+              examples:
+              - 20
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo subCategoryCd no tenga null
+                  o vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE subCategoryCd IS NULL OR subCategoryCd = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.subCategoryCd
+                  xdataTypeField: string
+            subCategoryDesc:
+              type: string
+              description: Nombre que identifica la subcategoría a la que pertenece
+                el SKU.
+              loadrule: En caso el indicador de activado de la categoría principal
+                es IsDirectCategoryActive = 'true', entonces colocar S. En caso el
+                indicador de activado de la categoría principal es IsDirectCategoryActive
+                = 'false', entonces colocar N.
+              examples:
+              - ropa mujer
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: Validación de que el campo subCategoryDesc no tenga null
+                  o vacíos en la data.
+                query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE subCategoryDesc IS NULL OR subCategoryDesc = ''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.subCategoryDesc
+                  xdataTypeField: string
+            'principalflg:':
+              type: string
+              description: Indica si se trata de la categoría principal del SKU.
+              loadrule: Carga directa
+              examples:
+              - S / N
+              xqualityFieldValidations:
+                xnullity: false
+              quality:
+              - type: sql
+                description: 'Validación de que el campo principalflg: no tenga null
+                  o vacíos en la data.'
+                query: 'SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv
+                  WHERE principalflg: IS NULL OR principalflg: = '''''
+                mustBe: 0
+              lineage:
+                inputFields:
+                - namespace: lakehouse
+                  xcatalog: retail_desa
+                  xschema: bronze
+                  name: tiendaCatalogSku_brz
+                  field: category.principalflg
+                  xdataTypeField: string
+        examples:
+        - "\"category\": [\n        {\n          \"departmentCd\": 1,\n          \"\
+          departmentDesc\": \"tienda\",\n          \"categoriaCd\": 13,\n        \
+          \  \"categoriaDesc\": \"Linea blanca\",\n          \"subCategoriaCd\": 20,\n\
+          \          \"subCategoriaDesc\": \"cocina\",\n          \"principalflg\"\
+          : true\n        },\n        {\n          \"departmentCd\": 1,\n        \
+          \  \"departmentDesc\": \"tienda\",\n          \"categoriaCd\": 12,\n   \
+          \       \"categoriaDesc\": \"Ropa\",\n          \"subCategoriaCd\": 20,\n\
+          \          \"subCategoriaDesc\": \"Ropa mujer\",\n          \"principalflg\"\
+          : false\n        }\n      ]"
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: retail_desa
+            xschema: bronze
+            name: tiendaCatalogSku_brz
+            field: category
+            xdataTypeField: string
+      socialMediaDesc:
+        type: array
+        description: Contiene uno o varios enlaces a las redes sociales oficiales
+          del negocio (Facebook, Instagram, TikTok, etc.). Este campo permite establecer
+          un canal adicional de verificación, conocer el nivel de digitalización del
+          comercio, y eventualmente enriquecer el perfil digital del cliente para
+          fines de marketing, análisis de reputación o vinculación con plataformas
+          externas.
+        loadrule: 'Este campo se tiene que cargar cifrado tal cual viene '
+        items:
+          type: string
+          description: Items of field socialMediaDesc
+        examples:
+        - '"https://www.facebook.com/pastelerialosandes","https://instagram.com/latiendita.pe"'
+        pii: true
+        xqualityFieldValidations:
+          xnullity: false
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de que el campo socialMediaDesc no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            socialMediaDesc IS NULL OR size(socialMediaDesc) = 0;
+          mustBe: 0
+        - type: sql
+          description: Validación de encriptado del campo socialMediaDesc.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            socialMediaDesc IS NOT NULL AND socialMediaDesc NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: socialMedia
+            xdataTypeField: string
+      employeeCd:
+        type: string
+        description: 'Campo que contiende la Matrícula del colaborador '
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: false
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de que el campo employeeCd no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            employeeCd IS NULL OR employeeCd = ''
+          mustBe: 0
+        - type: sql
+          description: Validación de encriptado del campo employeeCd.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            employeeCd IS NOT NULL AND employeeCd NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: colabID
+            xdataTypeField: string
+      employeeEmailDesc:
+        type: string
+        description: 'Campo que contiene el Correo del colaborador, este campo es
+          DAC y debe estar cifrado '
+        loadrule: Campo que debe estar cifrado desde bronze
+        examples:
+        - 7336e1c8-8ef3-4e9a-8b98-7427ee306f34
+        pii: true
+        xqualityFieldValidations:
+          xnullity: false
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de que el campo employeeEmailDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            employeeEmailDesc IS NULL OR employeeEmailDesc = ''
+          mustBe: 0
+        - type: sql
+          description: Validación de encriptado del campo employeeEmailDesc.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            employeeEmailDesc IS NOT NULL AND employeeEmailDesc NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: colabEmail
+            xdataTypeField: string
+      relationshipWithReferralDesc:
+        type: string
+        description: 'Campo que contiene el Vinculo con el referido dentro del formulario '
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        examples:
+        - Primo
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo relationshipWithReferralDesc no
+            tenga null o vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            relationshipWithReferralDesc IS NULL OR relationshipWithReferralDesc =
+            ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: referredLink
+            xdataTypeField: string
+      recordCreationTs:
+        type: timestamp
+        description: 'Este campo representa la fecha y hora exacta en que se generó
+          la solicitud por parte del usuario, registrada en formato UTC -5 y con el
+          formato yyyy-MM-dd''T''HH:mm
+
+          . Este campo es crucial para rastrear el momento específico de cada solicitud,
+          lo que facilita el análisis temporal de incidencias y la gestión cronológica
+          de las notificaciones. Ejemplos de valores posibles incluyen: ''2023-12-05
+          22:43:18'' y ''2023-12-31 09:01:12''.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo recordCreationTs no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            recordCreationTs IS NULL OR recordCreationTs = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: bronze
+            name: yapewebforms_brz
+            field: eventDate
+            xdataTypeField: string
+      recordCreationDt:
+        type: date
+        description: 'Este campo representa la fecha  exacta en que se generó la solicitud
+          por parte del usuario, registrada en formato UTC -5 y con el formato yyyy-MM-dd''T''HH:mm
+
+          . Este campo es crucial para rastrear el momento específico de cada solicitud,
+          lo que facilita el análisis temporal de incidencias y la gestión cronológica
+          de las notificaciones. Ejemplos de valores posibles incluyen: ''2023-12-05
+          22:43:18'' y ''2023-12-31 09:01:12''.'
+        loadrule: 'Carga directa desde el aplicativo fuente. '
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo recordCreationDt no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM None.silver.h_eventRegistrationForm_slv WHERE
+            recordCreationDt IS NULL OR recordCreationDt = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: productoscx
+            xschema: silver
+            name: h_eventRegistrationForm_slv
+            field: recordCreationTs
+            xdataTypeField: string
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+    config:
+      clustering:
+        fields:
+        - recordCreationDt
+        - eventRegistrationFormId
+        - campaignName
+        - idcCd
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    type: streaming
+    description: 'Carga en streaming: los registros se almacenan de forma continua
+      conforme el usuario llena el formulario.'
+    interval: No aplica
