@@ -1,0 +1,669 @@
+dataContractSpecification: 0.9.3
+id: urn:core.silver.m_yapebanner_slv-latest
+info:
+  title: Tabla Maestra de Configuración de Banners Publicitarios
+  version: 1.0.0
+  status: active
+  description: Consolida la configuración de banners publicitarios desde el Backoffice,
+    utilizada para personalización en el aplicativo y modelos de recomendación (ML).
+    Estructurada y normalizada desde Postgres.
+  owner: Angello Sebastian Vasquez Carbajal
+  contact:
+    name: Enrique Huasupoma Malca
+    email: enriquehuasupomam@yape.com.pe
+    nickame: dianafdominguez
+  domain: core
+  squad: SQ CONNECT
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: core
+    schema: silver
+terms:
+  usage: La configuración de banners publicitarios, debe ser utilizada exclusivamente
+    para fines de analítica.
+  limitations: Ninguna
+tags:
+- core
+- silver
+- master
+models:
+  m_yapebanner_slv:
+    description: Tabla maestra que consolida la configuración de banners publicitarios
+      gestionados desde el Backoffice. Esta configuración es utilizada tanto para
+      la visualización personalizada en el aplicativo como para alimentar modelos
+      de recomendación (ML). La tabla es estructurada y normalizada a partir del origen
+      transaccional en Postgres.
+    type: table
+    tableType: master
+    universeLogic: Carga directa
+    fields:
+      yapeBannerId:
+        type: string
+        description: Identificador único del banner, generado desde Backoffice. Actúa
+          como clave primaria de la tabla y permite trazabilidad entre capas del modelo
+          de datos.
+        required: true
+        primary_key: true
+        loadrule: Carga directa
+        examples:
+        - 5cbfce31eef3581dbb2e5a8490d4ac7b
+        xqualityFieldValidations:
+          xnullity: false
+          unique: true
+        quality:
+        - type: sql
+          description: Validación de que el campo yapeBannerId no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE yapeBannerId
+            IS NULL OR yapeBannerId = ''
+          mustBe: 0
+        - type: sql
+          description: Validacion de unicidad campo yapeBannerId.
+          query: select count(*) from (select count(*) from core_desa.silver.m_yapebanner_slv
+            GROUP BY yapeBannerId HAVING COUNT(*) > 1)
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: id
+            xdataTypeField: string
+      segmentationTypeDesc:
+        type: string
+        description: Estrategia de segmentación del banner. Puede ser MASIVO (por
+          owner), SEGMENTADO (por segmentos), NBP (a nivel usuario) o DEFAULT (fallback
+          genérico).
+        loadrule: Carga directa
+        examples:
+        - MASIVO
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo segmentationTypeDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE segmentationTypeDesc
+            IS NULL OR segmentationTypeDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: banner_type_position
+            xdataTypeField: string
+      blacklistSegmentDesc:
+        type: array
+        description: Lista de segmentos a los cuales no se debe mostrar el banner,
+          incluso si cumplen otros criterios. Actúa como lista de exclusión (blacklist
+          lógica).
+        loadrule: Carga directa
+        items:
+          type: string
+          description: Items of field blacklistSegmentDesc
+        examples:
+        - '[testqanewlabel40, testqanewlabel39]'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: blacklist
+            xdataTypeField: string
+      confirmationMessageDesc:
+        type: string
+        description: Texto de confirmación que aparece en el modal al realizar una
+          donación. Solo aplica para banners de tipo DONATION.
+        loadrule: Carga directa
+        examples:
+        - Perú Manos Unidas
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: confirmation_name
+            xdataTypeField: string
+      organizationName:
+        type: string
+        description: Nombre de la organización u ONG asociada al banner. Aplica únicamente
+          para banners de tipo DONATION.
+        loadrule: Carga directa
+        examples:
+        - Perú Manos Unidas
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: organization_name
+            xdataTypeField: string
+      deeplinkDesc:
+        type: string
+        description: Enlace interno que redirige al usuario a una funcionalidad específica
+          de la app (e.g., recargas, pagos) al hacer tap en el banner.
+        loadrule: Carga directa
+        examples:
+        - yape://yape.com.pe/app/recharges
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: deeplink
+            xdataTypeField: string
+      organizationPhoneNum:
+        type: string
+        description: Número de celular de la ONG que recibe las donaciones. Este campo
+          solo se utiliza cuando el banner es de tipo DONATION. Campo DAC tiene que
+          ir cifrado
+        loadrule: Tiene que ir cifrado
+        examples:
+        - 51999999999
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+          xencrypted: true
+        quality:
+        - type: sql
+          description: Validación de encriptado del campo organizationPhoneNum.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE organizationPhoneNum
+            IS NOT NULL AND organizationPhoneNum NOT RLIKE '^[A-Za-z0-9+/=]{20,}$'
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: phone_donation
+            xdataTypeField: string
+      targetProviderDesc:
+        type: array
+        description: Lista de owner providers (como BCP, YAPEDIGITAL) a quienes se
+          dirige el banner. Aplica solo cuando banner_type_position = MASIVO.
+        loadrule: Carga directa
+        items:
+          type: string
+          description: Items of field targetProviderDesc
+        examples:
+        - '[BCP, YAPEDIGITAL]'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo targetProviderDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE targetProviderDesc
+            IS NULL OR size(targetProviderDesc) = 0;
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: Owner
+            xdataTypeField: string
+      targetSegmentDesc:
+        type: array
+        description: Lista de segmentos objetivo definidos para el banner. Solo se
+          usa si banner_type_position = SEGMENTADO.
+        loadrule: Carga directa
+        items:
+          type: string
+          description: Items of field targetSegmentDesc
+        examples:
+        - '[testqanewlabel42, testqanewlabel43, testqanewlabel44]'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: segment
+            xdataTypeField: string
+      contentOwnerDesc:
+        type: string
+        description: Producto o flujo del app que solicita la publicación del banner
+          (ej. RECARGAS). Ayuda a identificar al área dueña del contenido.
+        loadrule: Carga directa
+        examples:
+        - RECARGAS
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: Petitioner
+            xdataTypeField: string
+      carouselPositionNum:
+        type: int
+        description: Orden relativo del banner en el carrusel de visualización. A
+          menor valor, mayor prioridad visual.
+        loadrule: Carga directa
+        examples:
+        - 1
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo carouselPositionNum no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE carouselPositionNum
+            IS NULL OR carouselPositionNum = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: Position
+            xdataTypeField: string
+      bannerTypeDesc:
+        type: string
+        description: Tipo de banner. Puede ser NAVIGATION (informativo, funcional)
+          o DONATION (dirigido a campañas de donación).
+        loadrule: Carga directa
+        examples:
+        - NAVIGATION
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo bannerTypeDesc no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE bannerTypeDesc
+            IS NULL OR bannerTypeDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: type
+            xdataTypeField: string
+      bannerStatusTypeDesc:
+        type: string
+        description: Estado del banner dentro del flujo de gestión (BORRADOR, VALIDACION,
+          APROBADO, ELIMINADO). Solo los banners aprobados son vigentes.
+        loadrule: Carga directa
+        examples:
+        - APROBADO
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo bannerStatusTypeDesc no tenga null
+            o vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE bannerStatusTypeDesc
+            IS NULL OR bannerStatusTypeDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: Status
+            xdataTypeField: string
+      titleDesc:
+        type: string
+        description: Título visible del banner, definido por el equipo de producto
+          o marketing.
+        loadrule: Carga directa
+        examples:
+        - Envios a 10 soles
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo titleDesc no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE titleDesc
+            IS NULL OR titleDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: title
+            xdataTypeField: string
+      imageUrl:
+        type: string
+        description: URL donde se encuentra alojada la imagen que será mostrada en
+          el banner.
+        loadrule: Carga directa
+        examples:
+        - yape://yape.com.pe/app/recharges
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo imageUrl no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE imageUrl
+            IS NULL OR imageUrl = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: url_image
+            xdataTypeField: string
+      productTypeDesc:
+        type: string
+        description: Producto asociado al banner. Se usará para segmentación avanzada
+          o modelos de recomendación (NBP).
+        loadrule: Carga directa
+        examples:
+        - Recargas
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo productTypeDesc no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE productTypeDesc
+            IS NULL OR productTypeDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: product
+            xdataTypeField: string
+      displayScreenDesc:
+        type: string
+        description: 'Pantalla específica de la app donde debe aparecer el banner
+          (por ejemplo: BENEFICIOS_DMS, HOME, etc.).'
+        loadrule: Carga directa
+        examples:
+        - BENEFICIOS_DMS
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: view_scope
+            xdataTypeField: string
+      descriptionDesc:
+        type: string
+        description: Texto accesible o alternativo del banner. Se usa para funciones
+          de accesibilidad y en algunos casos para enriquecer la semántica del banner.
+        loadrule: Carga directa
+        examples:
+        - Realiza compras con envios desde 10 soles por Yape Tienda
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo descriptionDesc no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE descriptionDesc
+            IS NULL OR descriptionDesc = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: Description
+            xdataTypeField: string
+      startTs:
+        type: timestamp
+        description: Fecha y hora de inicio de vigencia del banner convertido a hora
+          peru UTC. -5
+        loadrule: Carga en el formato de fecha y hora
+        examples:
+        - '''2025-06-12 12:23:432'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: start_date
+            xdataTypeField: string
+      startDt:
+        type: date
+        description: Fecha  de inicio de vigencia del banner convertido a hora peru
+          UTC. -5
+        loadrule: Deriva de startTs
+        examples:
+        - '''2025-06-12'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo startDt no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE startDt
+            IS NULL OR startDt = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: silver
+            name: m_yapeBanner_slv
+            field: startTs
+            xdataTypeField: string
+      endTs:
+        type: timestamp
+        description: Fecha y hora de finalización de la vigencia del banner convertido
+          a hora peru UTC. -5
+        loadrule: Carga en el formato de fecha y hora
+        examples:
+        - '''2025-06-12 12:23:432'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo endTs no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE endTs
+            IS NULL OR endTs = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: end_date
+            xdataTypeField: string
+      endDt:
+        type: date
+        description: Fecha  de finalización de la vigencia del banner convertido a
+          hora peru UTC. -5
+        loadrule: Deriva de endTs
+        examples:
+        - '''2025-06-12'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo endDt no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE endDt
+            IS NULL OR endDt = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: silver
+            name: m_yapeBanner_slv
+            field: endTs
+            xdataTypeField: string
+      recordCreationTs:
+        type: timestamp
+        description: Campo que corresponde a la fecha y hora de creación del home
+          banner. Se tiene que llevar a UTC - 5
+        loadrule: Carga en el formato de fecha y hora
+        examples:
+        - '''2025-06-12 12:23:432'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: created_at
+            xdataTypeField: string
+      recordCreationDt:
+        type: date
+        description: Campo que corresponde a la fecha de creación del home banner.
+          Se tiene que llevar a UTC - 5
+        loadrule: Deriva de recordCreationTs
+        examples:
+        - '''2025-06-12'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo recordCreationDt no tenga null o
+            vacíos en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE recordCreationDt
+            IS NULL OR recordCreationDt = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: silver
+            name: m_yapeBanner_slv
+            field: recordCreationTs
+            xdataTypeField: string
+      deletedFlg:
+        type: string
+        description: Indicador lógico para señalar eliminación  (soft delete). Si
+          es 'S', el registro ha sido eliminado en origen y puede excluirse del consumo.
+        required: true
+        loadrule: Carga directa
+        examples:
+        - S,N
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo deletedFlg no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE deletedFlg
+            IS NULL OR deletedFlg = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: __delete
+            xdataTypeField: string
+      recordUpdateTs:
+        type: timestamp
+        description: Campo que corresponde a la fecha y hora de modificación de un
+          registro del banner. Se tiene que llevar a UTC - 5
+        loadrule: Carga en el formato de fecha y hora
+        examples:
+        - '''2025-06-12 12:23:432'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: bronze
+            name: backofficeBannersConfigurations_brz
+            field: updated_at
+            xdataTypeField: string
+      recordUpdateDt:
+        type: date
+        description: Campo que corresponde a la fecha de modificación de un registro
+          del banner. Se tiene que llevar a UTC - 5
+        loadrule: Deriva de recordUpdateTs
+        examples:
+        - '''2025-06-12'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo recordUpdateDt no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM core_desa.silver.m_yapebanner_slv WHERE recordUpdateDt
+            IS NULL OR recordUpdateDt = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: lakehouse
+            xcatalog: core_desa
+            xschema: silver
+            name: m_yapeBanner_slv
+            field: recordUpdateTs
+            xdataTypeField: string
+      executionTs:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+    config:
+      clustering:
+        fields:
+        - recordCreationDt
+        - yapeBannerId
+        - productTypeDesc
+      tableProperties:
+        delta.enableChangeDataFeed: 'true'
+        delta.logRetentionDuration: interval 60 days
+        delta.deletedFileRetentionDuration: interval 60 days
+        delta.tuneFileSizesForRewrites: 'true'
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    type: streaming
+    description: La tabla maestra que consolida la configuración de banners publicitarios
+      se actualiza en tiempo real. Esto garantiza que la información esté siempre
+      sincronizada para su uso inmediato en la personalización del aplicativo y en
+      los modelos de recomendación (ML).
+    interval: No aplica
