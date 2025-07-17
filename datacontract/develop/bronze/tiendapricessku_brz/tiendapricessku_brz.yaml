@@ -1,0 +1,233 @@
+dataContractSpecification: 0.9.3
+id: urn:develop.bronze.tiendapricessku_brz-latest
+info:
+  title: Historial de Actualizaciones de Precios de Productos
+  domain: develop
+  version: 1.0.0
+  squad: tienda
+  owner: Miguel Sanchez Rojas
+  contact:
+    name: Yunior Cristian Huaman Daga
+    email: yuniorhuaman@yape.com.pe
+    nickame: dianafdominguez
+servers:
+  prd:
+    type: databricks
+    server_environment: prd
+    server_host: dbw-yadl3-eastus2-prd-001
+    catalog: develop
+    schema: bronze
+terms:
+  usage: Data de catalogo utilizada para análisis del movimiento de sku en el tiempo
+  limitations: Ninguna
+tags:
+- develop
+- bronze
+- raw
+- VTEX
+models:
+  tiendapricessku_brz:
+    description: 'Guarda la información relacionada a las actualizaciones de precios
+      de los productos.
+
+      Nivel de detalle:
+
+      Almacena cada actualización ocurrida en el tiempo.'
+    type: table
+    tableType: raw
+    universeLogic: Carga directa
+    fields:
+      itemId:
+        type: string
+        description: The unique identifier for the item
+        examples:
+        - 38
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo itemId no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE itemId
+            IS NULL OR itemId = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: itemId
+            xdataTypeField: string
+      listPrice:
+        type: string
+        description: The list price of the item (retail price)
+        examples:
+        - 119
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo listPrice no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE listPrice
+            IS NULL OR listPrice = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: listPrice
+            xdataTypeField: number
+      costPrice:
+        type: string
+        description: The cost price of the item
+        examples:
+        - 49
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo costPrice no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE costPrice
+            IS NULL OR costPrice = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: costPrice
+            xdataTypeField: number
+      markup:
+        type: string
+        description: The markup percentage for the item
+        examples:
+        - 2040816327
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo markup no tenga null o vacíos en
+            la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE markup
+            IS NULL OR markup = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: markup
+            xdataTypeField: number
+      basePrice:
+        type: string
+        description: The base price of the item
+        examples:
+        - 50
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo basePrice no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE basePrice
+            IS NULL OR basePrice = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: basePrice
+            xdataTypeField: number
+      fixedPrices:
+        type: string
+        description: List of fixed prices for specific trade policies or null
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo fixedPrices no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE fixedPrices
+            IS NULL OR fixedPrices = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: fixedPrices
+            xdataTypeField: array
+      updateTs:
+        type: string
+        description: The timestamp when the update happened (in UTC-5)
+        examples:
+        - '2025-04-25T15:05:29.434-05:00'
+        xqualityFieldValidations:
+          xnullity: false
+        quality:
+        - type: sql
+          description: Validación de que el campo updateTs no tenga null o vacíos
+            en la data.
+          query: SELECT COUNT(*) FROM develop.bronze.tiendapricessku_brz WHERE updateTs
+            IS NULL OR updateTs = ''
+          mustBe: 0
+        lineage:
+          inputFields:
+          - namespace: VTEX
+            xsourceType: kafka
+            name: marketplace.vtex.pricing.prices.update
+            field: updateTs
+            xdataTypeField: string
+      metadata:
+        description: Metadata from kafka
+        type: struct
+        required: true
+        fields:
+          partition:
+            description: Indica la división lógica y física de un tópico
+            type: int
+          offset:
+            description: Indica la posición secuencial de un mensaje dentro de una
+              partición
+            type: bigint
+          timestampType:
+            description: Flag que indica el tipo de fecha; 0 fecha de creación del
+              evento, 1 fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              1. Si timestampType es 0, corresponde a la fecha de creación del evento.
+            type: timestamp
+      document:
+        description: JSON text from eventData
+        type: string
+        required: true
+      auditTime:
+        description: Fecha y hora de ejecucion de la rutina de carga al datalake en
+          UTC-0.
+        type: timestamp
+        required: true
+      p_auditDate:
+        description: Fecha de ejecucion de la rutina de carga al datalake en UTC-0.
+        type: date
+        required: true
+    config:
+      clustering:
+        description: Clustering for optimization
+        fields:
+        - auditTime
+        - p_auditDate
+      tableProperties:
+        delta.logRetentionDuration: interval 30 days
+        delta.deletedFileRetentionDuration: interval 30 days
+        delta.autoOptimize.autoCompact: 'true'
+        delta.autoOptimize.optimizeWrite: 'true'
+servicelevels:
+  frequency:
+    description: La información de las actualizaciones del catálogo de Tienda se reciben
+      cada vez que se genera una actualización sobre algún SKU por lo cual es en streaming.
+    type: streaming
