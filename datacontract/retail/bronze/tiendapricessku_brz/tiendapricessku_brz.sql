@@ -1,13 +1,13 @@
 -- Data Contract: urn:retail.bronze.tiendapricessku_brz-latest
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE retail.bronze.tiendapricessku_brz (
-  itemId STRING COMMENT "Identificador único del SKU. Es un valor incremental autogenerado por la aplicación de VTEX.",
-  listPrice STRING COMMENT "Precio de venta sugerido para el SKU.",
-  costPrice STRING COMMENT "Costo base del SKU, utilizado para calcular márgenes de ganancia.",
-  markup STRING COMMENT "Margen de ganancia deseado para la venta del SKU .",
-  basePrice STRING COMMENT "Precio base o de referencia del SKU, utilizado como punto de partida para cálculos de precios dinámicos o promociones.",
-  fixedPrices STRING COMMENT "Lista de objetos que definen precios fijos para el SKU. Estos precios sobrescriben cualquier otra configuración de precios existente.",
-  updateTs STRING COMMENT "Fecha de actualización de la información del sku. Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo.",
+  itemId STRING COMMENT "The unique identifier for the item",
+  listPrice STRING COMMENT "The list price of the item (retail price)",
+  costPrice STRING COMMENT "The cost price of the item",
+  markup STRING COMMENT "The markup percentage for the item",
+  basePrice STRING COMMENT "The base price of the item",
+  fixedPrices STRING COMMENT "List of fixed prices for specific trade policies or null",
+  updateTs STRING COMMENT "The timestamp when the update happened (in UTC-5)",
   metadata STRUCT<
       partition INT COMMENT "Indica la división lógica y física de un tópico",
       offset BIGINT COMMENT "Indica la posición secuencial de un mensaje dentro de una partición",
@@ -28,4 +28,4 @@ Almacena cada actualización ocurrida en el tiempo."
   'delta.autoOptimize.autoCompact' = 'true',
   'delta.autoOptimize.optimizeWrite' = 'true'
 );
-ALTER TABLE retail.bronze.tiendapricessku_brz SET TAGS ('TypeTable'='raw');
+ALTER TABLE retail.bronze.tiendapricessku_brz SET TAGS ('Domain'='retail', 'Layer'='bronze', 'TypeTable'='raw');

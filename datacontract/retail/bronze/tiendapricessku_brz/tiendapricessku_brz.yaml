@@ -39,8 +39,7 @@ models:
     fields:
       itemId:
         type: string
-        description: Identificador único del SKU. Es un valor incremental autogenerado
-          por la aplicación de VTEX.
+        description: The unique identifier for the item
         examples:
         - 38
         xqualityFieldValidations:
@@ -61,7 +60,7 @@ models:
             xdataTypeField: string
       listPrice:
         type: string
-        description: Precio de venta sugerido para el SKU.
+        description: The list price of the item (retail price)
         examples:
         - 119
         xqualityFieldValidations:
@@ -82,7 +81,7 @@ models:
             xdataTypeField: number
       costPrice:
         type: string
-        description: Costo base del SKU, utilizado para calcular márgenes de ganancia.
+        description: The cost price of the item
         examples:
         - 49
         xqualityFieldValidations:
@@ -103,7 +102,7 @@ models:
             xdataTypeField: number
       markup:
         type: string
-        description: Margen de ganancia deseado para la venta del SKU .
+        description: The markup percentage for the item
         examples:
         - 2040816327
         xqualityFieldValidations:
@@ -124,8 +123,7 @@ models:
             xdataTypeField: number
       basePrice:
         type: string
-        description: Precio base o de referencia del SKU, utilizado como punto de
-          partida para cálculos de precios dinámicos o promociones.
+        description: The base price of the item
         examples:
         - 50
         xqualityFieldValidations:
@@ -146,8 +144,7 @@ models:
             xdataTypeField: number
       fixedPrices:
         type: string
-        description: Lista de objetos que definen precios fijos para el SKU. Estos
-          precios sobrescriben cualquier otra configuración de precios existente.
+        description: List of fixed prices for specific trade policies or null
         xqualityFieldValidations:
           xnullity: false
         quality:
@@ -166,8 +163,7 @@ models:
             xdataTypeField: array
       updateTs:
         type: string
-        description: Fecha de actualización de la información del sku. Indica la fecha
-          y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+        description: The timestamp when the update happened (in UTC-5)
         examples:
         - '2025-04-25T15:05:29.434-05:00'
         xqualityFieldValidations:
