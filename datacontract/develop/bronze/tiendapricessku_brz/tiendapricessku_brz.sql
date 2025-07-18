@@ -1,13 +1,13 @@
 -- Data Contract: urn:develop.bronze.tiendapricessku_brz-latest
 -- SQL Dialect: databricks
 CREATE OR REPLACE TABLE develop.bronze.tiendapricessku_brz (
-  itemId STRING COMMENT "Identificador único del SKU (unidad de mantenimiento de stock). Este valor es incremental y se autogenera por la aplicación de VTEX.",
-  listPrice STRING COMMENT "Precio de venta sugerido para el SKU (unidad de mantenimiento de stock), que representa el costo que se espera que pague el cliente.",
-  costPrice STRING COMMENT "Costo base del SKU (unidad de mantenimiento de stock), utilizado para calcular los márgenes de ganancia en las transacciones.",
-  markup STRING COMMENT "Margen de ganancia deseado para la venta del SKU (unidad de mantenimiento de stock), que se aplica sobre el costo base para determinar el precio de venta.",
-  basePrice STRING COMMENT "Precio base o de referencia del SKU (unidad de mantenimiento de stock), utilizado como punto de partida para cálculos de precios dinámicos o promociones.",
-  fixedPrices STRING COMMENT "Lista de objetos que definen precios fijos para el SKU (unidad de mantenimiento de stock). Estos precios sobrescriben cualquier otra configuración de precios existente.",
-  updateTs STRING COMMENT "Fecha de actualización de la información del SKU (unidad de mantenimiento de stock). Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo, con el formato: yyyy-MM-dd'T'HH:mm:ss.SSSXXX.",
+  itemId STRING COMMENT "Identificador único del SKU (stock keeping unit). Este valor es incremental y se autogenera por la aplicación de VTEX.",
+  listPrice STRING COMMENT "Precio de venta sugerido para el SKU, que representa el costo que se espera que pague el cliente.",
+  costPrice STRING COMMENT "Costo base del SKU, utilizado para calcular los márgenes de ganancia y evaluar la rentabilidad del producto.",
+  markup STRING COMMENT "Margen de ganancia deseado para la venta del SKU, expresado como un porcentaje sobre el costo.",
+  basePrice STRING COMMENT "Precio base o de referencia del SKU, utilizado como punto de partida para cálculos de precios dinámicos o promociones.",
+  fixedPrices STRING COMMENT "Lista de objetos que definen precios fijos para el SKU. Estos precios sobrescriben cualquier otra configuración de precios existente, garantizando que se aplique un precio específico.",
+  updateTs STRING COMMENT "Fecha de actualización de la información del SKU. Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo. Formato: yyyy-MM-dd'T'HH:mm:ss.SSSXXX.",
   metadata STRUCT<
       partition INT COMMENT "Indica la división lógica y física de un tópico",
       offset BIGINT COMMENT "Indica la posición secuencial de un mensaje dentro de una partición",
@@ -19,7 +19,7 @@ CREATE OR REPLACE TABLE develop.bronze.tiendapricessku_brz (
   p_auditDate DATE COMMENT "Fecha de ejecucion de la rutina de carga al datalake en UTC-0." not null
 )
 CLUSTER BY (auditTime, p_auditDate)
-COMMENT "Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes de ganancia. Cada SKU está identificado de manera única y se registran datos relevantes para la gestión de precios y actualizaciones del catálogo."
+COMMENT "Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units). Incluye datos como identificadores únicos, precios de venta, costos, márgenes de ganancia y fechas de actualización, lo que permite un análisis exhaustivo de la rentabilidad y la gestión de precios."
  TBLPROPERTIES (
   'delta.logRetentionDuration' = 'interval 30 days',
   'delta.deletedFileRetentionDuration' = 'interval 30 days',

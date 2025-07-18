@@ -1966,7 +1966,7 @@ video {
                           <span class="font-mono font-medium">tiendapricessku_brz</span>
                           
                           <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">table</span>
-                          <div class="text-sm font-medium text-gray-500">Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes de ganancia. Cada SKU está identificado de manera única y se registran datos relevantes para la gestión de precios y actualizaciones del catálogo.</div>
+                          <div class="text-sm font-medium text-gray-500">Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units). Incluye datos como identificadores únicos, precios de venta, costos, márgenes de ganancia y fechas de actualización, lo que permite un análisis exhaustivo de la rentabilidad y la gestión de precios.</div>
 
                           
                           
@@ -2009,7 +2009,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Identificador único del SKU (unidad de mantenimiento de stock). Este valor es incremental y se autogenera por la aplicación de VTEX.</div>
+    <div class="text-gray-500">Identificador único del SKU (stock keeping unit). Este valor es incremental y se autogenera por la aplicación de VTEX.</div>
     
 
     
@@ -2181,7 +2181,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Precio de venta sugerido para el SKU (unidad de mantenimiento de stock), que representa el costo que se espera que pague el cliente.</div>
+    <div class="text-gray-500">Precio de venta sugerido para el SKU, que representa el costo que se espera que pague el cliente.</div>
     
 
     
@@ -2353,7 +2353,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Costo base del SKU (unidad de mantenimiento de stock), utilizado para calcular los márgenes de ganancia en las transacciones.</div>
+    <div class="text-gray-500">Costo base del SKU, utilizado para calcular los márgenes de ganancia y evaluar la rentabilidad del producto.</div>
     
 
     
@@ -2525,7 +2525,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Margen de ganancia deseado para la venta del SKU (unidad de mantenimiento de stock), que se aplica sobre el costo base para determinar el precio de venta.</div>
+    <div class="text-gray-500">Margen de ganancia deseado para la venta del SKU, expresado como un porcentaje sobre el costo.</div>
     
 
     
@@ -2697,7 +2697,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Precio base o de referencia del SKU (unidad de mantenimiento de stock), utilizado como punto de partida para cálculos de precios dinámicos o promociones.</div>
+    <div class="text-gray-500">Precio base o de referencia del SKU, utilizado como punto de partida para cálculos de precios dinámicos o promociones.</div>
     
 
     
@@ -2869,7 +2869,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Lista de objetos que definen precios fijos para el SKU (unidad de mantenimiento de stock). Estos precios sobrescriben cualquier otra configuración de precios existente.</div>
+    <div class="text-gray-500">Lista de objetos que definen precios fijos para el SKU. Estos precios sobrescriben cualquier otra configuración de precios existente, garantizando que se aplique un precio específico.</div>
     
 
     
@@ -3034,7 +3034,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Fecha de actualización de la información del SKU (unidad de mantenimiento de stock). Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo, con el formato: yyyy-MM-dd'T'HH:mm:ss.SSSXXX.</div>
+    <div class="text-gray-500">Fecha de actualización de la información del SKU. Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo. Formato: yyyy-MM-dd'T'HH:mm:ss.SSSXXX.</div>
     
 
     
@@ -3908,7 +3908,7 @@ video {
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 18 Jul 2025 05:49:23 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 18 Jul 2025 05:54:45 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3958,15 +3958,15 @@ terms:
 models:
   tiendapricessku_brz:
     description: Esta tabla contiene información detallada sobre los productos, específicamente
-      sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes
-      de ganancia. Cada SKU está identificado de manera única y se registran datos
-      relevantes para la gestión de precios y actualizaciones del catálogo.
+      sobre los SKU (stock keeping units). Incluye datos como identificadores únicos,
+      precios de venta, costos, márgenes de ganancia y fechas de actualización, lo
+      que permite un análisis exhaustivo de la rentabilidad y la gestión de precios.
     type: table
     fields:
       itemId:
         type: string
-        description: Identificador único del SKU (unidad de mantenimiento de stock).
-          Este valor es incremental y se autogenera por la aplicación de VTEX.
+        description: Identificador único del SKU (stock keeping unit). Este valor
+          es incremental y se autogenera por la aplicación de VTEX.
         examples:
         - 38
         quality:
@@ -3987,8 +3987,8 @@ models:
           xnullity: false
       listPrice:
         type: string
-        description: Precio de venta sugerido para el SKU (unidad de mantenimiento
-          de stock), que representa el costo que se espera que pague el cliente.
+        description: Precio de venta sugerido para el SKU, que representa el costo
+          que se espera que pague el cliente.
         examples:
         - 119
         quality:
@@ -4009,8 +4009,8 @@ models:
           xnullity: false
       costPrice:
         type: string
-        description: Costo base del SKU (unidad de mantenimiento de stock), utilizado
-          para calcular los márgenes de ganancia en las transacciones.
+        description: Costo base del SKU, utilizado para calcular los márgenes de ganancia
+          y evaluar la rentabilidad del producto.
         examples:
         - 49
         quality:
@@ -4031,9 +4031,8 @@ models:
           xnullity: false
       markup:
         type: string
-        description: Margen de ganancia deseado para la venta del SKU (unidad de mantenimiento
-          de stock), que se aplica sobre el costo base para determinar el precio de
-          venta.
+        description: Margen de ganancia deseado para la venta del SKU, expresado como
+          un porcentaje sobre el costo.
         examples:
         - 2040816327
         quality:
@@ -4054,9 +4053,8 @@ models:
           xnullity: false
       basePrice:
         type: string
-        description: Precio base o de referencia del SKU (unidad de mantenimiento
-          de stock), utilizado como punto de partida para cálculos de precios dinámicos
-          o promociones.
+        description: Precio base o de referencia del SKU, utilizado como punto de
+          partida para cálculos de precios dinámicos o promociones.
         examples:
         - 50
         quality:
@@ -4077,9 +4075,9 @@ models:
           xnullity: false
       fixedPrices:
         type: string
-        description: Lista de objetos que definen precios fijos para el SKU (unidad
-          de mantenimiento de stock). Estos precios sobrescriben cualquier otra configuración
-          de precios existente.
+        description: Lista de objetos que definen precios fijos para el SKU. Estos
+          precios sobrescriben cualquier otra configuración de precios existente,
+          garantizando que se aplique un precio específico.
         quality:
         - type: sql
           description: Validación de que el campo fixedPrices no tenga null o vacíos
@@ -4098,9 +4096,9 @@ models:
           xnullity: false
       updateTs:
         type: string
-        description: 'Fecha de actualización de la información del SKU (unidad de
-          mantenimiento de stock). Indica la fecha y hora en formato UTC-5 en que
-          se produjo la actualización del catálogo, con el formato: yyyy-MM-dd''T''HH:mm:ss.SSSXXX.'
+        description: 'Fecha de actualización de la información del SKU. Indica la
+          fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+          Formato: yyyy-MM-dd''T''HH:mm:ss.SSSXXX.'
         examples:
         - '2025-04-25T15:05:29.434-05:00'
         quality:
