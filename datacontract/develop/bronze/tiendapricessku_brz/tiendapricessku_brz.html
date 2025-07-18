@@ -1966,7 +1966,7 @@ video {
                           <span class="font-mono font-medium">tiendapricessku_brz</span>
                           
                           <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">table</span>
-                          <div class="text-sm font-medium text-gray-500">Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes de ganancia. Cada SKU tiene un identificador único y se registran los precios sugeridos, costos base, márgenes de ganancia, precios de referencia, así como cualquier precio fijo que pueda aplicarse. Además, se incluye la fecha y hora de la última actualización de la información del SKU, lo que permite un seguimiento efectivo de los cambios en el catálogo.</div>
+                          <div class="text-sm font-medium text-gray-500">Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units). Incluye datos como el identificador único, precios de venta y costo, márgenes de ganancia, así como información sobre actualizaciones y precios fijos. Estos datos son esenciales para la gestión de inventarios y la estrategia de precios en la plataforma VTEX.</div>
 
                           
                           
@@ -2009,7 +2009,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Identificador único del SKU. Es un valor incremental autogenerado por la aplicación de VTEX.</div>
+    <div class="text-gray-500">Identificador único del SKU (stock keeping unit). Este valor es autogenerado de manera incremental por la aplicación de VTEX. Ejemplo: 38.</div>
     
 
     
@@ -2181,7 +2181,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Precio de venta sugerido para el SKU.</div>
+    <div class="text-gray-500">Precio de venta sugerido para el SKU. Este valor representa el costo que se recomienda al consumidor. Ejemplo: 119.</div>
     
 
     
@@ -2353,7 +2353,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Costo base del SKU, utilizado para calcular márgenes de ganancia.</div>
+    <div class="text-gray-500">Costo base del SKU, utilizado para calcular los márgenes de ganancia. Este valor es fundamental para determinar la rentabilidad del producto. Ejemplo: 49.</div>
     
 
     
@@ -2525,7 +2525,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Margen de ganancia deseado para la venta del SKU .</div>
+    <div class="text-gray-500">Margen de ganancia deseado para la venta del SKU. Este valor se expresa en centavos y se utiliza para establecer el precio de venta. Ejemplo: 2040816327.</div>
     
 
     
@@ -2697,7 +2697,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Precio base o de referencia del SKU, utilizado como punto de partida para cálculos de precios dinámicos o promociones.</div>
+    <div class="text-gray-500">Precio base o de referencia del SKU, utilizado como punto de partida para cálculos de precios dinámicos o promociones. Ejemplo: 50.</div>
     
 
     
@@ -2869,7 +2869,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Lista de objetos que definen precios fijos para el SKU. Estos precios sobrescriben cualquier otra configuración de precios existente.</div>
+    <div class="text-gray-500">Lista de objetos que definen precios fijos para el SKU. Estos precios sobrescriben cualquier otra configuración de precios existente, asegurando que se aplique un precio específico. Ejemplo: [] (sin precios fijos).</div>
     
 
     
@@ -3034,7 +3034,7 @@ video {
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Fecha de actualización de la información del sku. Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo.</div>
+    <div class="text-gray-500">Fecha de actualización de la información del SKU. Indica la fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo. Formato: yyyy-MM-dd'T'HH:mm:ss.SSSXXX. Ejemplo: 2025-04-25T15:05:29.434-05:00.</div>
     
 
     
@@ -3908,7 +3908,7 @@ video {
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 18 Jul 2025 04:58:58 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 18 Jul 2025 05:45:15 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -3958,18 +3958,17 @@ terms:
 models:
   tiendapricessku_brz:
     description: Esta tabla contiene información detallada sobre los productos, específicamente
-      sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes
-      de ganancia. Cada SKU tiene un identificador único y se registran los precios
-      sugeridos, costos base, márgenes de ganancia, precios de referencia, así como
-      cualquier precio fijo que pueda aplicarse. Además, se incluye la fecha y hora
-      de la última actualización de la información del SKU, lo que permite un seguimiento
-      efectivo de los cambios en el catálogo.
+      sobre los SKU (stock keeping units). Incluye datos como el identificador único,
+      precios de venta y costo, márgenes de ganancia, así como información sobre actualizaciones
+      y precios fijos. Estos datos son esenciales para la gestión de inventarios y
+      la estrategia de precios en la plataforma VTEX.
     type: table
     fields:
       itemId:
         type: string
-        description: Identificador único del SKU. Es un valor incremental autogenerado
-          por la aplicación de VTEX.
+        description: 'Identificador único del SKU (stock keeping unit). Este valor
+          es autogenerado de manera incremental por la aplicación de VTEX. Ejemplo:
+          38.'
         examples:
         - 38
         quality:
@@ -3990,7 +3989,8 @@ models:
           xnullity: false
       listPrice:
         type: string
-        description: Precio de venta sugerido para el SKU.
+        description: 'Precio de venta sugerido para el SKU. Este valor representa
+          el costo que se recomienda al consumidor. Ejemplo: 119.'
         examples:
         - 119
         quality:
@@ -4011,7 +4011,9 @@ models:
           xnullity: false
       costPrice:
         type: string
-        description: Costo base del SKU, utilizado para calcular márgenes de ganancia.
+        description: 'Costo base del SKU, utilizado para calcular los márgenes de
+          ganancia. Este valor es fundamental para determinar la rentabilidad del
+          producto. Ejemplo: 49.'
         examples:
         - 49
         quality:
@@ -4032,7 +4034,9 @@ models:
           xnullity: false
       markup:
         type: string
-        description: Margen de ganancia deseado para la venta del SKU .
+        description: 'Margen de ganancia deseado para la venta del SKU. Este valor
+          se expresa en centavos y se utiliza para establecer el precio de venta.
+          Ejemplo: 2040816327.'
         examples:
         - 2040816327
         quality:
@@ -4053,8 +4057,8 @@ models:
           xnullity: false
       basePrice:
         type: string
-        description: Precio base o de referencia del SKU, utilizado como punto de
-          partida para cálculos de precios dinámicos o promociones.
+        description: 'Precio base o de referencia del SKU, utilizado como punto de
+          partida para cálculos de precios dinámicos o promociones. Ejemplo: 50.'
         examples:
         - 50
         quality:
@@ -4075,8 +4079,10 @@ models:
           xnullity: false
       fixedPrices:
         type: string
-        description: Lista de objetos que definen precios fijos para el SKU. Estos
-          precios sobrescriben cualquier otra configuración de precios existente.
+        description: 'Lista de objetos que definen precios fijos para el SKU. Estos
+          precios sobrescriben cualquier otra configuración de precios existente,
+          asegurando que se aplique un precio específico. Ejemplo: [] (sin precios
+          fijos).'
         quality:
         - type: sql
           description: Validación de que el campo fixedPrices no tenga null o vacíos
@@ -4095,8 +4101,9 @@ models:
           xnullity: false
       updateTs:
         type: string
-        description: Fecha de actualización de la información del sku. Indica la fecha
-          y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+        description: 'Fecha de actualización de la información del SKU. Indica la
+          fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+          Formato: yyyy-MM-dd''T''HH:mm:ss.SSSXXX. Ejemplo: 2025-04-25T15:05:29.434-05:00.'
         examples:
         - '2025-04-25T15:05:29.434-05:00'
         quality:

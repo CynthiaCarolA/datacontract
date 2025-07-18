@@ -28,20 +28,19 @@ tags:
 models:
   tiendapricessku_brz:
     description: Esta tabla contiene información detallada sobre los productos, específicamente
-      sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes
-      de ganancia. Cada SKU tiene un identificador único y se registran los precios
-      sugeridos, costos base, márgenes de ganancia, precios de referencia, así como
-      cualquier precio fijo que pueda aplicarse. Además, se incluye la fecha y hora
-      de la última actualización de la información del SKU, lo que permite un seguimiento
-      efectivo de los cambios en el catálogo.
+      sobre los SKU (stock keeping units). Incluye datos como el identificador único,
+      precios de venta y costo, márgenes de ganancia, así como información sobre actualizaciones
+      y precios fijos. Estos datos son esenciales para la gestión de inventarios y
+      la estrategia de precios en la plataforma VTEX.
     type: table
     tableType: raw
     universeLogic: Carga directa
     fields:
       itemId:
         type: string
-        description: Identificador único del SKU. Es un valor incremental autogenerado
-          por la aplicación de VTEX.
+        description: 'Identificador único del SKU (stock keeping unit). Este valor
+          es autogenerado de manera incremental por la aplicación de VTEX. Ejemplo:
+          38.'
         examples:
         - 38
         xqualityFieldValidations:
@@ -62,7 +61,8 @@ models:
             xdataTypeField: string
       listPrice:
         type: string
-        description: Precio de venta sugerido para el SKU.
+        description: 'Precio de venta sugerido para el SKU. Este valor representa
+          el costo que se recomienda al consumidor. Ejemplo: 119.'
         examples:
         - 119
         xqualityFieldValidations:
@@ -83,7 +83,9 @@ models:
             xdataTypeField: number
       costPrice:
         type: string
-        description: Costo base del SKU, utilizado para calcular márgenes de ganancia.
+        description: 'Costo base del SKU, utilizado para calcular los márgenes de
+          ganancia. Este valor es fundamental para determinar la rentabilidad del
+          producto. Ejemplo: 49.'
         examples:
         - 49
         xqualityFieldValidations:
@@ -104,7 +106,9 @@ models:
             xdataTypeField: number
       markup:
         type: string
-        description: Margen de ganancia deseado para la venta del SKU .
+        description: 'Margen de ganancia deseado para la venta del SKU. Este valor
+          se expresa en centavos y se utiliza para establecer el precio de venta.
+          Ejemplo: 2040816327.'
         examples:
         - 2040816327
         xqualityFieldValidations:
@@ -125,8 +129,8 @@ models:
             xdataTypeField: number
       basePrice:
         type: string
-        description: Precio base o de referencia del SKU, utilizado como punto de
-          partida para cálculos de precios dinámicos o promociones.
+        description: 'Precio base o de referencia del SKU, utilizado como punto de
+          partida para cálculos de precios dinámicos o promociones. Ejemplo: 50.'
         examples:
         - 50
         xqualityFieldValidations:
@@ -147,8 +151,10 @@ models:
             xdataTypeField: number
       fixedPrices:
         type: string
-        description: Lista de objetos que definen precios fijos para el SKU. Estos
-          precios sobrescriben cualquier otra configuración de precios existente.
+        description: 'Lista de objetos que definen precios fijos para el SKU. Estos
+          precios sobrescriben cualquier otra configuración de precios existente,
+          asegurando que se aplique un precio específico. Ejemplo: [] (sin precios
+          fijos).'
         xqualityFieldValidations:
           xnullity: false
         quality:
@@ -167,8 +173,9 @@ models:
             xdataTypeField: array
       updateTs:
         type: string
-        description: Fecha de actualización de la información del sku. Indica la fecha
-          y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+        description: 'Fecha de actualización de la información del SKU. Indica la
+          fecha y hora en formato UTC-5 en que se produjo la actualización del catálogo.
+          Formato: yyyy-MM-dd''T''HH:mm:ss.SSSXXX. Ejemplo: 2025-04-25T15:05:29.434-05:00.'
         examples:
         - '2025-04-25T15:05:29.434-05:00'
         xqualityFieldValidations:
