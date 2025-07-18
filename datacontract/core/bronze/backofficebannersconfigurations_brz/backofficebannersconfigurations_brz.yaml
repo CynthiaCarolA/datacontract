@@ -30,11 +30,12 @@ tags:
 models:
   backofficebannersconfigurations_brz:
     description: 'Descripción de la tabla: Esta tabla almacena la configuración y
-      atributos de los banners gestionados desde el backoffice, permitiendo su segmentación,
-      personalización y control de visibilidad según tipo, producto, segmento de usuario
-      y estado. Incluye información relevante para la gestión de banners funcionales
-      y de donación, así como detalles de accesibilidad, fechas de vigencia, segmentación,
-      y control de eliminación lógica.'
+      atributos de los banners mostrados en la aplicación, permitiendo su segmentación,
+      personalización y control de vigencia. Incluye información relevante como fechas
+      de publicación, tipo de banner, segmentación, estado, detalles de accesibilidad,
+      y datos específicos para banners de donación o funcionales. La gestión y visualización
+      de estos banners se realiza a través del backoffice, permitiendo una administración
+      flexible y dinámica de la experiencia de usuario.'
     type: table
     tableType: raw
     universeLogic: Carga directa
@@ -42,8 +43,7 @@ models:
       end_date:
         type: string
         description: 'Fecha de finalización de la vigencia del banner, configurada
-          en el backoffice. El valor se encuentra en formato UTC-0. Formato: dd/MM/yyyy
-          HH:mm:ssZ.'
+          en el backoffice. La fecha está en formato UTC-0. Formato: dd/MM/yyyy HH:mm:ssZ.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -59,7 +59,7 @@ models:
         type: string
         description: 'Owner provider configurado en el backoffice, utilizado para
           identificar a los usuarios a quienes se mostrará el banner según el owner
-          provider. Este valor solo está presente cuando el banner es de tipo MASIVO.
+          provider. Este valor solo se presenta cuando el banner es de tipo MASIVO.
           Valores posibles: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.'
         examples:
         - '{BCP, YAPEDIGITAL}'
@@ -89,9 +89,9 @@ models:
             xdataTypeField: string
       __deleted:
         type: string
-        description: Campo utilizado como convención de integración con Debezium.
-          False indica que el registro no ha sido eliminado (registro activo), mientras
-          que True indica que el registro ha sido eliminado (tombstone).
+        description: 'Campo utilizado como convención de integración con Debezium.
+          False: El registro no ha sido eliminado (registro activo). True: El registro
+          ha sido eliminado (tombstone).'
         examples:
         - 1
         xqualityFieldValidations:
@@ -120,10 +120,10 @@ models:
             xdataTypeField: string
       blacklist:
         type: string
-        description: Corresponde a un arreglo de valores que indica la lista de segmentos
-          que actuarán como blacklist dentro de la lógica del API Connect Hub. Si
-          un segmento está incluido en esta lista, los usuarios pertenecientes a ese
-          segmento no visualizarán el banner configurado.
+        description: Corresponde a un arreglo de valores. Este campo indica la lista
+          de segmentos que funcionarán como blacklist dentro de la lógica del API
+          Connect Hub; si un segmento está incluido, los usuarios pertenecientes a
+          ese segmento no visualizarán el banner configurado.
         examples:
         - '{testqanewlabel40, testqanewlabel39}'
         xqualityFieldValidations:
@@ -152,8 +152,8 @@ models:
             xdataTypeField: string
       created_at:
         type: string
-        description: 'Fecha de creación del home banner. El valor se encuentra en
-          formato UTC-0. Formato: dd/MM/yyyy HH:mm:ssZ.'
+        description: 'Fecha de creación del home banner. Formato UTC-0. Formato: dd/MM/yyyy
+          HH:mm:ssZ.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -168,7 +168,7 @@ models:
       organization_name:
         type: string
         description: Nombre de la ONG u organización utilizado para crear el banner
-          de tipo donación. Este campo solo tiene valor si el banner es de tipo donación.
+          de tipo donación. Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         xqualityFieldValidations:
@@ -197,7 +197,7 @@ models:
       type:
         type: string
         description: 'Indica el tipo de banner. Puede ser funcional o de donación.
-          Valores posibles: NAVIGATION, DONATION.'
+          Valores esperados: NAVIGATION, DONATION.'
         examples:
         - NAVIGATION
         xqualityFieldValidations:
@@ -212,7 +212,7 @@ models:
       confirmation_name:
         type: string
         description: Nombre del mensaje de confirmación mostrado en el modal de donación.
-          Este campo solo tiene valor si el banner es de tipo donación.
+          Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         xqualityFieldValidations:
@@ -226,11 +226,10 @@ models:
             xdataTypeField: string
       banner_type_position:
         type: string
-        description: Indica el tipo de configuración de segmentación del banner. Los
-          valores determinan si es de tipo MASIVO (envíos según owner provider del
-          usuario), SEGMENTADO (segmentación personalizada por bases), NBP (personalización
-          a nivel de usuario) o DEFAULT (banners por defecto si un usuario no tiene
-          banners pendientes).
+        description: 'Tipo de configuración de segmentación del banner creado. Valores
+          posibles: MASIVO (envíos según owner provider del usuario), SEGMENTADO (segmentación
+          personalizada por bases), NBP (personalización a nivel usuario), DEFAULT
+          (banners por defecto si el usuario no tiene banners pendientes).'
         examples:
         - MASIVO
         xqualityFieldValidations:
@@ -272,8 +271,8 @@ models:
             xdataTypeField: string
       updated_at:
         type: string
-        description: 'Fecha de modificación de un registro del banner. El valor se
-          encuentra en formato UTC-0. Formato: dd/MM/yyyy HH:mm:ssZ.'
+        description: 'Fecha de modificación del registro del banner. Formato UTC-0.
+          Formato: dd/MM/yyyy HH:mm:ssZ.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -287,9 +286,9 @@ models:
             xdataTypeField: string
       segment:
         type: string
-        description: Corresponde a un arreglo de valores que indica el listado de
-          segmentos a los cuales se disponibilizará el banner. Este valor solo está
-          presente cuando el banner es de tipo SEGMENTADO.
+        description: Corresponde a un arreglo de valores. Indica el listado de segmentos
+          a los que se disponibilizará el banner. Este valor solo se presenta cuando
+          el banner es de tipo SEGMENTADO.
         examples:
         - '{testqanewlabel42, testqanewlabel43, testqanewlabel44}'
         xqualityFieldValidations:
@@ -318,8 +317,8 @@ models:
             xdataTypeField: string
       phone_donation:
         type: string
-        description: Número de celular de la ONG a la cual se realizarán los yapeos
-          donativos. Este campo solo tiene valor si el banner es de tipo donación.
+        description: Número de celular de la ONG a la que se realizarán los yapeos
+          donativos. Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - 51999999999
         pii: true
@@ -334,8 +333,8 @@ models:
             xdataTypeField: string
       position:
         type: string
-        description: Posición relativa que tendrá el banner dentro del carrusel o
-          listado de banners en los flujos que lo soporten.
+        description: Posición relativa del banner dentro del carrusel o listado de
+          banners en los flujos que lo soportan.
         examples:
         - 1
         xqualityFieldValidations:
@@ -349,8 +348,8 @@ models:
             xdataTypeField: string
       view_scope:
         type: string
-        description: Indica la pantalla en la que debe aparecer el banner configurado
-          en el backoffice.
+        description: Pantalla en la que debe aparecer el banner configurado en el
+          backoffice.
         examples:
         - BENEFICIOS_DMS
         xqualityFieldValidations:
@@ -365,8 +364,7 @@ models:
       start_date:
         type: string
         description: 'Fecha de inicio de la publicación del banner, configurada en
-          el backoffice. El valor se encuentra en formato UTC-0. Formato: dd/MM/yyyy
-          HH:mm:ssZ.'
+          el backoffice. La fecha está en formato UTC-0. Formato: dd/MM/yyyy HH:mm:ssZ.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -380,11 +378,10 @@ models:
             xdataTypeField: string
       status:
         type: string
-        description: 'Indica el estado del registro del banner. Valores posibles:
-          BORRADOR (el registro aún se encuentra en borrador y puede ser modificado),
-          VALIDACION (el registro se encuentra en validación por un owner), APROBADO
-          (el registro está activado), ELIMINADO (el registro ha sido eliminado desde
-          el backoffice).'
+        description: 'Estado del registro del banner. Valores posibles: BORRADOR (el
+          registro está en borrador y puede ser modificado), VALIDACION (el registro
+          está en validación por un owner), APROBADO (el registro está activado),
+          ELIMINADO (el registro ha sido eliminado desde el backoffice).'
         examples:
         - APROBADO
         xqualityFieldValidations:
