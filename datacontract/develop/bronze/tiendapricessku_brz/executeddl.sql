@@ -22,7 +22,7 @@ CREATE OR REPLACE TABLE ${env:ENV_CATALOG_NAME_DEVELOP}.bronze.tiendapricessku_b
   p_auditDate DATE COMMENT "Fecha de ejecucion de la rutina de carga al datalake en UTC-0." not null
 )
 CLUSTER BY (auditTime, p_auditDate)
-COMMENT "Esta tabla contiene información detallada sobre los productos, incluyendo su identificación, precios y márgenes de ganancia. Cada producto está representado por un identificador único y se incluyen precios sugeridos, costos, márgenes y precios base, así como información sobre actualizaciones en el catálogo."
+COMMENT "Esta tabla contiene información detallada sobre los productos, específicamente sobre los SKU (stock keeping units), incluyendo sus precios, costos y márgenes de ganancia. Cada SKU tiene un identificador único y se registran los precios sugeridos, costos base, márgenes de ganancia, precios de referencia, así como cualquier precio fijo que pueda aplicarse. Además, se incluye la fecha y hora de la última actualización de la información del SKU, lo que permite un seguimiento efectivo de los cambios en el catálogo."
  TBLPROPERTIES (
   'delta.logRetentionDuration' = 'interval 30 days',
   'delta.deletedFileRetentionDuration' = 'interval 30 days',
