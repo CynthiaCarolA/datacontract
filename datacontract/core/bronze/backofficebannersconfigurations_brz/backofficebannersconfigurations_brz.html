@@ -1982,9 +1982,7 @@ video {
                           <span class="font-mono font-medium">backofficebannersconfigurations_brz</span>
                           
                           <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">table</span>
-                          <div class="text-sm font-medium text-gray-500">Esta tabla guardará la información de la configuración de los Banners realizados desde el Backoffice y almacenada en Postgress.
-La finalidad de la tabla es poder realizar cruces entre los eventos de la tabla app interactions junto con la forma en como se configuró el propio banner para medir el performance de acuerdo a la segmentación realizada.
-Adicionalmente servirá para que el equipo de ML pueda consultar la información de los banners configurados y se utilice dentro de sus modelos de recomendación.</div>
+                          <div class="text-sm font-medium text-gray-500">Esta tabla contiene información sobre los banners configurados en el sistema, incluyendo detalles sobre su vigencia, tipo, y segmentación. Cada banner tiene un identificador único y puede estar asociado a diferentes tipos de productos y organizaciones, así como a configuraciones específicas de visualización y acceso. La fecha de inicio y finalización de la vigencia del banner se establece en formato UTC-0, y se incluyen campos para la descripción, título, y otros atributos relevantes que determinan cómo y a quién se mostrará el banner.</div>
 
                           
                           
@@ -2027,7 +2025,7 @@ Adicionalmente servirá para que el equipo de ML pueda consultar la información
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Fecha de finalización de la vigencia de un banner. Esta fecha es configurada dentro del backoffice. La fecha está en formato UTC-0</div>
+    <div class="text-gray-500">Fecha de finalización de la vigencia de un banner, configurada dentro del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.</div>
     
 
     
@@ -2175,8 +2173,7 @@ Adicionalmente servirá para que el equipo de ML pueda consultar la información
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Owner provider configurado dentro del backoffice. Sirve para identificar a que usuarios se mostrará el banner de acuerdo al owner provider. Este valor solo llegará cuando el banner es de tipo MASIVO.
-Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA</div>
+    <div class="text-gray-500">Owner provider configurado dentro del backoffice, que identifica a qué usuarios se mostrará el banner según el owner provider. Este valor solo se presenta cuando el banner es de tipo MASIVO. Valores posibles: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.</div>
     
 
     
@@ -2324,7 +2321,7 @@ Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Producto del home banner. Este se empleará para los clusters de NBP en un futuro.</div>
+    <div class="text-gray-500">Producto asociado al home banner, que se utilizará para los clusters de NBP en el futuro.</div>
     
 
     
@@ -2472,9 +2469,7 @@ Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Campo que se usa como convención de integración con debezium.
-False: El registro no ha sido eliminado (es un registro activo).
-True: El registro ha sido eliminado (es un "tombstone").</div>
+    <div class="text-gray-500">Campo utilizado como convención de integración con Debezium. False indica que el registro no ha sido eliminado (es un registro activo), mientras que True indica que el registro ha sido eliminado (es un 'tombstone').</div>
     
 
     
@@ -2622,7 +2617,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Es el deeplink empleado en el banner el cual permitirá redireccionar a los usuarios cuando estos le den tap.</div>
+    <div class="text-gray-500">Deeplink utilizado en el banner que permite redireccionar a los usuarios al hacer tap.</div>
     
 
     
@@ -2770,7 +2765,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">It corresponds to an array of values. This field indicates the list of segments that will act as a blacklist within the API Connect Hub logic. If a segment is included in this list, users belonging to that segment will not see the configured banner.</div>
+    <div class="text-gray-500">Corresponde a un array de valores que indica la lista de segmentos que actuarán como blacklist dentro de la lógica del API Connect Hub. Si un segmento está incluido en esta lista, los usuarios pertenecientes a ese segmento no verán el banner configurado.</div>
     
 
     
@@ -2918,7 +2913,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Es la descripción textual del banner creado. Se emplea para las funciones de accesibilidad en los dispositivos.</div>
+    <div class="text-gray-500">Descripción textual del banner creado, utilizada para funciones de accesibilidad en los dispositivos.</div>
     
 
     
@@ -3066,7 +3061,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Campo que corresponde a la fecha de creación del home banner. Formato UTC - 0</div>
+    <div class="text-gray-500">Campo que corresponde a la fecha de creación del home banner. Formato: dd/MM/yyyy HH:mm:ss+00.</div>
     
 
     
@@ -3214,7 +3209,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Es el nombre de la ONG u Organización de la cual se está usando para crear el banner de tipo donación. Este campo solo tendrá valor si el banner es de tipo donación</div>
+    <div class="text-gray-500">Nombre de la ONG u organización utilizada para crear el banner de tipo donación. Este campo solo tendrá valor si el banner es de tipo donación.</div>
     
 
     
@@ -3362,7 +3357,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Es el título que se le da al banner dentro del backoffice</div>
+    <div class="text-gray-500">Título asignado al banner dentro del backoffice.</div>
     
 
     
@@ -3510,10 +3505,7 @@ True: El registro ha sido eliminado (es un "tombstone").</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Indica el tipo de banner que es. Puede ser de tipo funcional o de tipo donación.
-Valores esperados:
-NAVIGATION
-DONATION</div>
+    <div class="text-gray-500">Indica el tipo de banner. Puede ser de tipo funcional o de tipo donación. Valores esperados: NAVIGATION, DONATION.</div>
     
 
     
@@ -3661,7 +3653,7 @@ DONATION</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">It is the confirmation message name displayed in the donation modal. This field will only have a value if the banner is of the donation type.</div>
+    <div class="text-gray-500">Nombre del mensaje de confirmación mostrado en el modal de donación. Este campo solo tendrá valor si el banner es de tipo donación.</div>
     
 
     
@@ -3809,12 +3801,7 @@ DONATION</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Indica el tipo de configuración de segmentación que tiene el Banner creado. Los valores indicarán si es de tipo Masivo, Segmentado o NBP.
-Valores esperados:
-MASIVO: Envios de acuerdo al owner provider del usuario.
-SEGMENTADO: Segmentación personalida por bases.
-NBP: Personalización a nivel de usuario.
-DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.</div>
+    <div class="text-gray-500">Indica el tipo de configuración de segmentación del banner creado. Los valores indican si es de tipo Masivo, Segmentado o NBP. Valores esperados: MASIVO (envíos de acuerdo al owner provider del usuario), SEGMENTADO (segmentación personalizada por bases), NBP (personalización a nivel de usuario), DEFAULT (banners por defecto si un usuario no tiene banners pendientes).</div>
     
 
     
@@ -3962,7 +3949,7 @@ DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.</di
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Valor que indica el producto al que hace referencia la publicación. Se configura dentro de backoffice desde una lista deplegable o desde un campo de texto.</div>
+    <div class="text-gray-500">Valor que indica el producto al que hace referencia la publicación, configurado dentro del backoffice desde una lista desplegable o un campo de texto.</div>
     
 
     
@@ -4110,7 +4097,7 @@ DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.</di
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Es la url de la imagen que se utiliza para mostrar el banner en el carrusel de Yape</div>
+    <div class="text-gray-500">URL de la imagen utilizada para mostrar el banner en el carrusel de Yape.</div>
     
 
     
@@ -4251,7 +4238,7 @@ DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.</di
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Campo que corresponde a la fecha de modificación de un registro del banner. Formato UTC-0</div>
+    <div class="text-gray-500">Campo que corresponde a la fecha de modificación de un registro del banner. Formato: dd/MM/yyyy HH:mm:ss+00.</div>
     
 
     
@@ -4399,8 +4386,7 @@ DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.</di
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Corresponde a un array de valores. Este campo indica el listado de segmentos a los cuales se les disponibilizará el banner.
-Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
+    <div class="text-gray-500">Corresponde a un array de valores que indica el listado de segmentos a los cuales se disponibilizará el banner. Este valor solo se presenta cuando el banner es de tipo SEGMENTADO.</div>
     
 
     
@@ -4548,7 +4534,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Identificador único del Banner creado desde Backoffice. Se utiliza como una PK.</div>
+    <div class="text-gray-500">Identificador único del banner creado desde el backoffice, utilizado como clave primaria (PK).</div>
     
 
     
@@ -4696,7 +4682,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Numero celular de la ONG a la cual se realizarán los yapeos donativos. Este campo solo tendrá valor si el banner es de tipo donación.</div>
+    <div class="text-gray-500">Número celular de la ONG a la cual se realizarán los yapeos donativos. Este campo solo tendrá valor si el banner es de tipo donación.</div>
     
 
     
@@ -4846,7 +4832,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Indica la posición relativa que tendrá el banner dentro del carrusel de banners o dentro de un listado de banners en los flujos que lo soporten.</div>
+    <div class="text-gray-500">Indica la posición relativa del banner dentro del carrusel de banners o en un listado de banners en los flujos que lo soporten.</div>
     
 
     
@@ -4994,7 +4980,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Indica la pantalla a la cual donde deberá aparecer el banner configurado en backoffice.</div>
+    <div class="text-gray-500">Indica la pantalla donde debe aparecer el banner configurado en el backoffice.</div>
     
 
     
@@ -5142,7 +5128,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Fecha de inicio de la publicación del banner. Esta fecha es configurada dentro del backoffice. La fecha es en UTC-0</div>
+    <div class="text-gray-500">Fecha de inicio de la publicación del banner, configurada dentro del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.</div>
     
 
     
@@ -5290,12 +5276,7 @@ Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO</div>
   </td>
   <td class="px-3 py-2 text-sm text-gray-500 w-7/12">
     
-    <div class="text-gray-500">Indica el estado del registro de banner. 
-Los valores que pueden llegar son estos:
-BORRADOR: El registro aun se encuentra en borrador y puede ser modificado.
-VALIDACION: El registro se encuentra en validación por un owner.
-APROBADO: Indica que ya se encuentra activado
-ELIMINADO: El registro se ha eliminado desde backoffice.</div>
+    <div class="text-gray-500">Indica el estado del registro del banner. Los valores posibles son: BORRADOR (el registro se encuentra en borrador y puede ser modificado), VALIDACION (el registro está en validación por un owner), APROBADO (el registro está activado), ELIMINADO (el registro ha sido eliminado desde el backoffice).</div>
     
 
     
@@ -6152,7 +6133,7 @@ ELIMINADO: El registro se ha eliminado desde backoffice.</div>
       </div>
 
       <div class="mt-6 text-sm text-gray-400">
-        Created at 18 Jul 2025 15:37:56 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
+        Created at 18 Jul 2025 15:48:28 UTC with <a href="https://cli.datacontract.com" class="text-gray-400 hover:text-gray-500">Data Contract CLI</a> v0.10.27
       </div>
 
     </div>
@@ -6203,21 +6184,19 @@ terms:
   limitations: Ninguna
 models:
   backofficebannersconfigurations_brz:
-    description: 'Esta tabla guardará la información de la configuración de los Banners
-      realizados desde el Backoffice y almacenada en Postgress.
-
-      La finalidad de la tabla es poder realizar cruces entre los eventos de la tabla
-      app interactions junto con la forma en como se configuró el propio banner para
-      medir el performance de acuerdo a la segmentación realizada.
-
-      Adicionalmente servirá para que el equipo de ML pueda consultar la información
-      de los banners configurados y se utilice dentro de sus modelos de recomendación.'
+    description: Esta tabla contiene información sobre los banners configurados en
+      el sistema, incluyendo detalles sobre su vigencia, tipo, y segmentación. Cada
+      banner tiene un identificador único y puede estar asociado a diferentes tipos
+      de productos y organizaciones, así como a configuraciones específicas de visualización
+      y acceso. La fecha de inicio y finalización de la vigencia del banner se establece
+      en formato UTC-0, y se incluyen campos para la descripción, título, y otros
+      atributos relevantes que determinan cómo y a quién se mostrará el banner.
     type: table
     fields:
       end_date:
         type: string
-        description: Fecha de finalización de la vigencia de un banner. Esta fecha
-          es configurada dentro del backoffice. La fecha está en formato UTC-0
+        description: 'Fecha de finalización de la vigencia de un banner, configurada
+          dentro del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         lineage:
@@ -6231,11 +6210,10 @@ models:
           xnullity: true
       owner:
         type: string
-        description: 'Owner provider configurado dentro del backoffice. Sirve para
-          identificar a que usuarios se mostrará el banner de acuerdo al owner provider.
-          Este valor solo llegará cuando el banner es de tipo MASIVO.
-
-          Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA'
+        description: 'Owner provider configurado dentro del backoffice, que identifica
+          a qué usuarios se mostrará el banner según el owner provider. Este valor
+          solo se presenta cuando el banner es de tipo MASIVO. Valores posibles: BCP,
+          NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.'
         examples:
         - '{BCP, YAPEDIGITAL}'
         lineage:
@@ -6249,8 +6227,8 @@ models:
           xnullity: true
       product:
         type: string
-        description: Producto del home banner. Este se empleará para los clusters
-          de NBP en un futuro.
+        description: Producto asociado al home banner, que se utilizará para los clusters
+          de NBP en el futuro.
         examples:
         - Recargas
         lineage:
@@ -6264,9 +6242,9 @@ models:
           xnullity: true
       __deleted:
         type: string
-        description: "Campo que se usa como convención de integración con debezium.\
-          \ \nFalse: El registro no ha sido eliminado (es un registro activo).\nTrue:\
-          \ El registro ha sido eliminado (es un \"tombstone\")."
+        description: Campo utilizado como convención de integración con Debezium.
+          False indica que el registro no ha sido eliminado (es un registro activo),
+          mientras que True indica que el registro ha sido eliminado (es un 'tombstone').
         examples:
         - 1
         lineage:
@@ -6280,8 +6258,8 @@ models:
           xnullity: true
       deeplink:
         type: string
-        description: Es el deeplink empleado en el banner el cual permitirá redireccionar
-          a los usuarios cuando estos le den tap.
+        description: Deeplink utilizado en el banner que permite redireccionar a los
+          usuarios al hacer tap.
         examples:
         - yape://yape.com.pe/app/recharges
         lineage:
@@ -6295,10 +6273,10 @@ models:
           xnullity: true
       blacklist:
         type: string
-        description: It corresponds to an array of values. This field indicates the
-          list of segments that will act as a blacklist within the API Connect Hub
-          logic. If a segment is included in this list, users belonging to that segment
-          will not see the configured banner.
+        description: Corresponde a un array de valores que indica la lista de segmentos
+          que actuarán como blacklist dentro de la lógica del API Connect Hub. Si
+          un segmento está incluido en esta lista, los usuarios pertenecientes a ese
+          segmento no verán el banner configurado.
         examples:
         - '{testqanewlabel40, testqanewlabel39}'
         lineage:
@@ -6312,8 +6290,8 @@ models:
           xnullity: true
       description:
         type: string
-        description: Es la descripción textual del banner creado. Se emplea para las
-          funciones de accesibilidad en los dispositivos.
+        description: Descripción textual del banner creado, utilizada para funciones
+          de accesibilidad en los dispositivos.
         examples:
         - Realiza compras con envios desde 10 soles por Yape Tienda
         lineage:
@@ -6327,8 +6305,8 @@ models:
           xnullity: true
       created_at:
         type: string
-        description: Campo que corresponde a la fecha de creación del home banner.
-          Formato UTC - 0
+        description: 'Campo que corresponde a la fecha de creación del home banner.
+          Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         lineage:
@@ -6342,9 +6320,8 @@ models:
           xnullity: true
       organization_name:
         type: string
-        description: Es el nombre de la ONG u Organización de la cual se está usando
-          para crear el banner de tipo donación. Este campo solo tendrá valor si el
-          banner es de tipo donación
+        description: Nombre de la ONG u organización utilizada para crear el banner
+          de tipo donación. Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         lineage:
@@ -6358,7 +6335,7 @@ models:
           xnullity: true
       title:
         type: string
-        description: Es el título que se le da al banner dentro del backoffice
+        description: Título asignado al banner dentro del backoffice.
         examples:
         - Envios a 10 soles
         lineage:
@@ -6372,14 +6349,8 @@ models:
           xnullity: true
       type:
         type: string
-        description: 'Indica el tipo de banner que es. Puede ser de tipo funcional
-          o de tipo donación.
-
-          Valores esperados:
-
-          NAVIGATION
-
-          DONATION'
+        description: 'Indica el tipo de banner. Puede ser de tipo funcional o de tipo
+          donación. Valores esperados: NAVIGATION, DONATION.'
         examples:
         - NAVIGATION
         lineage:
@@ -6393,9 +6364,8 @@ models:
           xnullity: true
       confirmation_name:
         type: string
-        description: It is the confirmation message name displayed in the donation
-          modal. This field will only have a value if the banner is of the donation
-          type.
+        description: Nombre del mensaje de confirmación mostrado en el modal de donación.
+          Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         lineage:
@@ -6409,19 +6379,11 @@ models:
           xnullity: true
       banner_type_position:
         type: string
-        description: 'Indica el tipo de configuración de segmentación que tiene el
-          Banner creado. Los valores indicarán si es de tipo Masivo, Segmentado o
-          NBP.
-
-          Valores esperados:
-
-          MASIVO: Envios de acuerdo al owner provider del usuario.
-
-          SEGMENTADO: Segmentación personalida por bases.
-
-          NBP: Personalización a nivel de usuario.
-
-          DEFAULT: Banners por defaull en caso un usuario no tenga banners pendientes.'
+        description: 'Indica el tipo de configuración de segmentación del banner creado.
+          Los valores indican si es de tipo Masivo, Segmentado o NBP. Valores esperados:
+          MASIVO (envíos de acuerdo al owner provider del usuario), SEGMENTADO (segmentación
+          personalizada por bases), NBP (personalización a nivel de usuario), DEFAULT
+          (banners por defecto si un usuario no tiene banners pendientes).'
         examples:
         - MASIVO
         lineage:
@@ -6435,9 +6397,9 @@ models:
           xnullity: true
       petitioner:
         type: string
-        description: Valor que indica el producto al que hace referencia la publicación.
-          Se configura dentro de backoffice desde una lista deplegable o desde un
-          campo de texto.
+        description: Valor que indica el producto al que hace referencia la publicación,
+          configurado dentro del backoffice desde una lista desplegable o un campo
+          de texto.
         examples:
         - RECARGAS
         lineage:
@@ -6451,8 +6413,8 @@ models:
           xnullity: true
       url_image:
         type: string
-        description: Es la url de la imagen que se utiliza para mostrar el banner
-          en el carrusel de Yape
+        description: URL de la imagen utilizada para mostrar el banner en el carrusel
+          de Yape.
         lineage:
           inputFields:
           - namespace: Backoffice
@@ -6464,8 +6426,8 @@ models:
           xnullity: true
       updated_at:
         type: string
-        description: Campo que corresponde a la fecha de modificación de un registro
-          del banner. Formato UTC-0
+        description: 'Campo que corresponde a la fecha de modificación de un registro
+          del banner. Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         lineage:
@@ -6479,10 +6441,9 @@ models:
           xnullity: true
       segment:
         type: string
-        description: 'Corresponde a un array de valores. Este campo indica el listado
-          de segmentos a los cuales se les disponibilizará el banner.
-
-          Este valor solo vendrá cuando el banner sea de tipo SEGMENTADO'
+        description: Corresponde a un array de valores que indica el listado de segmentos
+          a los cuales se disponibilizará el banner. Este valor solo se presenta cuando
+          el banner es de tipo SEGMENTADO.
         examples:
         - '{testqanewlabel42, testqanewlabel43, testqanewlabel44}'
         lineage:
@@ -6496,8 +6457,8 @@ models:
           xnullity: true
       id:
         type: string
-        description: Identificador único del Banner creado desde Backoffice. Se utiliza
-          como una PK.
+        description: Identificador único del banner creado desde el backoffice, utilizado
+          como clave primaria (PK).
         examples:
         - 5cbfce31eef3581dbb2e5a8490d4ac7b
         lineage:
@@ -6511,7 +6472,7 @@ models:
           xnullity: true
       phone_donation:
         type: string
-        description: Numero celular de la ONG a la cual se realizarán los yapeos donativos.
+        description: Número celular de la ONG a la cual se realizarán los yapeos donativos.
           Este campo solo tendrá valor si el banner es de tipo donación.
         pii: true
         examples:
@@ -6527,8 +6488,8 @@ models:
           xnullity: true
       position:
         type: string
-        description: Indica la posición relativa que tendrá el banner dentro del carrusel
-          de banners o dentro de un listado de banners en los flujos que lo soporten.
+        description: Indica la posición relativa del banner dentro del carrusel de
+          banners o en un listado de banners en los flujos que lo soporten.
         examples:
         - 1
         lineage:
@@ -6542,8 +6503,8 @@ models:
           xnullity: true
       view_scope:
         type: string
-        description: Indica la pantalla a la cual donde deberá aparecer el banner
-          configurado en backoffice.
+        description: Indica la pantalla donde debe aparecer el banner configurado
+          en el backoffice.
         examples:
         - BENEFICIOS_DMS
         lineage:
@@ -6557,8 +6518,8 @@ models:
           xnullity: true
       start_date:
         type: string
-        description: Fecha de inicio de la publicación del banner. Esta fecha es configurada
-          dentro del backoffice. La fecha es en UTC-0
+        description: 'Fecha de inicio de la publicación del banner, configurada dentro
+          del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         lineage:
@@ -6572,11 +6533,10 @@ models:
           xnullity: true
       status:
         type: string
-        description: "Indica el estado del registro de banner. \nLos valores que pueden\
-          \ llegar son estos:\nBORRADOR: El registro aun se encuentra en borrador\
-          \ y puede ser modificado.\nVALIDACION: El registro se encuentra en validación\
-          \ por un owner.\nAPROBADO: Indica que ya se encuentra activado\nELIMINADO:\
-          \ El registro se ha eliminado desde backoffice."
+        description: 'Indica el estado del registro del banner. Los valores posibles
+          son: BORRADOR (el registro se encuentra en borrador y puede ser modificado),
+          VALIDACION (el registro está en validación por un owner), APROBADO (el registro
+          está activado), ELIMINADO (el registro ha sido eliminado desde el backoffice).'
         examples:
         - APROBADO
         lineage:
