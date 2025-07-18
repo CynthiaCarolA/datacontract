@@ -42,20 +42,198 @@ models:
     tableType: raw
     universeLogic: Carga directa
     fields:
-      id:
+      end_date:
         type: string
-        description: Identificador único del Banner creado desde Backoffice. Se utiliza
-          como una PK.
+        description: Fecha de finalización de la vigencia de un banner. Esta fecha
+          es configurada dentro del backoffice. La fecha está en formato UTC-0
         examples:
-        - 5cbfce31eef3581dbb2e5a8490d4ac7b
+        - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
           xnullity: true
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: id
+            field: end_date
+            xdataTypeField: string
+      owner:
+        type: string
+        description: 'Owner provider configurado dentro del backoffice. Sirve para
+          identificar a que usuarios se mostrará el banner de acuerdo al owner provider.
+          Este valor solo llegará cuando el banner es de tipo MASIVO.
+
+          Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA'
+        examples:
+        - '{BCP, YAPEDIGITAL}'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: owner
+            xdataTypeField: string
+      product:
+        type: string
+        description: Producto del home banner. Este se empleará para los clusters
+          de NBP en un futuro.
+        examples:
+        - Recargas
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: product
+            xdataTypeField: string
+      __deleted:
+        type: string
+        description: "Campo que se usa como convención de integración con debezium.\
+          \ \nFalse: El registro no ha sido eliminado (es un registro activo).\nTrue:\
+          \ El registro ha sido eliminado (es un \"tombstone\")."
+        examples:
+        - 1
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: __deleted
+            xdataTypeField: string
+      deeplink:
+        type: string
+        description: Es el deeplink empleado en el banner el cual permitirá redireccionar
+          a los usuarios cuando estos le den tap.
+        examples:
+        - yape://yape.com.pe/app/recharges
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: deeplink
+            xdataTypeField: string
+      blacklist:
+        type: string
+        description: It corresponds to an array of values. This field indicates the
+          list of segments that will act as a blacklist within the API Connect Hub
+          logic. If a segment is included in this list, users belonging to that segment
+          will not see the configured banner.
+        examples:
+        - '{testqanewlabel40, testqanewlabel39}'
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: blacklist
+            xdataTypeField: string
+      description:
+        type: string
+        description: Es la descripción textual del banner creado. Se emplea para las
+          funciones de accesibilidad en los dispositivos.
+        examples:
+        - Realiza compras con envios desde 10 soles por Yape Tienda
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: description
+            xdataTypeField: string
+      created_at:
+        type: string
+        description: Campo que corresponde a la fecha de creación del home banner.
+          Formato UTC - 0
+        examples:
+        - 09/03/2025 00:00:59+00
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: created_at
+            xdataTypeField: string
+      organization_name:
+        type: string
+        description: Es el naming de la ONG u Organización de la cual se está usando
+          para crear el banner de tipo donación. Este field solo tendrá valor si el
+          banner es de tipo donacion
+        examples:
+        - Perú Manos Unidas
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: organization_name
+            xdataTypeField: string
+      title:
+        type: string
+        description: Es el título que se le da al banner dentro del backoffice
+        examples:
+        - Envios a 10 soles
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: title
+            xdataTypeField: string
+      type:
+        type: string
+        description: 'Indica el tipo de banner que es. Puede ser de tipo funcional
+          o de tipo donación.
+
+          Valores esperados:
+
+          NAVIGATION
+
+          DONATION'
+        examples:
+        - NAVIGATION
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: type
+            xdataTypeField: string
+      confirmation_name:
+        type: string
+        description: It is the confirmation message name displayed in the donation
+          modal. This field will only have a value if the banner is of the donation
+          type.
+        examples:
+        - Perú Manos Unidas
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: confirmation_name
             xdataTypeField: string
       banner_type_position:
         type: string
@@ -78,94 +256,43 @@ models:
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
             field: banner_type_position
             xdataTypeField: string
-      blacklist:
+      petitioner:
         type: string
-        description: It corresponds to an array of values. This field indicates the
-          list of segments that will act as a blacklist within the API Connect Hub
-          logic. If a segment is included in this list, users belonging to that segment
-          will not see the configured banner.
+        description: Valor que indica el producto al que hace referencia la publicación.
+          Se configura dentro de backoffice desde una lista deplegable o desde un
+          campo de texto.
         examples:
-        - '{testqanewlabel40, testqanewlabel39}'
+        - RECARGAS
         xqualityFieldValidations:
           xnullity: true
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: blacklist
+            field: petitioner
             xdataTypeField: string
-      confirmation_name:
+      url_image:
         type: string
-        description: It is the confirmation message name displayed in the donation
-          modal. This field will only have a value if the banner is of the donation
-          type.
-        examples:
-        - Perú Manos Unidas
+        description: Es la url de la imagen que se utiliza para mostrar el banner
+          en el carrusel de Yape
         xqualityFieldValidations:
           xnullity: true
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: confirmation_name
+            field: url_image
             xdataTypeField: string
-      organization_name:
+      updated_at:
         type: string
-        description: Es el naming de la ONG u Organización de la cual se está usando
-          para crear el banner de tipo donación. Este field solo tendrá valor si el
-          banner es de tipo donacion
-        examples:
-        - Perú Manos Unidas
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: organization_name
-            xdataTypeField: string
-      deeplink:
-        type: string
-        description: Es el deeplink empleado en el banner el cual permitirá redireccionar
-          a los usuarios cuando estos le den tap.
-        examples:
-        - yape://yape.com.pe/app/recharges
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: deeplink
-            xdataTypeField: string
-      phone_donation:
-        type: string
-        description: Numero celular de la ONG a la cual se realizarán los yapeos donativos.
-          Este campo solo tendrá valor si el banner es de tipo donación.
-        examples:
-        - 51999999999
-        pii: true
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: phone_donation
-            xdataTypeField: string
-      start_date:
-        type: string
-        description: Fecha de inicio de la publicación del banner. Esta fecha es configurada
-          dentro del backoffice. La fecha es en UTC-0
+        description: Campo que corresponde a la fecha de modificación de un registro
+          del banner. Formato UTC-0
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -173,42 +300,9 @@ models:
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: start_date
-            xdataTypeField: string
-      end_date:
-        type: string
-        description: Fecha de finalización de la vigencia de un banner. Esta fecha
-          es configurada dentro del backoffice. La fecha está en formato UTC-0
-        examples:
-        - 09/03/2025 00:00:59+00
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: end_date
-            xdataTypeField: string
-      owner:
-        type: string
-        description: 'Owner provider configurado dentro del backoffice. Sirve para
-          identificar a que usuarios se mostrará el banner de acuerdo al owner provider.
-          Este valor solo llegará cuando el banner es de tipo MASIVO.
-
-          Valores que pueden exisitir: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA'
-        examples:
-        - '{BCP, YAPEDIGITAL}'
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: owner
+            field: updated_at
             xdataTypeField: string
       segment:
         type: string
@@ -223,25 +317,40 @@ models:
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
             field: segment
             xdataTypeField: string
-      petitioner:
+      id:
         type: string
-        description: Valor que indica el producto al que hace referencia la publicación.
-          Se configura dentro de backoffice desde una lista deplegable o desde un
-          campo de texto.
+        description: Identificador único del Banner creado desde Backoffice. Se utiliza
+          como una PK.
         examples:
-        - RECARGAS
+        - 5cbfce31eef3581dbb2e5a8490d4ac7b
         xqualityFieldValidations:
           xnullity: true
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: petitioner
+            field: id
+            xdataTypeField: string
+      phone_donation:
+        type: string
+        description: Numero celular de la ONG a la cual se realizarán los yapeos donativos.
+          Este campo solo tendrá valor si el banner es de tipo donación.
+        examples:
+        - 51999999999
+        pii: true
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: phone_donation
             xdataTypeField: string
       position:
         type: string
@@ -254,30 +363,39 @@ models:
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
             field: position
             xdataTypeField: string
-      type:
+      view_scope:
         type: string
-        description: 'Indica el tipo de banner que es. Puede ser de tipo funcional
-          o de tipo donación.
-
-          Valores esperados:
-
-          NAVIGATION
-
-          DONATION'
+        description: Indica la pantalla a la cual donde deberá aparecer el banner
+          configurado en backoffice.
         examples:
-        - NAVIGATION
+        - BENEFICIOS_DMS
         xqualityFieldValidations:
           xnullity: true
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: type
+            field: view_scope
+            xdataTypeField: string
+      start_date:
+        type: string
+        description: Fecha de inicio de la publicación del banner. Esta fecha es configurada
+          dentro del backoffice. La fecha es en UTC-0
+        examples:
+        - 09/03/2025 00:00:59+00
+        xqualityFieldValidations:
+          xnullity: true
+        lineage:
+          inputFields:
+          - namespace: Backoffice
+            xsourceType: kafka
+            name: db-yape3-eastus-connect-hub-qa.public.banner
+            field: start_date
             xdataTypeField: string
       status:
         type: string
@@ -293,130 +411,12 @@ models:
         lineage:
           inputFields:
           - namespace: Backoffice
-            xsourceType: eventhub
+            xsourceType: kafka
             name: db-yape3-eastus-connect-hub-qa.public.banner
             field: status
             xdataTypeField: string
-      title:
-        type: string
-        description: Es el título que se le da al banner dentro del backoffice
-        examples:
-        - Envios a 10 soles
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: title
-            xdataTypeField: string
-      url_image:
-        type: string
-        description: Es la url de la imagen que se utiliza para mostrar el banner
-          en el carrusel de Yape
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: url_image
-            xdataTypeField: string
-      product:
-        type: string
-        description: Producto del home banner. Este se empleará para los clusters
-          de NBP en un futuro.
-        examples:
-        - Recargas
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: product
-            xdataTypeField: string
-      view_scope:
-        type: string
-        description: Indica la pantalla a la cual donde deberá aparecer el banner
-          configurado en backoffice.
-        examples:
-        - BENEFICIOS_DMS
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: view_scope
-            xdataTypeField: string
-      description:
-        type: string
-        description: Es la descripción textual del banner creado. Se emplea para las
-          funciones de accesibilidad en los dispositivos.
-        examples:
-        - Realiza compras con envios desde 10 soles por Yape Tienda
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: description
-            xdataTypeField: string
-      __deleted:
-        type: string
-        description: "Campo que se usa como convención de integración con debezium.\
-          \ \nFalse: El registro no ha sido eliminado (es un registro activo).\nTrue:\
-          \ El registro ha sido eliminado (es un \"tombstone\")."
-        examples:
-        - 1
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: __deleted
-            xdataTypeField: string
-      created_at:
-        type: string
-        description: Campo que corresponde a la fecha de creación del home banner.
-          Formato UTC - 0
-        examples:
-        - 09/03/2025 00:00:59+00
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: created_at
-            xdataTypeField: string
-      updated_at:
-        type: string
-        description: Campo que corresponde a la fecha de modificación de un registro
-          del banner. Formato UTC-0
-        examples:
-        - 09/03/2025 00:00:59+00
-        xqualityFieldValidations:
-          xnullity: true
-        lineage:
-          inputFields:
-          - namespace: Backoffice
-            xsourceType: eventhub
-            name: db-yape3-eastus-connect-hub-qa.public.banner
-            field: updated_at
-            xdataTypeField: string
       metadata:
-        description: Metadata from eventhub
+        description: Metadata from kafka
         type: struct
         required: true
         fields:
@@ -424,14 +424,16 @@ models:
             description: Indica la división lógica y física de un tópico
             type: int
           offset:
-            description: Número entero que se asigna a cada evento enviado a un EventHub.
-            type: bigint
-          sequenceNumber:
             description: Indica la posición secuencial de un mensaje dentro de una
               partición
             type: bigint
-          enqueuedTime:
-            description: Fecha en que se encola el registros para eventHub.
+          timestampType:
+            description: Flag que indica el tipo de fecha; 0 fecha de creación del
+              evento, 1 fecha en que se encola el evento
+            type: string
+          timestamp:
+            description: Fecha en que se encola el evento cuando timestampType es
+              1. Si timestampType es 0, corresponde a la fecha de creación del evento.
             type: timestamp
       document:
         description: JSON text from eventData
