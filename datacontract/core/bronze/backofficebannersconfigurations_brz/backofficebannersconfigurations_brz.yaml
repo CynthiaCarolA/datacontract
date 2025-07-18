@@ -30,11 +30,12 @@ tags:
 models:
   backofficebannersconfigurations_brz:
     description: Esta tabla contiene información sobre los banners configurados en
-      el backoffice, incluyendo detalles sobre su vigencia, segmentación y características
-      específicas. Los banners pueden ser de tipo funcional o de donación, y su configuración
-      determina cómo y a quién se mostrarán. Cada registro incluye datos como fechas
-      de inicio y finalización, tipo de banner, owner provider, y otros atributos
-      que facilitan su gestión y visualización en la plataforma.
+      el sistema, incluyendo detalles sobre su vigencia, tipo, propietario y otros
+      atributos relevantes. Cada banner puede ser de tipo funcional o de donación,
+      y su visibilidad puede ser determinada por segmentos específicos. Los campos
+      incluyen fechas de inicio y finalización, así como información sobre la organización
+      asociada en caso de donaciones. Además, se registran detalles como el estado
+      del banner, su posición en el carrusel y la URL de la imagen correspondiente.
     type: table
     tableType: raw
     universeLogic: Carga directa
@@ -42,7 +43,7 @@ models:
       end_date:
         type: string
         description: 'Fecha de finalización de la vigencia de un banner, configurada
-          en el backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
+          dentro del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -56,9 +57,9 @@ models:
             xdataTypeField: string
       owner:
         type: string
-        description: 'Owner provider configurado en el backoffice, que identifica
-          a los usuarios que verán el banner según el owner provider. Este valor se
-          presenta solo cuando el banner es de tipo MASIVO. Valores posibles: BCP,
+        description: 'Owner provider configurado dentro del backoffice, que identifica
+          a qué usuarios se mostrará el banner según el owner provider. Este valor
+          solo se incluye cuando el banner es de tipo MASIVO. Valores posibles: BCP,
           NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.'
         examples:
         - '{BCP, YAPEDIGITAL}'
@@ -73,8 +74,8 @@ models:
             xdataTypeField: string
       product:
         type: string
-        description: Producto asociado al home banner, que se utilizará para los clusters
-          de NBP en el futuro.
+        description: Producto del home banner, que se empleará para los clusters de
+          NBP en el futuro.
         examples:
         - Recargas
         xqualityFieldValidations:
@@ -89,8 +90,8 @@ models:
       __deleted:
         type: string
         description: Campo utilizado como convención de integración con Debezium.
-          False indica que el registro es activo, mientras que True indica que el
-          registro ha sido eliminado (es un 'tombstone').
+          False indica que el registro no ha sido eliminado (es un registro activo),
+          mientras que True indica que el registro ha sido eliminado (es un 'tombstone').
         examples:
         - 1
         xqualityFieldValidations:
@@ -104,8 +105,8 @@ models:
             xdataTypeField: string
       deeplink:
         type: string
-        description: Deeplink utilizado en el banner, que permite redirigir a los
-          usuarios al hacer tap en él.
+        description: Deeplink utilizado en el banner que permite redireccionar a los
+          usuarios al hacer tap.
         examples:
         - yape://yape.com.pe/app/recharges
         xqualityFieldValidations:
@@ -120,9 +121,9 @@ models:
       blacklist:
         type: string
         description: Corresponde a un array de valores que indica la lista de segmentos
-          que actúan como blacklist dentro de la lógica del API Connect Hub. Si un
-          segmento está incluido en esta lista, los usuarios de ese segmento no verán
-          el banner configurado.
+          que actuarán como blacklist dentro de la lógica del API Connect Hub. Si
+          un segmento está incluido en esta lista, los usuarios pertenecientes a ese
+          segmento no verán el banner configurado.
         examples:
         - '{testqanewlabel40, testqanewlabel39}'
         xqualityFieldValidations:
@@ -136,8 +137,8 @@ models:
             xdataTypeField: string
       description:
         type: string
-        description: Descripción textual del banner, utilizada para funciones de accesibilidad
-          en dispositivos.
+        description: Descripción textual del banner creado, utilizada para funciones
+          de accesibilidad en dispositivos.
         examples:
         - Realiza compras con envios desde 10 soles por Yape Tienda
         xqualityFieldValidations:
@@ -195,8 +196,8 @@ models:
             xdataTypeField: string
       type:
         type: string
-        description: 'Indica el tipo de banner. Puede ser funcional o de donación.
-          Valores esperados: NAVIGATION, DONATION.'
+        description: 'Indica el tipo de banner. Puede ser de tipo funcional o de tipo
+          donación. Valores esperados: NAVIGATION, DONATION.'
         examples:
         - NAVIGATION
         xqualityFieldValidations:
@@ -226,9 +227,8 @@ models:
       banner_type_position:
         type: string
         description: 'Indica el tipo de configuración de segmentación del banner creado.
-          Valores esperados: MASIVO (envíos según el owner provider del usuario),
-          SEGMENTADO (segmentación personalizada), NBP (personalización a nivel de
-          usuario), DEFAULT (banners por defecto si no hay banners pendientes).'
+          Los valores indican si es de tipo Masivo, Segmentado o NBP. Valores esperados:
+          MASIVO, SEGMENTADO, NBP, DEFAULT.'
         examples:
         - MASIVO
         xqualityFieldValidations:
@@ -243,7 +243,7 @@ models:
       petitioner:
         type: string
         description: Valor que indica el producto al que hace referencia la publicación,
-          configurado en el backoffice a partir de una lista desplegable o un campo
+          configurado dentro del backoffice desde una lista desplegable o un campo
           de texto.
         examples:
         - RECARGAS
@@ -286,8 +286,8 @@ models:
             xdataTypeField: string
       segment:
         type: string
-        description: Corresponde a un array de valores que indica los segmentos a
-          los cuales se disponibilizará el banner. Este valor solo se incluye cuando
+        description: Corresponde a un array de valores que indica el listado de segmentos
+          a los cuales se disponibilizará el banner. Este valor solo se incluye cuando
           el banner es de tipo SEGMENTADO.
         examples:
         - '{testqanewlabel42, testqanewlabel43, testqanewlabel44}'
@@ -333,8 +333,8 @@ models:
             xdataTypeField: string
       position:
         type: string
-        description: Indica la posición relativa del banner dentro del carrusel o
-          listado de banners en los flujos que lo soporten.
+        description: Indica la posición relativa del banner dentro del carrusel de
+          banners o en un listado de banners en los flujos que lo soporten.
         examples:
         - 1
         xqualityFieldValidations:
@@ -363,8 +363,8 @@ models:
             xdataTypeField: string
       start_date:
         type: string
-        description: 'Fecha de inicio de la publicación del banner, configurada en
-          el backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
+        description: 'Fecha de inicio de la publicación del banner, configurada dentro
+          del backoffice. Formato: dd/MM/yyyy HH:mm:ss+00.'
         examples:
         - 09/03/2025 00:00:59+00
         xqualityFieldValidations:
@@ -378,8 +378,8 @@ models:
             xdataTypeField: string
       status:
         type: string
-        description: 'Indica el estado del registro del banner. Valores posibles:
-          BORRADOR (el registro está en borrador y puede ser modificado), VALIDACION
+        description: 'Indica el estado del registro del banner. Los valores posibles
+          son: BORRADOR (el registro está en borrador y puede ser modificado), VALIDACION
           (el registro está en validación por un owner), APROBADO (el registro está
           activado), ELIMINADO (el registro ha sido eliminado desde el backoffice).'
         examples:
