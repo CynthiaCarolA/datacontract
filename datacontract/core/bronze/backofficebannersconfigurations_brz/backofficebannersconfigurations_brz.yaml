@@ -30,12 +30,11 @@ tags:
 models:
   backofficebannersconfigurations_brz:
     description: Esta tabla contiene información sobre los banners configurados en
-      el sistema, incluyendo detalles sobre su vigencia, propietario, tipo de producto
-      y segmentación. Cada banner tiene un identificador único y puede estar asociado
-      a diferentes tipos de campañas, como donaciones o promociones. La fecha de inicio
-      y finalización de la vigencia del banner se establece en formato UTC-0, y se
-      incluye información sobre su estado, tipo y otros atributos relevantes para
-      su visualización y gestión en el backoffice.
+      el backoffice, incluyendo detalles sobre su vigencia, segmentación y características
+      específicas. Los banners pueden ser de tipo funcional o de donación, y su configuración
+      determina cómo y a quién se mostrarán. Cada registro incluye datos como fechas
+      de inicio y finalización, tipo de banner, owner provider, y otros atributos
+      que facilitan su gestión y visualización en la plataforma.
     type: table
     tableType: raw
     universeLogic: Carga directa
@@ -57,10 +56,10 @@ models:
             xdataTypeField: string
       owner:
         type: string
-        description: 'Owner provider configurado en el backoffice, utilizado para
-          identificar a qué usuarios se mostrará el banner según el owner provider.
-          Este valor se proporciona únicamente cuando el banner es de tipo MASIVO.
-          Valores posibles: BCP, NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.'
+        description: 'Owner provider configurado en el backoffice, que identifica
+          a los usuarios que verán el banner según el owner provider. Este valor se
+          presenta solo cuando el banner es de tipo MASIVO. Valores posibles: BCP,
+          NIUBIZ, YAPEDIGITAL, YAPEEMPRESA.'
         examples:
         - '{BCP, YAPEDIGITAL}'
         xqualityFieldValidations:
@@ -105,7 +104,7 @@ models:
             xdataTypeField: string
       deeplink:
         type: string
-        description: Deeplink empleado en el banner que permite redireccionar a los
+        description: Deeplink utilizado en el banner, que permite redirigir a los
           usuarios al hacer tap en él.
         examples:
         - yape://yape.com.pe/app/recharges
@@ -122,8 +121,8 @@ models:
         type: string
         description: Corresponde a un array de valores que indica la lista de segmentos
           que actúan como blacklist dentro de la lógica del API Connect Hub. Si un
-          segmento está incluido en esta lista, los usuarios pertenecientes a ese
-          segmento no verán el banner configurado.
+          segmento está incluido en esta lista, los usuarios de ese segmento no verán
+          el banner configurado.
         examples:
         - '{testqanewlabel40, testqanewlabel39}'
         xqualityFieldValidations:
@@ -137,8 +136,8 @@ models:
             xdataTypeField: string
       description:
         type: string
-        description: Descripción textual del banner creado, utilizada para funciones
-          de accesibilidad en dispositivos.
+        description: Descripción textual del banner, utilizada para funciones de accesibilidad
+          en dispositivos.
         examples:
         - Realiza compras con envios desde 10 soles por Yape Tienda
         xqualityFieldValidations:
@@ -167,8 +166,8 @@ models:
             xdataTypeField: string
       organization_name:
         type: string
-        description: Nombre de la ONG u organización asociada al banner de tipo donación.
-          Este campo tendrá valor únicamente si el banner es de tipo donación.
+        description: Nombre de la ONG u organización utilizada para crear el banner
+          de tipo donación. Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         xqualityFieldValidations:
@@ -211,9 +210,8 @@ models:
             xdataTypeField: string
       confirmation_name:
         type: string
-        description: Nombre del mensaje de confirmación que se muestra en el modal
-          de donación. Este campo tendrá valor únicamente si el banner es de tipo
-          donación.
+        description: Nombre del mensaje de confirmación mostrado en el modal de donación.
+          Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - Perú Manos Unidas
         xqualityFieldValidations:
@@ -227,8 +225,10 @@ models:
             xdataTypeField: string
       banner_type_position:
         type: string
-        description: Indica el tipo de configuración de segmentación del banner creado.
-          Los valores pueden ser MASIVO, SEGMENTADO, NBP o DEFAULT.
+        description: 'Indica el tipo de configuración de segmentación del banner creado.
+          Valores esperados: MASIVO (envíos según el owner provider del usuario),
+          SEGMENTADO (segmentación personalizada), NBP (personalización a nivel de
+          usuario), DEFAULT (banners por defecto si no hay banners pendientes).'
         examples:
         - MASIVO
         xqualityFieldValidations:
@@ -243,7 +243,8 @@ models:
       petitioner:
         type: string
         description: Valor que indica el producto al que hace referencia la publicación,
-          configurado en el backoffice desde una lista desplegable o un campo de texto.
+          configurado en el backoffice a partir de una lista desplegable o un campo
+          de texto.
         examples:
         - RECARGAS
         xqualityFieldValidations:
@@ -286,8 +287,8 @@ models:
       segment:
         type: string
         description: Corresponde a un array de valores que indica los segmentos a
-          los cuales se disponibilizará el banner. Este valor se proporciona únicamente
-          cuando el banner es de tipo SEGMENTADO.
+          los cuales se disponibilizará el banner. Este valor solo se incluye cuando
+          el banner es de tipo SEGMENTADO.
         examples:
         - '{testqanewlabel42, testqanewlabel43, testqanewlabel44}'
         xqualityFieldValidations:
@@ -317,7 +318,7 @@ models:
       phone_donation:
         type: string
         description: Número celular de la ONG a la cual se realizarán los yapeos donativos.
-          Este campo tendrá valor únicamente si el banner es de tipo donación.
+          Este campo solo tendrá valor si el banner es de tipo donación.
         examples:
         - 51999999999
         pii: true
@@ -378,7 +379,9 @@ models:
       status:
         type: string
         description: 'Indica el estado del registro del banner. Valores posibles:
-          BORRADOR, VALIDACION, APROBADO, ELIMINADO.'
+          BORRADOR (el registro está en borrador y puede ser modificado), VALIDACION
+          (el registro está en validación por un owner), APROBADO (el registro está
+          activado), ELIMINADO (el registro ha sido eliminado desde el backoffice).'
         examples:
         - APROBADO
         xqualityFieldValidations:
