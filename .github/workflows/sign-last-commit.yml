@@ -1,0 +1,39 @@
+name: Sign Last Commit on Feature Branches
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  sign-last-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Trae todo el historial (por si acaso)
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+
+      - name: Set Git user config
+        run: |
+          git config --global user.name "CynthiaCarolA"
+          git config --global user.email "cynthiaacuna@yape.com.pe"
+          git config --global commit.gpgsign true
+
+      - name: Firmar solo el último commit
+        run: |
+          export GIT_COMMITTER_NAME="CynthiaCarolA"
+          export GIT_COMMITTER_EMAIL="cynthiaacuna@yape.com.pe"
+          git commit --amend --no-edit -S
+
+      - name: Push force branch firmado
+        run: |
+          git push --force-with-lease
